@@ -5,6 +5,7 @@ import { DeviceManager } from './manager'
 import { TrayController, loadSettings, saveSettings } from './tray'
 import * as storage from './storage'
 import { fromHex } from './logitech/profile'
+import { handleSignals, watchForUpgrade } from './lifecycle'
 
 const demo = process.argv.includes('--demo') || process.env.HUBLESS_DEMO === '1'
 const manager = new DeviceManager(demo)
@@ -22,6 +23,14 @@ function quit() {
   quitting = true
   win?.close()
   if (!win) app.exit(0)
+}
+
+/** Start the (possibly newly installed) app again, keeping it in the tray if the window was hidden. */
+function restart() {
+  const args = process.argv.slice(1).filter((a) => a !== '--hidden')
+  if (!win?.isVisible()) args.push('--hidden')
+  app.relaunch({ args })
+  quit()
 }
 
 const tray = new TrayController(iconPath(), showWindow, quit)
@@ -195,12 +204,16 @@ manager.on('changed', (snap) => {
 
 if (!process.env.HUBLESS_SHOTS && !app.requestSingleInstanceLock()) app.exit(0)
 app.on('second-instance', showWindow)
+// Any other quit path (session end, app.quit) must not be swallowed by hide-to-tray.
+app.on('before-quit', () => (quitting = true))
+handleSignals(quit)
 
 app.whenReady().then(() => {
   createWindow()
   if (!demo && !process.env.HUBLESS_SHOTS) tray.ensure()
   manager.start()
   if (process.env.HUBLESS_SHOTS) void screenshots(process.env.HUBLESS_SHOTS)
+  else watchForUpgrade(restart)
 })
 
 /** Dev aid: HUBLESS_SHOTS=dir renders the home screen and every device section into dir, then quits. */

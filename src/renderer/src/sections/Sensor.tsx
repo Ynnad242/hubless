@@ -15,6 +15,8 @@ import { cn } from '@/lib/utils'
 export const STAGE_COLORS = ['#2b8cff', '#34c77b', '#f5a524', '#ff5a8a', '#a78bfa']
 const SLEEP: [number, string][] = [[30, '30 seconds'], [60, '1 minute'], [120, '2 minutes'], [300, '5 minutes'], [600, '10 minutes'], [900, '15 minutes']]
 const TICKS = [200, 400, 800, 1600, 3200, 6400, 12800, 25600]
+/** One-click DPI values under the big readout. */
+const PRESETS = [400, 800, 1200, 1600, 2400, 3200, 6400]
 const on = (s: Stage) => s.x > 0 && s.x < 0xffff
 const fmt = (n: number) => n.toLocaleString('en-US')
 const short = (hz: number) => (hz >= 1000 ? `${hz / 1000} kHz` : `${hz} Hz`)
@@ -271,6 +273,25 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
             {sel === draft.defaultStage && ' · starting stage'}
             {sel === live && <span className="text-success">· in use now</span>}
           </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-1.5" role="group" aria-label="Quick DPI">
+            {PRESETS.filter((v) => v >= min && v <= max).map((v) => (
+              <button
+                key={v}
+                type="button"
+                onClick={() => setDpi(v)}
+                aria-pressed={cur.x === v}
+                className={cn(
+                  'h-8 min-w-16 rounded-md border px-3 text-sm font-medium tabular-nums transition-colors',
+                  cur.x === v
+                    ? 'text-foreground'
+                    : 'border-foreground/10 text-muted-foreground hover:border-foreground/25 hover:text-foreground'
+                )}
+                style={cur.x === v ? { borderColor: STAGE_COLORS[sel], background: `${STAGE_COLORS[sel]}26` } : undefined}
+              >
+                {fmt(v)}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="w-full max-w-2xl">
           <div
@@ -320,7 +341,7 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
             ))}
           </div>
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            Drag a dot to set its DPI, or click the track to move the selected stage. Arrow keys nudge by 50 (Shift: 500).
+            Pick a value above, drag a dot, or click the track to move the selected stage. Arrow keys nudge by 50 (Shift: 500).
             <br />
             The DPI button cycles through these stages in order. Sensor range {fmt(min)}–{fmt(max)} DPI.
           </p>
