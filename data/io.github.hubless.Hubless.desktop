@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Hubless
+GenericName=Mouse Settings
+Comment=Configure Logitech G mice: DPI, buttons, profiles and HITS triggers
+Exec=hubless
+Icon=io.github.hubless.Hubless
+Terminal=false
+Type=Application
+Categories=Settings;HardwareSettings;GTK;
+Keywords=logitech;mouse;dpi;g hub;ghub;superstrike;hits;rapid trigger;polling;
+StartupNotify=true

@@ -1,0 +1,11 @@
+# hubless: let the logged-in user configure their mice, keyboards and headsets
+# Razer
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", TAG+="uaccess"
+# Endgame Gear
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3367", TAG+="uaccess"
+# Logitech
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", TAG+="uaccess"
+# Wooting
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="31e3", TAG+="uaccess"
+# Fractal Design
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="36bc", TAG+="uaccess"

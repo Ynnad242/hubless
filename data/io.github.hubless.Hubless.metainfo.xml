@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.hubless.Hubless</id>
+  <name>Hubless</name>
+  <summary>Configure Logitech G mice on Linux</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <description>
+    <p>Set DPI stages, polling rate, button actions and onboard profiles of Logitech G mice, and tune the
+    HITS analog triggers (actuation point, rapid trigger, haptic click) of the PRO X2/X3 SUPERSTRIKE.
+    Everything is stored in the mouse itself, so nothing has to keep running.</p>
+  </description>
+  <launchable type="desktop-id">io.github.hubless.Hubless.desktop</launchable>
+  <content_rating type="oars-1.1"/>
+  <releases><release version="0.9.0" date="2026-11-04"/></releases>
+</component>

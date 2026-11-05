@@ -1,0 +1,127 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-rail: var(--rail);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --font-sans: "Inter", "Cantarell", ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Hubless design tokens. One neutral scale + one accent:
+ *   background (app) < rail < surface (panels, cards) < surface-2 (inputs, hover) < border
+ *   primary = the only colour, used for selection, primary actions and live values.
+ */
+:root,
+.dark {
+  --radius: 10px;
+  --background: #0b0b0d;
+  --rail: #111215;
+  --surface: #17181c;
+  --surface-2: #202227;
+  --foreground: #f1f2f4;
+  --muted-foreground: #8a8f99;
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: #1c1d22;
+  --popover-foreground: var(--foreground);
+  --primary: #2b8cff;
+  --primary-foreground: #ffffff;
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-2);
+  --accent: #262932;
+  --accent-foreground: var(--foreground);
+  --destructive: #ff5a5f;
+  --border: rgb(255 255 255 / 0.07);
+  --input: rgb(255 255 255 / 0.1);
+  --ring: #2b8cff;
+  --success: #34c77b;
+  --warning: #f5a524;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    user-select: none;
+  }
+  input,
+  textarea,
+  .selectable {
+    user-select: text;
+  }
+  button {
+    cursor: default;
+  }
+}
+
+/* Small uppercase caption used for section labels. */
+@utility caption {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(255 255 255 / 0.1);
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+@keyframes ripple {
+  from {
+    width: 12px;
+    height: 12px;
+    opacity: 0.9;
+  }
+  to {
+    width: 110px;
+    height: 110px;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,99 @@
+# PRO X2 SUPERSTRIKE: HID++ notes
+
+Everything here was verified on a PRO X2 SUPERSTRIKE (wireless PID `0x40BD`, firmware MPM 42.00 build 0011,
+LIGHTSPEED receiver `046d:c54d`) by reading the device, writing, and reading back. Where other projects
+disagree, the reason is noted.
+
+## Transport
+
+- HID++ 2.0 (protocol 4.2) on the receiver's vendor interface (usage page `0xFF00`, report IDs `0x10`/`0x11`).
+  Device index `1` through the receiver, `0xFF` over the cable.
+- A sleeping mouse and an empty receiver slot give the same reply to a ping: HID++ 1.0 error `0x8F`, code
+  `0x08`. To tell them apart, read the receiver's pairing register: short request
+  `10 FF 83 B5 <0x20+slot>` returns the wireless PID at bytes 3-4, and `0x40+slot` returns the name.
+- Waking from power-save can take more than 0.4 s for the first reply, so use at least 1.5 s for that request.
+
+## Feature table (36 entries)
+
+`0x0000` Root, `0x0001` FeatureSet, `0x0003` firmware, `0x0005` name, `0x1D4B` wireless status, `0x0020` config change,
+`0x1004` unified battery, `0x2250`/`0x2251` motion/wheel stats, `0x2202` extended DPI, `0x8090` mode status,
+`0x80E0` (unknown), `0x1B0C` **HITS analog buttons**, `0x8061` extended report rate, `0x8100` onboard profiles,
+`0x8110` button spy, `0x1500`, `0x1602` (unknown), and 18 hidden/engineering features (DFU, GPIO, RF test,
+…) that a configuration tool must never touch.
+
+## HITS: feature `0x1B0C`
+
+| fn | request | reply |
+|---|---|---|
+| 0 | — | `00 03 28 14 14 01`: 3 buttons (only 0=left, 1=right can be set), max actuation 10, max rapid trigger 5, max haptics 5 (each `<<2`) |
+| 1 set | `btn act rt hap` | echo |
+| 2 get | `btn` | `btn act rt hap` |
+
+Each value is the logical level shifted left by two. **Bit 0 of the rapid-trigger byte is rapid trigger
+on/off**: setting it is accepted and reads back, and G HUB HITS codes carry a separate on/off digit
+per button that maps onto it. (Solaar treats the bit as a firmware flag to preserve, which is why rapid trigger
+can't be switched on there.) Values as low as actuation 1, rapid trigger 1 and haptics 0 are accepted.
+
+Changes made with fn 1 apply immediately but are **not** stored. The stored values live in the profile
+(offset `0x26`). Writing the active profile applies them immediately too.
+
+G HUB "HITS code": base64 of 16 ASCII digits, `00` + actuation L, R (2 digits each) + rapid-trigger level
+L, R + rapid-trigger on L, R (1 digit each) + haptics L, R.
+
+## Onboard profiles: feature `0x8100`
+
+`fn0` info `01 08 01 05 01 05 10 00 FF …`: memory model 1, **format 8**, 5 profiles, 5 buttons, 255-byte sectors.
+`fn1`/`fn2` set/get mode (1 onboard, 2 host), `fn3`/`fn4` set/get current profile, `fn5` read 16 bytes at
+`[sector, offset]` (the last read of a 255-byte sector must start at 239), `fn6` begin write `[sector, 0, len]`,
+`fn7` write 16 bytes, `fn8` commit, `fn11`/`fn12` get/set current DPI stage.
+
+- Sector `0x0000`: profile table `[sector_hi, sector_lo, enabled, 0xFF]` × n, ending with `FFFF`.
+- Sectors `0x0001`–`0x0005`: profiles.
+- ROM `0x0100`: factory table. ROM `0x0101`: factory profile, byte-identical to an untouched profile except the CRC.
+- CRC-16/CCITT-FALSE over `sector[0:253]`, big-endian in the last two bytes.
+
+Writing the active profile takes effect immediately. A profile switch is not needed.
+
+### Format 8 profile layout
+
+| Offset | Size | Field |
+|---|---|---|
+| `0x00` | 1 | wireless report rate, Hz = 125 << n |
+| `0x01` | 1 | wired report rate |
+| `0x02` | 1 | starting DPI stage |
+| `0x03` | 1 | DPI-shift stage |
+| `0x04` | 5×5 | DPI stages `[X lo, X hi, Y lo, Y hi, lift-off]`, X = 0 means off |
+| `0x22` | 1 | angle snapping |
+| `0x25` | 1 | scroll filter (`FF` = off) |
+| `0x26` | 3 | HITS left `[act, rt\|on, hap]` |
+| `0x29` | 3 | HITS right |
+| `0x2C` | 2 | sleep after (s, LE) |
+| `0x2E` | 2 | power off after (s, LE) |
+| `0x30` | 16×4 | button actions |
+| `0x70` | 12×4 | DPI-shift layer actions |
+| `0xA0` | 48 | name, UTF-16LE (`FF…` = unnamed) |
+| `0xD0` | 45 | unknown, preserved |
+| `0xFD` | 2 | CRC |
+
+Some other tools' docs describe DPI as 16-bit words starting at byte 3, which overlaps the entries
+above. Edits made that way read back fine but never change the sensor.
+
+### Button actions (4 bytes)
+
+`80 01 hi lo` mouse-button mask · `80 02 mods key` keyboard (HID usage) · `80 03 hi lo` consumer usage ·
+`90 fn FF 00` function (3 next DPI, 4 previous, 5 cycle, 7 DPI shift, 8/9/10 profile next/prev/cycle, 12
+battery) · `80 00 FF FF` disabled · `FF FF FF FF` default.
+
+## DPI list: `0x2202` fn 2
+
+Paged, 13 bytes per page starting at reply byte 3, big-endian words: a plain value, or `0xE000|step`
+followed by the end of a range. On this sensor: 100 (+1) 200 (+2) 500 (+5) 1000 (+10) 2000 (+20) 5000 (+50)
+10000 (+100) 20000 (+125) 32000 (+200) 44000.
+
+## Report rate: `0x8061`
+
+`fn1` supported mask (`0x7F`: 125 Hz to 8000 Hz). In onboard mode the `fn3` live setter is rejected with
+INVALID_ARGUMENT and the `fn2` getter keeps returning the old index. The rate that counts is profile byte
+`0x00`. Writing it to the active profile takes effect at once, which was measured at 500, 1000 and 2000 Hz
+from input-report timing. The mouse only reports while it moves, so any measurement needs fast, continuous
+motion.
