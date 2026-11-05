@@ -1,7 +1,7 @@
 {
   "name": "hubless",
   "productName": "Hubless",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "One app for your gaming mice, keyboards and headsets on Linux",
   "license": "MIT",
   "main": "./out/main/index.js",

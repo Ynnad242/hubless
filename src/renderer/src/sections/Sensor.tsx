@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronDown, Plus, X } from 'lucide-react'
 import { toast } from 'sonner'
 import type { ProfileData, Stage } from '@shared/types'
@@ -6,7 +6,6 @@ import { gridBounds, snapDpi } from '@shared/actions'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Slider } from '@/components/ui/slider'
 import { Switch } from '@/components/ui/switch'
 import { Canvas, Caption, Row, SidePanel } from '@/components/kit'
 import type { MouseCtl } from '@/hooks/useMouse'
@@ -35,6 +34,8 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
   const [sel, setSel] = useState(0)
   const [text, setText] = useState('')
   const [more, setMore] = useState(false)
+  const [drag, setDrag] = useState<number | null>(null)
+  const track = useRef<HTMLDivElement>(null)
   useEffect(() => setSel(draft?.defaultStage ?? 0), [editSector]) // eslint-disable-line react-hooks/exhaustive-deps
   const stages = draft?.stages.filter(on) ?? []
   const cur = draft?.stages[sel]
@@ -44,15 +45,59 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
   const grid = state.grid
   const [min, max] = gridBounds(grid)
   const logPos = (dpi: number) => (Math.log(Math.max(dpi, min) / min) / Math.log(max / min)) * 100
-  const fromPos = (p: number) => snapDpi(grid, min * (max / min) ** (p / 100))
+  /** Track position (0..100) → DPI, rounded to 50 so dragging lands on tidy values. */
+  const fromPos = (p: number) => snapDpi(grid, Math.round((min * (max / min) ** (Math.max(0, Math.min(100, p)) / 100)) / 50) * 50 || min)
   const live = state.activeSector === draft.sector ? state.stage : -1
 
-  const setDpi = (v: number) => {
+  const setDpi = (v: number, i = sel) => {
     const dpi = snapDpi(grid, v)
     update((d) => {
-      const s = d.stages[sel]
-      d.stages[sel] = { x: dpi, y: s.y !== s.x ? s.y : dpi, lod: s.lod || 2 }
+      const s = d.stages[i]
+      if (s.x === dpi) return
+      d.stages[i] = { x: dpi, y: s.y !== s.x ? s.y : dpi, lod: s.lod || 2 }
     })
+  }
+  const posAt = (clientX: number) => {
+    const r = track.current!.getBoundingClientRect()
+    return ((clientX - r.left) / r.width) * 100
+  }
+  /** Grab the handle under the pointer (or move the selected stage to where the track was clicked), then drag. */
+  const onTrackDown = (e: React.PointerEvent) => {
+    if (e.button !== 0) return
+    const p = posAt(e.clientX)
+    const width = track.current!.getBoundingClientRect().width
+    const near = stages
+      .map((s, i) => ({ i, d: (Math.abs(logPos(s.x) - p) / 100) * width }))
+      .filter((h) => h.d <= 14)
+      .sort((a, b) => a.d - b.d || +(b.i === sel) - +(a.i === sel))[0]
+    const i = near ? near.i : sel
+    setSel(i)
+    setDrag(i)
+    if (!near) setDpi(fromPos(p), i)
+    e.currentTarget.setPointerCapture(e.pointerId)
+    e.preventDefault()
+    track.current!.querySelectorAll<HTMLElement>('[role=slider]')[i]?.focus({ preventScroll: true })
+  }
+  const onTrackMove = (e: React.PointerEvent) => {
+    if (drag !== null) setDpi(fromPos(posAt(e.clientX)), drag)
+  }
+  const onTrackUp = () => setDrag(null)
+  const onHandleKey = (e: React.KeyboardEvent, i: number) => {
+    const step = e.shiftKey ? 500 : 50
+    const x = stages[i].x
+    const dir = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[e.key]
+    let next: number | undefined = { Home: min, End: max }[e.key]
+    if (dir) {
+      // Land on the next multiple of the step; skip values the sensor's DPI grid rounds back to x.
+      for (let k = (dir > 0 ? Math.floor(x / step) : Math.ceil(x / step)) + dir; k * step >= min - step && k * step <= max + step; k += dir) {
+        next = snapDpi(grid, k * step)
+        if (next !== x) break
+      }
+    }
+    if (next == null) return
+    e.preventDefault()
+    setSel(i)
+    setDpi(next, i)
   }
   const add = () => {
     const last = stages[stages.length - 1]?.x ?? 800
@@ -115,7 +160,7 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
           )}
         </div>
 
-        <div className="space-y-3 rounded-lg bg-surface-2 p-3.5">
+        <div className="rounded-lg bg-surface-2 p-3.5">
           <div className="flex items-center gap-2">
             <Input
               value={text}
@@ -137,7 +182,6 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
               {draft.defaultStage === sel ? 'Starting stage' : 'Make starting stage'}
             </Button>
           </div>
-          <Slider min={0} max={100} step={0.1} value={[logPos(cur.x)]} onValueChange={([p]) => setDpi(fromPos(p))} aria-label="DPI" />
         </div>
 
         <div className="space-y-3 border-t pt-4">
@@ -229,20 +273,43 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
           </div>
         </div>
         <div className="w-full max-w-2xl">
-          <div className="relative h-14">
-            <div className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-surface-2" />
+          <div
+            ref={track}
+            onPointerDown={onTrackDown}
+            onPointerMove={onTrackMove}
+            onPointerUp={onTrackUp}
+            onPointerCancel={onTrackUp}
+            className={cn('relative h-16 touch-none select-none', drag !== null ? 'cursor-grabbing' : 'cursor-pointer')}
+          >
+            <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-surface-2" />
+            <div
+              className="absolute left-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full opacity-40"
+              style={{ width: `${logPos(cur.x)}%`, background: STAGE_COLORS[sel] }}
+            />
             {stages.map((s, i) => (
-              <button
+              <div
                 key={i}
-                type="button"
-                aria-label={`Stage ${i + 1}: ${s.x} DPI`}
-                onClick={() => setSel(i)}
+                role="slider"
+                tabIndex={0}
+                aria-label={`Stage ${i + 1} DPI`}
+                aria-valuemin={min}
+                aria-valuemax={max}
+                aria-valuenow={s.x}
+                onFocus={() => setSel(i)}
+                onKeyDown={(e) => onHandleKey(e, i)}
                 className={cn(
-                  'absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background transition-all',
-                  i === sel ? 'size-5 ring-4' : 'size-3.5 hover:scale-125'
+                  'absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background outline-none transition-[width,height,box-shadow] focus-visible:ring-4',
+                  i === sel ? 'z-10 size-6 ring-4' : 'size-4 hover:size-5',
+                  drag === i ? 'cursor-grabbing' : 'cursor-grab'
                 )}
                 style={{ left: `${logPos(s.x)}%`, background: STAGE_COLORS[i], '--tw-ring-color': `${STAGE_COLORS[i]}40` } as React.CSSProperties}
-              />
+              >
+                {i === sel && (
+                  <span className="pointer-events-none absolute bottom-full left-1/2 mb-2.5 -translate-x-1/2 rounded-md bg-surface-2 px-2 py-0.5 text-xs font-semibold tabular-nums">
+                    {fmt(s.x)}
+                  </span>
+                )}
+              </div>
             ))}
           </div>
           <div className="relative h-5">
@@ -253,6 +320,8 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
             ))}
           </div>
           <p className="mt-6 text-center text-xs text-muted-foreground">
+            Drag a dot to set its DPI, or click the track to move the selected stage. Arrow keys nudge by 50 (Shift: 500).
+            <br />
             The DPI button cycles through these stages in order. Sensor range {fmt(min)}–{fmt(max)} DPI.
           </p>
         </div>
