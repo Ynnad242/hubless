@@ -148,7 +148,7 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
                   e.stopPropagation()
                   remove(i)
                 }}
-                className="rounded p-1 text-muted-foreground opacity-0 transition group-hover:opacity-100 hover:text-foreground"
+                className="rounded p-1 text-muted-foreground opacity-0 transition group-hover:opacity-100 focus-visible:opacity-100 hover:text-foreground"
               >
                 <X className="size-3.5" />
               </button>

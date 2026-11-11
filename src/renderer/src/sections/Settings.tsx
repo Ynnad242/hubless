@@ -76,7 +76,7 @@ export function Settings({ mouse, device, photo }: { mouse: MouseCtl; device: De
 
       <Canvas className="flex-col gap-6">
         <div className="flex h-[360px] items-center justify-center">
-          {photo ? <img src={photo} alt="" draggable={false} className="max-h-full max-w-[420px] object-contain" /> : <MouseArt />}
+          {photo ? <img src={photo} alt={`${device.vendor} ${device.name}`} draggable={false} className="max-h-full max-w-[420px] object-contain" /> : <MouseArt />}
         </div>
         {device.battery && (
           <div className="w-64 space-y-2 text-center">

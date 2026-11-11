@@ -1,3 +1,4 @@
+import { rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron'
 import type { Hits, HublessApi, ProfileData } from '@shared/types'
@@ -11,6 +12,7 @@ const demo = process.argv.includes('--demo') || process.env.HUBLESS_DEMO === '1'
 const manager = new DeviceManager(demo)
 let win: BrowserWindow | null = null
 let quitting = false
+let wipeUserData = false
 const iconPath = () => (app.isPackaged ? join(process.resourcesPath, 'icon.png') : join(__dirname, '../../build/icon.png'))
 
 function showWindow() {
@@ -173,6 +175,18 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
     storage.clearDeviceImage(id)
     manager.forget(id)
   },
+  appInfo: async () => ({ version: app.getVersion(), license: 'MIT' }),
+  readDocument: async (name) => storage.readDocument(name),
+  deleteAllData: async () => {
+    manager.freeze()
+    storage.deleteAllData()
+    wipeUserData = true // Chromium's own folder goes once the window is closed (see window-all-closed)
+    // Start over as a fresh install; the window is closed by quit() after this call returns.
+    setTimeout(() => {
+      app.relaunch({ args: process.argv.slice(1).filter((a) => a !== '--hidden') })
+      quit()
+    }, 100)
+  },
   deviceImages: async () => storage.deviceImages(),
   chooseDeviceImage: async (id) => {
     const r = await dialog.showOpenDialog(win!, {
@@ -244,6 +258,7 @@ async function screenshots(dir: string) {
 }
 app.on('window-all-closed', () => {
   manager.stop()
+  if (wipeUserData) rmSync(app.getPath('userData'), { recursive: true, force: true })
   // node-hid keeps native read threads alive; exit explicitly once everything is saved.
   app.exit(0)
 })

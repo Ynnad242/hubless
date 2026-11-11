@@ -90,8 +90,17 @@ export class DeviceManager extends EventEmitter {
   }
 
   // ---------------------------------------------------------------- registry
+  private frozen = false
+
+  /** Stop polling and stop writing the device list (used right before all app data is deleted). */
+  freeze() {
+    this.frozen = true
+    if (this.timer) clearInterval(this.timer)
+    this.timer = null
+  }
+
   private remember(d: DeviceSummary) {
-    if (this.demo) return
+    if (this.demo || this.frozen) return
     const prev = this.known.get(d.id)
     if (prev && prev.name === d.name && prev.capabilities.length === d.capabilities.length && Date.now() - prev.lastSeen < 60_000) return
     this.known.set(d.id, { ...d, battery: null, status: 'inactive', note: undefined, lastSeen: Date.now() })

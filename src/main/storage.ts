@@ -129,3 +129,21 @@ export function clearDeviceImage(id: string) {
   const f = imageFile(id)
   if (f) rmSync(f)
 }
+
+// ---------------------------------------------------------------- privacy
+
+const CONFIG_DIR = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'), 'hubless')
+const AUTOSTART_FILE = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'), 'autostart', 'io.github.hubless.Hubless.desktop')
+
+/** Everything Hubless keeps on this computer (see PRIVACY.md). Device memory and the system udev rule are not touched. */
+export function deleteAllData() {
+  for (const p of [CONFIG_DIR, DATA, AUTOSTART_FILE]) rmSync(p, { recursive: true, force: true })
+}
+
+/** PRIVACY.md / THIRD_PARTY_NOTICES.md, shipped as resources/docs in the package. */
+export function readDocument(name: 'privacy' | 'licenses') {
+  const file = name === 'privacy' ? 'PRIVACY.md' : 'THIRD_PARTY_NOTICES.md'
+  const path = [join(process.resourcesPath ?? '', 'docs', file), join(__dirname, '../..', file)].find((p) => existsSync(p))
+  if (!path) throw new Error(`${file} is missing from this build.`)
+  return readFileSync(path, 'utf8')
+}

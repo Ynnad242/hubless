@@ -91,7 +91,7 @@ export function Buttons({ mouse, id, photo }: { mouse: MouseCtl; id: string; pho
         sel === i ? 'border-primary/70' : 'hover:border-foreground/20'
       )}
     >
-      <span className={cn('flex size-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold', sel === i ? 'bg-primary text-white' : 'bg-surface-2')}>
+      <span className={cn('flex size-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold', sel === i ? 'bg-primary-solid text-white' : 'bg-surface-2')}>
         {i + 1}
       </span>
       <span className="min-w-0">

@@ -32,7 +32,7 @@ function RailButton({ label, icon: Icon, active, onClick }: { label: string; ico
           onClick={onClick}
           className={cn(
             'flex size-11 items-center justify-center rounded-lg transition-colors',
-            active ? 'bg-primary text-white' : 'text-muted-foreground hover:bg-surface-2 hover:text-foreground'
+            active ? 'bg-primary-solid text-white' : 'text-muted-foreground hover:bg-surface-2 hover:text-foreground'
           )}
         >
           <Icon className="size-5" />

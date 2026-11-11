@@ -240,6 +240,12 @@ export interface HublessApi {
   deviceImages(): Promise<Record<string, string>>
   chooseDeviceImage(id: string): Promise<string | null>
   clearDeviceImage(id: string): Promise<void>
+  /** version and license, for the About section */
+  appInfo(): Promise<{ version: string; license: string }>
+  /** the shipped privacy statement or third-party notices, as Markdown text */
+  readDocument(name: 'privacy' | 'licenses'): Promise<string>
+  /** remove settings, device list, photos, backups and the autostart entry, then restart fresh */
+  deleteAllData(): Promise<void>
   onChange(cb: (snap: AppSnapshot) => void): () => void
   /** physical button state of a mouse (bit 0 left, 1 right, 2 middle, 3 back, 4 forward) */
   onButtons(cb: (id: string, mask: number) => void): () => void

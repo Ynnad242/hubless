@@ -110,7 +110,7 @@ export function HeadsetView({ device, photo, onBack }: { device: DeviceSummary; 
           ))}
         </dl>
       </SidePanel>
-      <Canvas>{photo ? <img src={photo} alt="" draggable={false} className="h-72 w-auto object-contain" /> : <HeadsetArt className="h-72" />}</Canvas>
+      <Canvas>{photo ? <img src={photo} alt={`${device.vendor} ${device.name}`} draggable={false} className="h-72 w-auto object-contain" /> : <HeadsetArt className="h-72" />}</Canvas>
     </>
   ) : (
     <>
@@ -137,7 +137,7 @@ export function HeadsetView({ device, photo, onBack }: { device: DeviceSummary; 
               <button
                 type="button"
                 aria-label="Rename preset"
-                className="rounded p-1 text-muted-foreground opacity-0 group-hover:opacity-100 hover:text-foreground"
+                className="rounded p-1 text-muted-foreground opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-foreground"
                 onClick={(e) => {
                   e.stopPropagation()
                   setRenaming({ slot: p.slot, name: presetName(p.slot) })
@@ -190,7 +190,7 @@ export function HeadsetView({ device, photo, onBack }: { device: DeviceSummary; 
         }
       >
         <div className="flex items-center gap-8">
-          {photo ? <img src={photo} alt="" draggable={false} className="h-32 w-auto object-contain" /> : <HeadsetArt className="h-32" />}
+          {photo ? <img src={photo} alt={`${device.vendor} ${device.name}`} draggable={false} className="h-32 w-auto object-contain" /> : <HeadsetArt className="h-32" />}
           <div className="space-y-2">
             {state.battery !== null && (
               <div>

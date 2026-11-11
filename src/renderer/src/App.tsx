@@ -3,9 +3,8 @@ import { Info, Settings2, ShieldCheck } from 'lucide-react'
 import { toast } from 'sonner'
 import type { AppSnapshot, Capability } from '@shared/types'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { SettingsDialog } from '@/components/SettingsDialog'
+import { AboutDialog, SettingsDialog } from '@/components/SettingsDialog'
 import type { MouseCtl } from '@/hooks/useMouse'
 import { DeviceView } from '@/views/DeviceView'
 import { HeadsetView } from '@/views/HeadsetView'
@@ -90,20 +89,7 @@ export default function App() {
         <Home snap={snap} images={images} onImages={setImages} onOpen={setOpen} />
       </main>
       <SettingsDialog open={settings} onOpenChange={setSettings} />
-      <Dialog open={about} onOpenChange={setAbout}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Hubless</DialogTitle>
-            <DialogDescription>
-              One app for your gaming mice, keyboards and headsets on Linux. Settings are stored in your devices, so nothing has to keep running.
-            </DialogDescription>
-          </DialogHeader>
-          <p className="text-sm text-muted-foreground">
-            Open source (MIT). Not affiliated with Logitech, Razer, Wooting, Fractal Design or Endgame Gear. Protocol research builds on Solaar, libratbag
-            and the SUPERSTRIKE community.
-          </p>
-        </DialogContent>
-      </Dialog>
+      <AboutDialog open={about} onOpenChange={setAbout} />
     </div>
   )
 }

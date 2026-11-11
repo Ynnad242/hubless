@@ -52,8 +52,35 @@ function findButtons(img: HTMLImageElement): Masks | null {
       bottom = Math.max(bottom, y)
       count++
     }
-  if (count < w * h * 0.03) return null
-  return { w, h, left, right, top, bottom, cx }
+  if (count >= w * h * 0.03) return { w, h, left, right, top, bottom, cx }
+  return findLightButtons(px, w, h, minX, maxX, cx)
+}
+
+/** Light-coloured mice (e.g. a white OP1 8k): the main buttons are the body above the seam that runs across it. */
+function findLightButtons(px: Uint8ClampedArray, w: number, h: number, minX: number, maxX: number, cx: number): Masks | null {
+  const body = maxX - minX
+  const opaque = (x: number, y: number) => px[(y * w + x) * 4 + 3] > 200
+  const dark = (x: number, y: number) => {
+    const i = (y * w + x) * 4
+    return 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2] < 150
+  }
+  let seam = -1
+  for (let y = Math.round(h * 0.2); y < Math.round(h * 0.55) && seam < 0; y++) {
+    let n = 0
+    for (let x = minX; x <= maxX; x++) if (opaque(x, y) && dark(x, y)) n++
+    if (n > body * 0.45) seam = y
+  }
+  if (seam < 0) return null
+  let top = -1
+  for (let y = 0; y < seam && top < 0; y++) for (let x = minX; x <= maxX; x += 2) if (opaque(x, y)) top = y
+  const left = new Uint8Array(w * h)
+  const right = new Uint8Array(w * h)
+  for (let y = Math.max(0, top); y < seam; y++)
+    for (let x = minX; x <= maxX; x++) {
+      if (!opaque(x, y) || Math.abs(x - cx) < w * 0.07) continue
+      ;(x < cx ? left : right)[y * w + x] = 1
+    }
+  return { w, h, left, right, top: Math.max(0, top), bottom: seam, cx }
 }
 
 interface Props {

@@ -145,3 +145,16 @@ Terminal panel (no_new_privs): the user installs packages from their own termina
   resources/devices. User photos (~/.config/hubless/images/<device id>) still override. They are vendor product shots:
   publishing them publicly carries copyright risk — the user chose to ship them (2026-11-11).
 Next: Razer driver (OpenRazer protocol: 90-byte feature reports) would light up 89 catalog models; OP1 v2 layout check.
+
+## v0.16.1 (2026-11-11): OP1 verified by input capture, OP1 photo, release hygiene
+- OP1 8k checked with the user's hands: at divider 4 the busiest second had 2002 reports (2 kHz); Back remapped to
+  F13 arrived as keyboard usage 0x68 on interface 1. DPI-button cycling can't be seen over USB (handled on the mouse).
+- data/devices/endgame-gear-op1-8k.png (user's photo, cable cropped). PhotoMouse now also handles light mice: main
+  buttons = body above the horizontal seam (findLightButtons).
+- Release checklist pass: README rewritten for the Electron app (old GTK text/screenshots removed, claims toned down),
+  PRIVACY.md, THIRD_PARTY_NOTICES.md (tools/third-party-notices.mjs; all bundled packages MIT/ISC/Apache-2.0/0BSD),
+  docs/notices/sources.md (data/research credits, trademark + product-photo notice). In-app: About dialog (version,
+  license, disclaimer, Privacy, Open-source licenses), Settings → Your data → Delete all Hubless data (config, data,
+  autostart, and Electron's ~/.config/Hubless on exit; tested against sandboxed XDG dirs). Accessibility: alt text on
+  device photos, keyboard-visible hover buttons, --primary-solid #1b6fe0 for white-on-blue (4.8:1).
+- Still the user's call before publishing: vendor product photos (copyright), a real repo URL/contact in package.json.

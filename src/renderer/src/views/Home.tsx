@@ -75,7 +75,7 @@ function DeviceCard({ d, image, ownImage, onOpen, onImage, onClearImage, onForge
             <Button
               size="icon"
               variant="ghost"
-              className="size-8 shrink-0 text-muted-foreground opacity-0 group-hover:opacity-100 data-[state=open]:opacity-100"
+              className="size-8 shrink-0 text-muted-foreground opacity-0 group-hover:opacity-100 focus-visible:opacity-100 data-[state=open]:opacity-100"
               aria-label="Device options"
               onClick={(e) => e.stopPropagation()}
             >
@@ -101,7 +101,7 @@ function DeviceCard({ d, image, ownImage, onOpen, onImage, onClearImage, onForge
 
       <div className={cn('flex h-48 items-center justify-center py-2 transition', dim && 'opacity-40 grayscale', d.status === 'asleep' && 'opacity-70')}>
         {image ? (
-          <img src={image} alt="" className="max-h-full max-w-full object-contain" draggable={false} />
+          <img src={image} alt={`${d.vendor} ${d.name}`} className="max-h-full max-w-full object-contain" draggable={false} />
         ) : (
           <DeviceArt kind={d.kind} className={d.kind === 'keyboard' ? 'h-auto max-h-full w-full max-w-[560px]' : 'h-full w-auto'} />
         )}

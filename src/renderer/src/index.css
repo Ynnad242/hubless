@@ -12,6 +12,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-solid: var(--primary-solid);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -55,6 +56,8 @@
   --popover-foreground: var(--foreground);
   --primary: #2b8cff;
   --primary-foreground: #ffffff;
+  /* Filled blue behind white text: 4.8:1 contrast (the brighter --primary is for text and lines on dark). */
+  --primary-solid: #1b6fe0;
   --secondary: var(--surface-2);
   --secondary-foreground: var(--foreground);
   --muted: var(--surface-2);

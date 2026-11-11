@@ -717,7 +717,7 @@ function DeviceSettings({ kb, device, photo }: { kb: Kb; device: DeviceSummary; 
         </div>
       </SidePanel>
       <Canvas className="flex-col gap-8 px-6">
-        {photo && <img src={photo} alt="" draggable={false} className="max-h-64 w-full max-w-3xl object-contain" />}
+        {photo && <img src={photo} alt={`${device.vendor} ${device.name}`} draggable={false} className="max-h-64 w-full max-w-3xl object-contain" />}
         <KeyMap layout={s.layout} label={baseLabel(s)} selected={new Set()} onSelect={() => {}} color={(k) => s.lighting.colors[k.row]?.[k.col]} />
       </Canvas>
       <Dialog open={!!renaming} onOpenChange={(o) => !o && setRenaming(null)}>
