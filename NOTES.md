@@ -123,3 +123,25 @@ PhotoMouse finds dark button areas in the user's photo and draws selection / act
 OPEN: SUPERSTRIKE live analog press depth. 0x1B0C fn3 [01 3c] (G HUB's command) acks "3b 01 3c" but produced no events in two
 40–90 s captures — the user wasn't pressing; redo the capture with the user pressing, also watching report 0x12 and other
 feature indexes. Mute toggle capture likewise.
+
+## v0.15.x (2026-11-05)
+0.15.0 SUPERSTRIKE live press depth works (HITS 0x1B0C fn3 [01 3c] start / [00 3c] stop → fn0 events [left, right] 0..10).
+0.15.1 Sensor page: canvas DPI track is the editor (drag dots, click track, arrows). 0.15.2: DPI quick picks; SIGTERM/
+SIGINT/SIGHUP really quit (before-quit sets `quitting`); packaged app polls app.asar + execPath (src/main/lifecycle.ts) and
+relaunches into a freshly installed version (keeps --hidden). sudo is blocked inside Claude's sandbox and the app's
+Terminal panel (no_new_privs): the user installs packages from their own terminal.
+
+## v0.16.0 (2026-11-11): Endgame Gear OP1 8k, mouse catalog, shipped photos
+- OP1 8k (3367:1964) driver: src/main/endgame/{config,op1}.ts, layout in docs/PROTOCOL.md. Shown to the UI as a
+  one-profile mouse (MouseState.limits, ProfileData.extras for LOD/motion sync/ripple/filters/debounce). Verified on the
+  user's mouse via the app: DPI levels, polling, button remap, debounce all read back exactly; original config restored
+  byte-for-byte (backup in ~/.local/share/hubless/backups/endgame-1964). NOT yet confirmed by feel/capture: the user was
+  away for the input capture (polling rate measured from hidraw reports, Back→F13 key, DPI button cycling).
+  egctl (AGPL, OP1 8k v2) used as a fact reference only; v1 differs (button table at 71, debounce last).
+- data/mice.json: 214 models / 309 USB ids from OpenRazer + libratbag (tools/build-catalog.py, tools/extract-mice.py)
+  plus verified entries; `popular` from prosettings.net (Nov 2026). Unclaimed catalog mice show on Home by name with
+  max DPI ("support coming soon"). Viper V4 Pro ids 00e5/00e6 come from a driver database, unverified.
+- Product photos ship with the app: data/devices/<vendor>-<model>.png (modelKey in src/shared/devices.ts), packaged as
+  resources/devices. User photos (~/.config/hubless/images/<device id>) still override. They are vendor product shots:
+  publishing them publicly carries copyright risk — the user chose to ship them (2026-11-11).
+Next: Razer driver (OpenRazer protocol: 90-byte feature reports) would light up 89 catalog models; OP1 v2 layout check.

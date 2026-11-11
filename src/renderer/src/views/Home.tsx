@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { DeviceArt } from '@/components/DeviceArt'
 import { cn } from '@/lib/utils'
+import { photoFor } from '@shared/devices'
 
 interface Props {
   snap: AppSnapshot | null
@@ -30,9 +31,10 @@ const STATUS_TEXT: Record<DeviceSummary['status'], string> = {
   inactive: 'Inactive'
 }
 
-function DeviceCard({ d, image, onOpen, onImage, onClearImage, onForget }: {
+function DeviceCard({ d, image, ownImage, onOpen, onImage, onClearImage, onForget }: {
   d: DeviceSummary
   image?: string
+  ownImage: boolean
   onOpen: () => void
   onImage: () => void
   onClearImage: () => void
@@ -84,7 +86,7 @@ function DeviceCard({ d, image, onOpen, onImage, onClearImage, onForget }: {
             <DropdownMenuItem onSelect={onImage}>
               <ImagePlus className="size-4" /> Use your own photo…
             </DropdownMenuItem>
-            {image && <DropdownMenuItem onSelect={onClearImage}>Use the default picture</DropdownMenuItem>}
+            {ownImage && <DropdownMenuItem onSelect={onClearImage}>Use the default picture</DropdownMenuItem>}
             {d.status === 'inactive' && (
               <>
                 <DropdownMenuSeparator />
@@ -159,7 +161,8 @@ export function Home({ snap, images, onImages, onOpen }: Props) {
             <DeviceCard
               key={d.id}
               d={d}
-              image={images[d.id]}
+              image={photoFor(images, d)}
+              ownImage={!!images[d.id]}
               onOpen={() => onOpen(d.id)}
               onImage={async () => {
                 const url = await api.chooseDeviceImage(d.id).catch((e) => (toast.error(e.message), null))

@@ -83,9 +83,9 @@ function createWindow() {
 // Every renderer call goes through here; method names match HublessApi.
 const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
   snapshot: async () => manager.snapshot(),
-  mouseState: (id) => manager.run(id, async (s) => s.state()),
+  mouseState: (id) => manager.runMouse(id, async (s) => s.state()),
   saveProfile: (id, p: ProfileData) =>
-    manager.run(id, async (s) => {
+    manager.runMouse(id, async (s) => {
       await s.saveProfile(p)
       return s.state()
     }),
@@ -118,15 +118,15 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
       await s.replaceSector(sector, raw)
       return s.state()
     }),
-  backup: (id) => manager.run(id, (s) => s.backup()),
-  listBackups: async (id) => storage.listBackups(manager.session(id).dev.serial),
+  backup: (id) => manager.runMouse(id, (s) => s.backup()),
+  listBackups: async (id) => storage.listBackups(manager.mouseSession(id).backupKey),
   restoreBackup: (id, path) =>
-    manager.run(id, async (s) => {
+    manager.runMouse(id, async (s) => {
       await s.restore(storage.loadBackup(path))
       return s.state()
     }),
   openBackupsFolder: async (id) => {
-    await shell.openPath(storage.backupDir(manager.session(id).dev.serial))
+    await shell.openPath(storage.backupDir(manager.mouseSession(id).backupKey))
   },
   exportProfile: async (id, sector) => {
     const s = manager.session(id)

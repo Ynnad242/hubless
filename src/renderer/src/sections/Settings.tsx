@@ -24,8 +24,11 @@ export function Settings({ mouse, device, photo }: { mouse: MouseCtl; device: De
     ['Connection', device.connection],
     ['Firmware', state.firmware || 'Unknown'],
     ['Serial number', state.serial || 'Unknown'],
-    ['HID++ version', state.protocol],
-    ['Onboard memory', state.onboard ? `${state.onboard.profiles} profiles · format ${state.onboard.fmt}` : 'None']
+    /^\d/.test(state.protocol) ? ['HID++ version', state.protocol] : ['Protocol', state.protocol],
+    [
+      'Onboard memory',
+      state.limits && !state.limits.profiles ? 'One configuration' : state.onboard ? `${state.onboard.profiles} profiles · format ${state.onboard.fmt}` : 'None'
+    ]
   ]
 
   return (
@@ -54,7 +57,7 @@ export function Settings({ mouse, device, photo }: { mouse: MouseCtl; device: De
             </Button>
           </div>
         </div>
-        <div className="mt-auto border-t pt-4">
+        {state.features.length > 0 && <div className="mt-auto border-t pt-4">
           <button type="button" className="text-xs text-muted-foreground hover:text-foreground" onClick={() => setFeatures((f) => !f)}>
             {features ? 'Hide' : 'Show'} HID++ feature table
           </button>
@@ -68,7 +71,7 @@ export function Settings({ mouse, device, photo }: { mouse: MouseCtl; device: De
               ))}
             </div>
           )}
-        </div>
+        </div>}
       </SidePanel>
 
       <Canvas className="flex-col gap-6">

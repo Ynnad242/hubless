@@ -50,6 +50,9 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
   /** Track position (0..100) → DPI, rounded to 50 so dragging lands on tidy values. */
   const fromPos = (p: number) => snapDpi(grid, Math.round((min * (max / min) ** (Math.max(0, Math.min(100, p)) / 100)) / 50) * 50 || min)
   const live = state.activeSector === draft.sector ? state.stage : -1
+  const maxStages = state.limits?.stages ?? 5
+  const canStart = state.limits?.startStage ?? true
+  const canShift = state.limits?.shiftStage ?? true
 
   const setDpi = (v: number, i = sel) => {
     const dpi = snapDpi(grid, v)
@@ -136,7 +139,7 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
             >
               <span className="size-2.5 shrink-0 rounded-full" style={{ background: STAGE_COLORS[i] }} />
               <span className="flex-1 text-[15px] font-semibold tabular-nums">{fmt(s.x)}</span>
-              {i === draft.defaultStage && <span className="caption text-primary">Start</span>}
+              {canStart && i === draft.defaultStage && <span className="caption text-primary">Start</span>}
               {i === live && <span className="size-1.5 rounded-full bg-success" title="In use now" />}
               <button
                 type="button"
@@ -151,7 +154,7 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
               </button>
             </div>
           ))}
-          {stages.length < 5 && (
+          {stages.length < maxStages && (
             <button
               type="button"
               onClick={add}
@@ -174,15 +177,17 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
               aria-label="DPI"
             />
             <span className="text-sm text-muted-foreground">DPI</span>
-            <Button
-              size="sm"
-              variant="ghost"
-              className="ml-auto h-8 text-xs"
-              disabled={draft.defaultStage === sel}
-              onClick={() => update((d) => (d.defaultStage = sel))}
-            >
-              {draft.defaultStage === sel ? 'Starting stage' : 'Make starting stage'}
-            </Button>
+            {canStart && (
+              <Button
+                size="sm"
+                variant="ghost"
+                className="ml-auto h-8 text-xs"
+                disabled={draft.defaultStage === sel}
+                onClick={() => update((d) => (d.defaultStage = sel))}
+              >
+                {draft.defaultStage === sel ? 'Starting stage' : 'Make starting stage'}
+              </Button>
+            )}
           </div>
         </div>
 
@@ -222,9 +227,11 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
                   />
                 </Row>
               )}
-              <Row label="DPI shift stage" hint="While “DPI shift” is held">
-                <Pick value={String(draft.shiftStage)} items={stages.map((s, i) => [String(i), fmt(s.x)])} onChange={(v) => update((d) => (d.shiftStage = Number(v)))} />
-              </Row>
+              {canShift && (
+                <Row label="DPI shift stage" hint="While “DPI shift” is held">
+                  <Pick value={String(draft.shiftStage)} items={stages.map((s, i) => [String(i), fmt(s.x)])} onChange={(v) => update((d) => (d.shiftStage = Number(v)))} />
+                </Row>
+              )}
               {draft.fmt === 8 && (
                 <Row label="Lift-off distance">
                   <Pick
@@ -237,6 +244,19 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
               <Row label="Angle snapping">
                 <Switch checked={draft.angleSnap} onCheckedChange={(v) => update((d) => (d.angleSnap = v))} />
               </Row>
+              {draft.extras && (
+                <>
+                  <Row label="Lift-off distance">
+                    <Pick value={String(draft.extras.liftOffMm)} items={[['1', '1 mm'], ['2', '2 mm']]} onChange={(v) => update((d) => (d.extras!.liftOffMm = Number(v)))} />
+                  </Row>
+                  <Row label="Motion sync" hint="Aligns sensor frames with USB polls">
+                    <Switch checked={draft.extras.motionSync} onCheckedChange={(v) => update((d) => (d.extras!.motionSync = v))} />
+                  </Row>
+                  <Row label="Ripple control" hint="Smooths jitter at high DPI">
+                    <Switch checked={draft.extras.rippleControl} onCheckedChange={(v) => update((d) => (d.extras!.rippleControl = v))} />
+                  </Row>
+                </>
+              )}
               {draft.rateWiredHz != null && (
                 <Row label="Polling with cable">
                   <Pick value={String(Math.min(draft.rateWiredHz, 1000))} items={[125, 250, 500, 1000].map((v) => [String(v), `${v} Hz`])} onChange={(v) => update((d) => (d.rateWiredHz = Number(v)))} />
@@ -270,7 +290,7 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
           <div className="mt-2 flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <span className="size-2 rounded-full" style={{ background: STAGE_COLORS[sel] }} />
             Stage {sel + 1}
-            {sel === draft.defaultStage && ' · starting stage'}
+            {canStart && sel === draft.defaultStage && ' · starting stage'}
             {sel === live && <span className="text-success">· in use now</span>}
           </div>
           <div className="mt-6 flex flex-wrap justify-center gap-1.5" role="group" aria-label="Quick DPI">

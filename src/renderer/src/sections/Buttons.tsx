@@ -5,6 +5,7 @@ import { Action, CODE_TO_HID, FUNCTIONS, MEDIA, MOUSE_BUTTONS, actionCode, actio
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { Switch } from '@/components/ui/switch'
 import { MOUSE, MouseArt } from '@/components/DeviceArt'
 import { PhotoMouse } from '@/components/PhotoMouse'
 import { Canvas, Caption, PanelTabs, SidePanel } from '@/components/kit'
@@ -52,13 +53,20 @@ export function Buttons({ mouse, id, photo }: { mouse: MouseCtl; id: string; pho
     setRecording(false)
   }, [sel]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const limits = state?.limits
   const lists = useMemo<Record<Exclude<Tab, 'keys'>, [string, string][]>>(
     () => ({
-      mouse: Object.entries(MOUSE_BUTTONS).map(([c, n]) => [n, Action.mouse(Number(c))]),
-      media: Object.entries(MEDIA).map(([c, n]) => [n, Action.media(Number(c))]),
-      functions: [...Object.entries(FUNCTIONS).map(([c, n]) => [n, Action.fn(Number(c))] as [string, string]), ['Do nothing', Action.disabled()]]
+      // Mice with their own limits only get what their firmware can do.
+      mouse: Object.entries(MOUSE_BUTTONS).filter(([c]) => !limits || Number(c) <= 0x10).map(([c, n]) => [n, Action.mouse(Number(c))]),
+      media: Object.entries(MEDIA).filter(([c]) => !limits || Number(c) <= 0xff).map(([c, n]) => [n, Action.media(Number(c))]),
+      functions: [
+        ...Object.entries(FUNCTIONS)
+          .filter(([c]) => !limits || limits.functions.includes(Number(c)))
+          .map(([c, n]) => [n, Action.fn(Number(c))] as [string, string]),
+        ['Do nothing', Action.disabled()]
+      ]
     }),
-    []
+    [limits]
   )
   if (!draft || !state) return null
   const n = Math.min(5, state.onboard?.buttons ?? 5)
@@ -150,6 +158,37 @@ export function Buttons({ mouse, id, photo }: { mouse: MouseCtl; id: string; pho
                   </button>
                 ))}
             </div>
+          </div>
+        )}
+        {draft.extras && (
+          <div className="space-y-3 border-t pt-4">
+            <Caption>Click behaviour</Caption>
+            <div className="flex items-center justify-between gap-3 text-sm">
+              <span>Debounce</span>
+              <span className="flex items-center gap-2">
+                <Input
+                  key={draft.extras.debounceMs}
+                  defaultValue={draft.extras.debounceMs}
+                  inputMode="numeric"
+                  className="h-8 w-16 tabular-nums"
+                  aria-label="Debounce in milliseconds"
+                  onBlur={(e) => {
+                    const v = Math.max(0, Math.min(25, Math.round(Number(e.target.value) || 0)))
+                    update((d) => (d.extras!.debounceMs = v))
+                  }}
+                  onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+                />
+                <span className="text-muted-foreground">ms</span>
+              </span>
+            </div>
+            <label className="flex items-center justify-between gap-3 text-sm">
+              Slam-click filter
+              <Switch checked={draft.extras.slamClickFilter} onCheckedChange={(v) => update((d) => (d.extras!.slamClickFilter = v))} />
+            </label>
+            <label className="flex items-center justify-between gap-3 text-sm">
+              Jitter filter
+              <Switch checked={draft.extras.jitterFilter} onCheckedChange={(v) => update((d) => (d.extras!.jitterFilter = v))} />
+            </label>
           </div>
         )}
         <Button

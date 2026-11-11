@@ -11,6 +11,7 @@ import { DeviceView } from '@/views/DeviceView'
 import { HeadsetView } from '@/views/HeadsetView'
 import { KeyboardView } from '@/views/KeyboardView'
 import { Home } from '@/views/Home'
+import { photoFor } from '@shared/devices'
 
 type Hooks = { __nav?: (c: Capability) => void; __flush?: () => Promise<void>; __open?: (id: string | null) => void }
 
@@ -50,9 +51,9 @@ export default function App() {
     w.__flush = m.flush
   }, [])
 
-  if (device?.kind === 'keyboard') return <KeyboardView key={device.id} device={device} photo={images[device.id]} onBack={() => setOpen(null)} />
-  if (device?.kind === 'headset') return <HeadsetView key={device.id} device={device} photo={images[device.id]} onBack={() => setOpen(null)} />
-  if (device) return <DeviceView key={device.id} device={device} photo={images[device.id]} onBack={() => setOpen(null)} expose={expose} />
+  if (device?.kind === 'keyboard') return <KeyboardView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />
+  if (device?.kind === 'headset') return <HeadsetView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />
+  if (device) return <DeviceView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} expose={expose} />
 
   return (
     <div className="flex h-full flex-col">

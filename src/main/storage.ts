@@ -100,10 +100,18 @@ function imageFile(id: string) {
 
 const asDataUrl = (path: string) => `data:${MIME[extname(path).toLowerCase()] ?? 'image/png'};base64,${readFileSync(path).toString('base64')}`
 
+/** Product photos shipped with the app, one per model, named by modelKey() (data/devices in the source tree). */
+const SHIPPED = [join(process.resourcesPath ?? '', 'devices'), join(__dirname, '../../data/devices')].find((d) => existsSync(d))
+
+/** User photos keyed by device id, plus the shipped ones keyed "model:<modelKey>". */
 export function deviceImages(): Record<string, string> {
-  if (!existsSync(IMAGES)) return {}
   const out: Record<string, string> = {}
-  for (const f of readdirSync(IMAGES)) out[f.slice(0, f.lastIndexOf('.'))] = asDataUrl(join(IMAGES, f))
+  const add = (dir: string | undefined, prefix: string) => {
+    if (!dir || !existsSync(dir)) return
+    for (const f of readdirSync(dir)) if (MIME[extname(f).toLowerCase()]) out[prefix + f.slice(0, f.lastIndexOf('.'))] = asDataUrl(join(dir, f))
+  }
+  add(SHIPPED, 'model:')
+  add(IMAGES, '')
   return out
 }
 

@@ -6,6 +6,8 @@ import { homedir } from 'node:os'
 import { join } from 'node:path'
 import HID from 'node-hid'
 import type { AppSnapshot, DeviceKind, DeviceSummary } from '@shared/types'
+import { lookup } from './catalog'
+import { EG_VID, EndgameSession, EndgameTransport, MODELS as EG_MODELS, endgameEndpoint } from './endgame/op1'
 import { ScapeSession, ScapeTransport, scapeEndpoint } from './fractal/scape'
 import { LogitechDevice } from './logitech/device'
 import { HidrawTransport, Offline, Timeout, endpoints, type Transport } from './logitech/hidpp'
@@ -23,6 +25,10 @@ type Live =
   | { kind: 'logitech'; summary: DeviceSummary; path: string; session: LogitechSession }
   | { kind: 'wooting'; summary: DeviceSummary; path: string; session: WootingSession }
   | { kind: 'scape'; summary: DeviceSummary; path: string; session: ScapeSession }
+  | { kind: 'endgame'; summary: DeviceSummary; path: string; session: EndgameSession }
+
+/** Any mouse the mouse pages can edit. */
+export type MouseSession = LogitechSession | EndgameSession
 
 /** Peripherals recognised before (or without) a driver. */
 const KNOWN: { vid: number; pid?: number; kind: DeviceKind; vendor: string; name?: string }[] = [
@@ -140,6 +146,13 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
+  private endgameSummary(id: string, s: EndgameSession): DeviceSummary {
+    return {
+      id, kind: 'mouse', vendor: 'Endgame Gear', name: s.name, status: 'ready', battery: null, connection: 'USB cable',
+      capabilities: ['sensor', 'buttons', 'device'], verified: true, demo: false, lastSeen: Date.now()
+    }
+  }
+
   private headsetSummary(id: string, s: ScapeSession): DeviceSummary {
     const st = s.state
     return {
@@ -164,16 +177,28 @@ export class DeviceManager extends EventEmitter {
       }
       await this.scanKeyboard()
       await this.scanHeadset()
-      // Recognised peripherals that no driver claimed.
+      await this.scanEndgame()
+      // Recognised peripherals that no driver claimed: the vendors above, plus any mouse in the built-in catalog.
       this.unsupported.clear()
-      for (const k of KNOWN) {
-        const d = hid.find((x) => x.vendorId === k.vid && (k.pid === undefined || x.productId === k.pid))
-        if (!d) continue
-        const id = `${slug(k.vendor)}-${d.productId.toString(16).padStart(4, '0')}`
-        if (this.live.has(id)) continue
+      const seen = new Set<string>()
+      for (const d of hid) {
+        const key = `${d.vendorId}:${d.productId}`
+        if (seen.has(key)) continue
+        seen.add(key)
+        const model = lookup(d.vendorId, d.productId)
+        const k = KNOWN.find((x) => x.vid === d.vendorId && (x.pid === undefined || x.pid === d.productId))
+        if (!model && !k) continue
+        // Logitech mice are found through their receiver or cable by the HID++ driver instead.
+        if (d.vendorId === 0x046d) continue
+        const vendor = model?.vendor ?? k!.vendor
+        const id = `${slug(vendor)}-${d.productId.toString(16).padStart(4, '0')}`
+        if (this.live.has(id) || [...this.unsupported.values()].some((u) => u.name === (model?.name ?? k?.name))) continue
         const summary: DeviceSummary = {
-          id, kind: k.kind, vendor: k.vendor, name: k.name ?? cleanName(d.product ?? 'Device', k.vendor),
-          connection: 'USB', status: 'unsupported', battery: null, capabilities: [], verified: false, demo: false, lastSeen: Date.now()
+          id, kind: (model?.kind === 'keyboard' ? 'keyboard' : (k?.kind ?? 'mouse')) as DeviceKind, vendor,
+          name: model?.name ?? k!.name ?? cleanName(d.product ?? 'Device', vendor),
+          connection: 'USB', status: 'unsupported', battery: null, capabilities: [], verified: false, demo: false, lastSeen: Date.now(),
+          note: model?.maxDpi ? `Up to ${model.maxDpi.toLocaleString('en-US')} DPI · support coming soon` : undefined,
+          model: model && { protocol: model.protocol, maxDpi: model.maxDpi, popular: model.popular }
         }
         this.unsupported.set(id, summary)
         this.remember(summary)
@@ -203,6 +228,25 @@ export class DeviceManager extends EventEmitter {
     } catch (e) {
       t.close()
       if (!offline(e)) console.error('keyboard failed to load', e)
+    }
+  }
+
+  private async scanEndgame() {
+    const ep = endgameEndpoint()
+    if (!ep || !canOpen(ep.path)) return
+    const id = `endgame-gear-${ep.productId.toString(16).padStart(4, '0')}`
+    if (this.live.has(id)) return
+    const t = await EndgameTransport.open(ep.path)
+    try {
+      const s = new EndgameSession(t, EG_MODELS[ep.productId], ep.productId, ep.serial)
+      await s.load()
+      const summary = this.endgameSummary(id, s)
+      this.live.set(id, { kind: 'endgame', summary, path: ep.path, session: s })
+      void this.watchButtons(id, { vid: EG_VID, pid: ep.productId, report: 0x01 })
+      this.remember(summary)
+    } catch (e) {
+      t.close()
+      if (!offline(e)) console.error('Endgame Gear mouse failed to load', e)
     }
   }
 
@@ -257,7 +301,7 @@ export class DeviceManager extends EventEmitter {
           const id = `logitech-${dev.serial || serial || ep.path}`
           const summary = this.mouseSummary(id, s)
           this.live.set(id, { kind: 'logitech', summary, session: s, path: ep.path })
-          void this.watchButtons(id, ep.receiver ? wpidOf(slots, slot) : 0)
+          void this.watchButtons(id, { vid: 0x046d, pid: ep.receiver ? wpidOf(slots, slot) : 0, report: 0x02 })
           this.remember(summary)
         } catch (e) {
           if (!offline(e)) console.error('connect failed', e)
@@ -271,17 +315,17 @@ export class DeviceManager extends EventEmitter {
   private buttonStreams = new Map<string, HID.HIDAsync>()
 
   /** Follow the mouse's own input reports so the UI can light up buttons as they're physically pressed. */
-  private async watchButtons(id: string, wpid: number) {
+  private async watchButtons(id: string, src: { vid: number; pid: number; report: number }) {
     if (this.buttonStreams.has(id)) return
-    const d = HID.devices().find((x) => x.vendorId === 0x046d && (wpid ? x.productId === wpid : true) && x.usagePage === 1 && x.usage === 2 && x.path)
+    const d = HID.devices().find((x) => x.vendorId === src.vid && (src.pid ? x.productId === src.pid : true) && x.usagePage === 1 && x.usage === 2 && x.path)
     if (!d || !canOpen(d.path!)) return
     try {
       const dev = await HID.HIDAsync.open(d.path!)
       this.buttonStreams.set(id, dev)
       let last = -1
       dev.on('data', (r: Buffer) => {
-        if (r[0] !== 0x02) return // mouse report: [id, buttons lo, buttons hi, …]
-        const mask = r[1] | (r[2] << 8)
+        if (r[0] !== src.report) return // mouse report: [id, buttons lo, buttons hi, …]
+        const mask = src.report === 0x02 ? r[1] | (r[2] << 8) : r[1]
         if (mask !== last) {
           last = mask
           this.emit('buttons', id, mask)
@@ -316,6 +360,8 @@ export class DeviceManager extends EventEmitter {
       if (!this.demo && !present.has(e.path)) {
         // Receiver, cable or dongle is gone.
         this.live.delete(id)
+        this.buttonStreams.get(id)?.close().catch(() => {})
+        this.buttonStreams.delete(id)
         if (e.kind === 'logitech') {
           this.transports.get(e.path)?.close()
           this.transports.delete(e.path)
@@ -338,6 +384,9 @@ export class DeviceManager extends EventEmitter {
         await e.session.refresh()
         if (!was && e.session.state.connected) await e.session.load() // headset switched on: read firmware and EQ
         e.summary = this.headsetSummary(id, e.session)
+      } else if (e.kind === 'endgame') {
+        await e.session.ping()
+        e.summary = this.endgameSummary(id, e.session)
       } else {
         await e.session.ping()
       }
@@ -386,6 +435,19 @@ export class DeviceManager extends EventEmitter {
   run<T>(id: string, job: (s: LogitechSession) => Promise<T>): Promise<T> {
     const s = this.session(id)
     return this.guard(id, () => job(s), 'The mouse is asleep. Move it or click a button to wake it up.')
+  }
+
+  /** Any editable mouse (Logitech or Endgame Gear). */
+  runMouse<T>(id: string, job: (s: MouseSession) => Promise<T>): Promise<T> {
+    const e = this.live.get(id)
+    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame')) throw new Error('That mouse is not connected right now.')
+    return this.guard(id, () => job(e.session), 'The mouse is asleep. Move it or click a button to wake it up.')
+  }
+
+  mouseSession(id: string): MouseSession {
+    const e = this.live.get(id)
+    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame')) throw new Error('That mouse is not connected right now.')
+    return e.session
   }
 
   runKeyboard<T>(id: string, job: (s: WootingSession) => Promise<T>): Promise<T> {

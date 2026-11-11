@@ -97,3 +97,35 @@ INVALID_ARGUMENT and the `fn2` getter keeps returning the old index. The rate th
 `0x00`. Writing it to the active profile takes effect at once, which was measured at 500, 1000 and 2000 Hz
 from input-report timing. The mouse only reports while it moves, so any measurement needs fast, continuous
 motion.
+
+# Endgame Gear OP1 8k (USB `3367:1964`, firmware 1.24)
+
+Wired only. Interface 1, usage page `0xFF01`: feature report `0xA1` (commands, 63 bytes) and `0xA0` (config write,
+1040 bytes). Every command is a 64-byte feature report `[op lo, op hi, 0…]`; wait ~80 ms, then read feature report
+`0xA1` (retry up to 5× until the answer is plausible).
+
+| op | meaning |
+|---|---|
+| `a1 02` | firmware: reply byte 17 = minor (hex digits), 18 = major → `1.24`; bytes 20–23 = VID/PID |
+| `a1 12` | read config: reply is the 1040-byte block (byte 0 = `a1`, byte 1 = status `01`) |
+| `a0 11` + block | write config: send the whole block as report `0xA0` (bytes 2.. = config). No checksum. Applies at once. |
+| `a1 13` | factory reset (from egctl, not used by Hubless) |
+
+Config block (offsets from the report id byte):
+
+| off | size | meaning |
+|---|---|---|
+| 21 | 1 | polling divider of 8 kHz: 1 = 8000, 2 = 4000, 4 = 2000, 8 = 1000 |
+| 22 | 1 | filters: `0x01` slam-click, `0x10` jitter |
+| 25 | 1 | lift-off distance, 1 or 2 mm |
+| 26 / 27 / 28 | 1 | angle snapping / ripple control / motion sync |
+| 29 | 1 | unknown (`02`), kept |
+| 30 | 1 | active DPI levels, 1..4 |
+| 31 | 4×5 | DPI LED colours `[r, g, b, on, level n]` (yellow, blue, red, green) |
+| 51 | 4×5 | DPI levels `[split, x LE16, y LE16]`, 50..26000 step 50 |
+| 71 | 8×7 | buttons `[type, value×5, debounce ms]`: left, right, middle, forward, back, DPI button, wheel up, wheel down |
+
+Button types: `00` mouse (value = HID button bit 1/2/4/8 back/16 forward), `01` scroll (`01` up, `ff` down), `02` key
+`[modifiers, usage]`, `09` DPI cycle (value `f1`), `0c` fixed DPI `[split, x, y]`, `20` consumer usage (8-bit),
+`ff` disabled. The OP1 8k v2 (`3367:1978`, per egctl) keeps offsets 21–70 but its button table starts at 77 with
+the debounce byte first, so Hubless does not claim the v2 until it is checked on hardware.

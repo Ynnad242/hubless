@@ -25,6 +25,11 @@ export class LogitechSession {
     return !!this.dev.onboard && [1, 2, 3, 4, 5, 6, 8].includes(this.dev.onboard.fmt)
   }
 
+  /** Backups are filed under this key. */
+  get backupKey() {
+    return this.dev.serial
+  }
+
   /** Only the PRO X2 SUPERSTRIKE has been verified on hardware. */
   get verified() {
     return this.dev.isSuperstrike

@@ -33,6 +33,26 @@ export interface ProfileData {
   sleepS: number | null
   offS: number | null
   raw: string // the whole sector as hex; unknown bytes are kept
+  /** Settings that only some mice have (Endgame Gear today). */
+  extras?: MouseExtras
+}
+
+export interface MouseExtras {
+  liftOffMm: number // 1 or 2
+  debounceMs: number // 0..25
+  motionSync: boolean
+  rippleControl: boolean
+  slamClickFilter: boolean
+  jitterFilter: boolean
+}
+
+/** What a non-Logitech mouse can do; missing means "like a Logitech onboard profile". */
+export interface MouseLimits {
+  stages: number
+  startStage: boolean
+  shiftStage: boolean
+  profiles: boolean
+  functions: number[] // Logitech function ids the mouse supports
 }
 
 export interface Battery {
@@ -59,6 +79,7 @@ export interface MouseState {
   protocol: string
   onboard: { fmt: number; profiles: number; buttons: number; sectorSize: number } | null
   features: { index: number; id: number; hidden: boolean; version: number }[]
+  limits?: MouseLimits
 }
 
 // ---------------------------------------------------------------- keyboards (Wooting)
@@ -143,6 +164,19 @@ export type HeadsetPatch = Partial<Pick<HeadsetState, 'eqSlot' | 'sidetone' | 'n
  *  unsupported: plugged in, but Hubless has no driver for it yet */
 export type DeviceStatus = 'ready' | 'asleep' | 'inactive' | 'unsupported'
 
+/** One entry of the built-in mouse catalog (data/mice.json). */
+export interface CatalogModel {
+  vendor: string
+  name: string
+  kind: string
+  protocol: string // razer, logitech-hidpp20, steelseries, sinowealth, asus, endgame, …
+  maxDpi: number | null
+  ids: { vid: number; pid: number; connection: string | null }[]
+  popular: boolean
+  verified: boolean
+  source: string
+}
+
 export interface DeviceSummary {
   id: string
   kind: DeviceKind
@@ -157,6 +191,8 @@ export interface DeviceSummary {
   lastSeen: number
   /** overrides the status line on the home card, e.g. "Headset off" */
   note?: string
+  /** what the built-in catalog knows about this model */
+  model?: Pick<CatalogModel, 'protocol' | 'maxDpi' | 'popular'>
 }
 
 export interface AppSnapshot {

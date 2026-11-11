@@ -1,0 +1,4118 @@
+{
+ "generated": "tools/build-catalog.py",
+ "models": [
+  {
+   "vendor": "Endgame Gear",
+   "name": "OP1 8k",
+   "kind": "mouse",
+   "protocol": "endgame",
+   "maxDpi": 26000,
+   "ids": [
+    {
+     "vid": 13159,
+     "pid": 6500,
+     "connection": "wired"
+    }
+   ],
+   "popular": true,
+   "verified": true,
+   "source": "hubless"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "Model O/O-",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 54,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G Pro Wireless",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16505,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49288,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G Pro X Wireless Superlight",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16531,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49300,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 Hero",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49291,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 X",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49305,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G703 Hero",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16518,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49296,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Gaming Mouse G102/G103/G203",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49284,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49298,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49309,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Gaming Mouse G305",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16500,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "PRO X2 SUPERSTRIKE",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": 44000,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16573,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": true,
+   "source": "hubless"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V3",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 26000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 153,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V3 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 170,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 171,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Cobra Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 175,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 176,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V3",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 178,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V3 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 35000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 182,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 183,
+     "connection": "wireless"
+    },
+    {
+     "vid": 5426,
+     "pid": 194,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 195,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V4 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 45000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 190,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 191,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Orochi V2",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 18000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 148,
+     "connection": "wireless"
+    },
+    {
+     "vid": 5426,
+     "pid": 149,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper Mini",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 138,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper V2 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 165,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 166,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper V3 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 35000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 192,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 193,
+     "connection": "wireless"
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper V4 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 229,
+     "connection": null
+    },
+    {
+     "vid": 5426,
+     "pid": 230,
+     "connection": null
+    }
+   ],
+   "popular": true,
+   "verified": false,
+   "source": "driver database (unverified ids)"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ASUSTeK TUF GAMING M3 GEN II",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 8000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6811,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Chakram",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6371,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 6373,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Chakram Core",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6488,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Chakram X",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 36000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6680,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 6682,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG GX860 Buzzard Mouse",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6166,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Gladius II",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6213,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Gladius II Origin",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6263,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Gladius II Origin PNK LTD",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6349,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Harpe Wireless",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 36000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6802,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Keris",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6492,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Keris Wireless",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6494,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 6496,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Keris Wireless AimPoint",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 36000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6758,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 6760,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Omni",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6862,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Pugio",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 7200,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6214,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Spatha X",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 19000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6521,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 6519,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Strix Carry",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 7200,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6324,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Strix Impact",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 5000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6215,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Strix Impact II",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 6200,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6369,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Strix Impact II Wireless",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6471,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 6473,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Strix Impact III",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6792,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "ROG Strix Impact III Wireless",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 36000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6871,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "TUF GAMING M4 AIR",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 6659,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "ASUS",
+   "name": "TUF GAMING MINI WL MOUSE MIKU",
+   "kind": "mouse",
+   "protocol": "asus",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 2821,
+     "pid": 7254,
+     "connection": null
+    },
+    {
+     "vid": 2821,
+     "pid": 7255,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Endgame Gear",
+   "name": "OP1 8k v2",
+   "kind": "mouse",
+   "protocol": "endgame-v2",
+   "maxDpi": 26000,
+   "ids": [
+    {
+     "vid": 13159,
+     "pid": 6520,
+     "connection": "wired"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "egctl"
+  },
+  {
+   "vendor": "Etekcity",
+   "name": "Scroll Alpha",
+   "kind": "mouse",
+   "protocol": "etekcity",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 7847,
+     "pid": 16401,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "G.Skill",
+   "name": "MX-780",
+   "kind": "mouse",
+   "protocol": "gskill",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 10458,
+     "pid": 12545,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "Model D",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 51,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "Model O Eternal",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 14228,
+     "pid": 40960,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "Nubwo x7 spectrum",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 18,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "SinoWealth Generic Mouse (0027)",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 39,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "SinoWealth Generic Mouse (0029)",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 41,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "SinoWealth Generic Mouse (1007)",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 4103,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Glorious",
+   "name": "Sinowealth Generic Mouse (0051)",
+   "kind": "mouse",
+   "protocol": "sinowealth",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 9610,
+     "pid": 81,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Holtek",
+   "name": "Mars Gaming MM4",
+   "kind": "mouse",
+   "protocol": "marsgaming",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1241,
+     "pid": 64088,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G PRO Keyboard",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49977,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G Powerplay",
+   "kind": "other",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16479,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G300",
+   "kind": "mouse",
+   "protocol": "logitech-g300",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49734,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G303 Shroud Edition",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49303,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G402 Gaming Mouse",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49278,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G403",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49283,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G403 Hero",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49295,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G403 Wireless",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16477,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49282,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G413",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49978,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G5",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49225,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49217,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G500",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": 5700,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49256,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G500s",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49742,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 Hero Wireless",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16511,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49293,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 Proteus Core",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49277,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 Proteus Spectrum",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49970,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 X PLUS",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16537,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49301,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G502 X Wireless",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49304,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16543,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G513",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49980,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G600",
+   "kind": "mouse",
+   "protocol": "logitech-g600",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49738,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G602",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16428,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G603",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16492,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45084,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G604",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16517,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45092,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G635",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 2697,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G7",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 50458,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G700",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": 5700,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 50481,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49259,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G700s",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49276,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G703",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49287,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16496,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G705",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49302,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16541,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45102,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G733 Gaming Headset",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 2741,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 2814,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G815",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49983,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G9",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49224,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G900",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49281,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16467,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G903",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49286,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16487,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G903 Hero",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49297,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16519,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G910",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49973,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G915",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49982,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G915 TKL",
+   "kind": "keyboard",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49987,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45919,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G935",
+   "kind": "other",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 2695,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G9x [Call of Duty MW3 Edition]",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": 5700,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49737,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "G9x [Original]",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": 5700,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49254,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Gaming Mouse G Pro",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49285,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49292,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Gaming Mouse G302",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49279,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Gaming Mouse G303",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49280,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M325",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16394,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M500s",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49299,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M545",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16466,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M570",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 4136,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M585/M590",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16491,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45083,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M705",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp10",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 4123,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "M720",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16478,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45077,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Anywhere 2",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16458,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16498,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 16483,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45075,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 45080,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 45087,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Anywhere 2S",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45082,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16490,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Anywhere 3",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45093,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16528,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Anywhere 3B",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45101,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Anywhere 3S",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45111,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Ergo",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45085,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16495,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Master",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16449,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45074,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16480,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 45079,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 45086,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16497,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Master 2S",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45081,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16489,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Master 3",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45091,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16514,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Master 3S",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45108,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Master 3S for Business",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45109,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Master 4",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45122,
+     "connection": "bluetooth"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX Vertical",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 45088,
+     "connection": "bluetooth"
+    },
+    {
+     "vid": 1133,
+     "pid": 16507,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49290,
+     "connection": null
+    },
+    {
+     "vid": 1133,
+     "pid": 49271,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "MX518",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 49294,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Marathon M705",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16493,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "T650",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16641,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Logitech",
+   "name": "Wireless Touchpad",
+   "kind": "mouse",
+   "protocol": "logitech-hidpp20",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 1133,
+     "pid": 16401,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Razer",
+   "name": "",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 136,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Abyssus",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 66,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Abyssus 1800",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 1800,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 32,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Abyssus 2000",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 2000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 94,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Abyssus Elite (D.Va Edition)",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 7200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 106,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Abyssus Essential",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 7200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 107,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Abyssus V2",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 5000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 91,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Atheris",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 7200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 98,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 100,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk Essential",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 101,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk Mobile",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 18000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 211,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 212,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk Ultimate",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 134,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V2",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 133,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V3 35K",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 35000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 203,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V3 Pro 35K",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 35000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 204,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 205,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V3 Pro 35K Phantom Green Edition",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 35000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 214,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 215,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk V3 X HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 18000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 185,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Basilisk X HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 131,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Cobra",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 163,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Cobra HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 26000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 218,
+     "connection": null
+    },
+    {
+     "vid": 5426,
+     "pid": 219,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder 1800",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 1800,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 56,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder 2000",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 2000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 79,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder 2013",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 55,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder 3.5G",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 3500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 22,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder 3.5G Black",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 3500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 41,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder 3500",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 3500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 84,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder Chroma",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 10000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 67,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder Elite",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 92,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder Essential",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 110,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder Essential (2021)",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 152,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder Essential (White Edition)",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 113,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V2",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 132,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V2 Lite",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 161,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V2 Mini",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8500,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 140,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V2 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 124,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 125,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V2 X HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 14000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 156,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "DeathAdder V3 HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 26000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 196,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 197,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Diamondback Chroma",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 76,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "HyperPolling Wireless",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 179,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Imperator 2012",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 47,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Lancehead",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 89,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 90,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Lancehead Tournament Edition",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 96,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Lancehead Wireless",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 112,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 111,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Mamba 2012",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 37,
+     "connection": "wireless"
+    },
+    {
+     "vid": 5426,
+     "pid": 36,
+     "connection": "wired"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Mamba Chroma",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 69,
+     "connection": "wireless"
+    },
+    {
+     "vid": 5426,
+     "pid": 68,
+     "connection": "wired"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Mamba Elite",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 108,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Mamba Tournament Edition",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 70,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Mamba Wireless",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 115,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 114,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 5600,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 21,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga 2012",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 5600,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 46,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga 2014",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 64,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Chroma",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 83,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Epic",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 5600,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 31,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Epic Chroma",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 62,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 63,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Hex",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 5600,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 65,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Hex (Red)",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 5600,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 54,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Hex V2",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 80,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Left Handed Edition 2020",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 141,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 143,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 144,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga Trinity",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 103,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga V2 HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 180,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga V2 Pro",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 167,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 168,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Naga X",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 18000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 150,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Orochi",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 72,
+     "connection": "wired"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Orochi 2011",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 4000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 19,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Orochi 2013",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 6400,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 57,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Ouroboros",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 50,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Pro Click",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 119,
+     "connection": "wireless"
+    },
+    {
+     "vid": 5426,
+     "pid": 128,
+     "connection": "wired"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Pro Click Mini",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 154,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Pro Click V2",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 208,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 209,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Pro Click V2 Vertical Edition",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 199,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 200,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Taipan",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 8200,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 52,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 16000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 120,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper 8KHz",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 145,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper Mini SE",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 158,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 159,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper Ultimate",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 20000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 122,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 123,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper V3 HyperSpeed",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 184,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Razer",
+   "name": "Viper V3 Pro SE",
+   "kind": "mouse",
+   "protocol": "razer",
+   "maxDpi": 35000,
+   "ids": [
+    {
+     "vid": 5426,
+     "pid": 222,
+     "connection": "wired"
+    },
+    {
+     "vid": 5426,
+     "pid": 223,
+     "connection": "wireless"
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "openrazer"
+  },
+  {
+   "vendor": "Roccat",
+   "name": "Kone EMP",
+   "kind": "mouse",
+   "protocol": "roccat",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 7805,
+     "pid": 11812,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Roccat",
+   "name": "Kone Pure",
+   "kind": "mouse",
+   "protocol": "roccat",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 7805,
+     "pid": 11714,
+     "connection": null
+    },
+    {
+     "vid": 7805,
+     "pid": 11710,
+     "connection": null
+    },
+    {
+     "vid": 7805,
+     "pid": 11723,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "Roccat",
+   "name": "Kone XTD",
+   "kind": "mouse",
+   "protocol": "roccat",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 7805,
+     "pid": 11810,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Kinzu V2",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 4984,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Kinzu V2 Pro Edition",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 4966,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Kinzu V3",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 5000,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Rival",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": 6500,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 4996,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5010,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5904,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5906,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5916,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5012,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5914,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5910,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5908,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5912,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Rival 100/105",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 5890,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5898,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5899,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5900,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 6164,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Rival 310",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 5920,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Rival 600",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 5924,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Rival 650 Wireless",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 5931,
+     "connection": null
+    },
+    {
+     "vid": 4152,
+     "pid": 5926,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Sensei 310",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": 12000,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 5922,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "SteelSeries",
+   "name": "Sensei Raw",
+   "kind": "mouse",
+   "protocol": "steelseries",
+   "maxDpi": 5670,
+   "ids": [
+    {
+     "vid": 4152,
+     "pid": 4969,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  },
+  {
+   "vendor": "openinput",
+   "name": "openinput",
+   "kind": "mouse",
+   "protocol": "openinput",
+   "maxDpi": null,
+   "ids": [
+    {
+     "vid": 7504,
+     "pid": 24938,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "libratbag"
+  }
+ ]
+}
