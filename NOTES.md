@@ -165,3 +165,14 @@ rewritten before the first push to drop the personal email). Releasing: bump pac
 `git tag -a vX.Y.Z -m "Hubless X.Y.Z" && git push origin vX.Y.Z`; .github/workflows/release.yml checks the tag matches
 package.json, runs tsc + vitest, builds AppImage/deb/rpm/pacman on ubuntu-24.04 (needs libusb-1.0-0-dev, libudev-dev,
 rpm, libarchive-tools) and publishes the release. First release: v0.16.1.
+
+## v0.16.2 (2026-11-11): security pass
+Renderer sandbox on, nodeIntegration off, devTools off when packaged, default menu removed when packaged, strict CSP
+(object/frame/base/form locked), https-only external links, will-navigate blocked, all web permissions denied. IPC:
+own-property method whitelist, sender must be the app page, args array ≤4; settings patch whitelisted; restoreBackup
+path must be inside the device's backup dir (storage.backupPathFor). HUBLESS_SHOTS ignored when packaged. Electron fuses
+(package.json electronFuses): RunAsNode/NODE_OPTIONS/--inspect off, OnlyLoadAppFromAsar on (verified with
+@electron/fuses read). Deps updated (Electron 45.3.0); npm audit: 6 moderate, all minimatch inside electron-builder
+(build-time only). Removed legacy-python/ and 9 unused shadcn components. GitHub: secret scanning + push protection,
+Dependabot alerts/security fixes + .github/dependabot.yml, private vulnerability reporting, SECURITY.md, Actions pinned
+to SHAs (checkout v7.0.1, setup-node v7.1.0). Tested on the packaged build in demo mode with throwaway XDG dirs.

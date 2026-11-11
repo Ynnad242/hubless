@@ -1,6 +1,6 @@
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { BrowserWindow, app, dialog, ipcMain, shell } from 'electron'
+import { BrowserWindow, Menu, app, dialog, ipcMain, session, shell } from 'electron'
 import type { Hits, HublessApi, ProfileData } from '@shared/types'
 import { DeviceManager } from './manager'
 import { TrayController, loadSettings, saveSettings } from './tray'
@@ -9,6 +9,8 @@ import { fromHex } from './logitech/profile'
 import { handleSignals, watchForUpgrade } from './lifecycle'
 
 const demo = process.argv.includes('--demo') || process.env.HUBLESS_DEMO === '1'
+/** Dev-only screenshot mode; ignored by the installed app. */
+const SHOTS = app.isPackaged ? undefined : process.env.HUBLESS_SHOTS
 const manager = new DeviceManager(demo)
 let win: BrowserWindow | null = null
 let quitting = false
@@ -47,12 +49,16 @@ function createWindow() {
     backgroundColor: '#14131a',
     autoHideMenuBar: true,
     icon: iconPath(),
-    show: !process.env.HUBLESS_SHOTS && !process.argv.includes('--hidden'),
+    show: !SHOTS && !process.argv.includes('--hidden'),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false,
+      sandbox: true,
       contextIsolation: true,
-      offscreen: !!process.env.HUBLESS_SHOTS
+      nodeIntegration: false,
+      webSecurity: true,
+      devTools: !app.isPackaged,
+      spellcheck: false,
+      offscreen: !!SHOTS
     }
   })
   win.setMenuBarVisibility(false)
@@ -60,7 +66,7 @@ function createWindow() {
   let flushed = false
   win.on('close', (e) => {
     // With "keep running in the tray", closing hides the window so battery alerts keep working.
-    if (!quitting && !process.env.HUBLESS_SHOTS && loadSettings().runInTray && tray.available) {
+    if (!quitting && !SHOTS && loadSettings().runInTray && tray.available) {
       e.preventDefault()
       void win?.webContents.executeJavaScript('window.__flush ? window.__flush() : null').finally(() => win?.hide())
       return
@@ -77,9 +83,20 @@ function createWindow() {
   if (process.env.ELECTRON_RENDERER_URL) void win.loadURL(process.env.ELECTRON_RENDERER_URL)
   else void win.loadFile(join(__dirname, '../renderer/index.html'))
   win.webContents.setWindowOpenHandler(({ url }) => {
-    void shell.openExternal(url)
+    // Links open in the user's browser, and only web links: never file:// or custom schemes.
+    if (/^https:\/\//i.test(url)) void shell.openExternal(url)
     return { action: 'deny' }
   })
+  // The window only ever shows the app itself.
+  win.webContents.on('will-navigate', (e, url) => {
+    if (!isAppUrl(url)) e.preventDefault()
+  })
+}
+
+/** The app's own page: the built index.html, or the dev server while developing. */
+function isAppUrl(url: string) {
+  if (!app.isPackaged && process.env.ELECTRON_RENDERER_URL) return url.startsWith(process.env.ELECTRON_RENDERER_URL)
+  return url.startsWith('file://') && url.includes('/renderer/index.html')
 }
 
 // Every renderer call goes through here; method names match HublessApi.
@@ -124,7 +141,7 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
   listBackups: async (id) => storage.listBackups(manager.mouseSession(id).backupKey),
   restoreBackup: (id, path) =>
     manager.runMouse(id, async (s) => {
-      await s.restore(storage.loadBackup(path))
+      await s.restore(storage.loadBackup(storage.backupPathFor(s.backupKey, path)))
       return s.state()
     }),
   openBackupsFolder: async (id) => {
@@ -170,7 +187,15 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
       return s.state
     }),
   appSettings: async () => loadSettings(),
-  setAppSettings: async (patch) => saveSettings(patch),
+  setAppSettings: async (patch) => {
+    // Only the known settings, with the right types, reach the settings file and the autostart entry.
+    const p = (patch ?? {}) as Record<string, unknown>
+    const clean: Partial<import('@shared/types').AppSettings> = {}
+    if (typeof p.runInTray === 'boolean') clean.runInTray = p.runInTray
+    if (typeof p.startOnLogin === 'boolean') clean.startOnLogin = p.startOnLogin
+    if (typeof p.lowBattery === 'number' && [0, 10, 15, 20, 30].includes(p.lowBattery)) clean.lowBattery = p.lowBattery
+    return saveSettings(clean)
+  },
   forgetDevice: async (id) => {
     storage.clearDeviceImage(id)
     manager.forget(id)
@@ -204,9 +229,12 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
   }
 }
 
-ipcMain.handle('hubless:call', async (_e, method: keyof typeof api, args: unknown[]) => {
-  const fn = api[method] as (...a: unknown[]) => Promise<unknown>
-  if (!fn) throw new Error(`unknown method ${method}`)
+ipcMain.handle('hubless:call', async (e, method: unknown, args: unknown) => {
+  // Only the app's own page may call in, only listed methods (not inherited ones like "constructor"), with an argument list.
+  if (!e.senderFrame || !isAppUrl(e.senderFrame.url)) throw new Error('Call refused: unknown sender.')
+  if (typeof method !== 'string' || !Object.hasOwn(api, method)) throw new Error(`Unknown method ${String(method)}.`)
+  if (!Array.isArray(args) || args.length > 4) throw new Error('Bad arguments.')
+  const fn = api[method as keyof typeof api] as (...a: unknown[]) => Promise<unknown>
   return fn(...args)
 })
 
@@ -216,17 +244,22 @@ manager.on('changed', (snap) => {
   tray.update(snap)
 })
 
-if (!process.env.HUBLESS_SHOTS && !app.requestSingleInstanceLock()) app.exit(0)
+if (!SHOTS && !app.requestSingleInstanceLock()) app.exit(0)
 app.on('second-instance', showWindow)
 // Any other quit path (session end, app.quit) must not be swallowed by hide-to-tray.
 app.on('before-quit', () => (quitting = true))
 handleSignals(quit)
 
 app.whenReady().then(() => {
+  // No camera, microphone, notifications-from-the-page, HID-from-the-page or other web permissions: devices are
+  // reached only through the main process.
+  session.defaultSession.setPermissionRequestHandler((_wc, _perm, cb) => cb(false))
+  session.defaultSession.setPermissionCheckHandler(() => false)
+  if (app.isPackaged) Menu.setApplicationMenu(null) // drops the default DevTools / reload shortcuts
   createWindow()
-  if (!demo && !process.env.HUBLESS_SHOTS) tray.ensure()
+  if (!demo && !SHOTS) tray.ensure()
   manager.start()
-  if (process.env.HUBLESS_SHOTS) void screenshots(process.env.HUBLESS_SHOTS)
+  if (SHOTS) void screenshots(SHOTS)
   else watchForUpgrade(restart)
 })
 

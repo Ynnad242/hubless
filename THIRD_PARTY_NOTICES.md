@@ -360,7 +360,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### lucide-react 1.68.0
+### lucide-react 1.72.0
 
 License: ISC
 
@@ -575,7 +575,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### tailwindcss 4.3.4
+### tailwindcss 4.3.5
 
 License: MIT
 

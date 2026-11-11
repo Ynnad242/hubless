@@ -2,7 +2,7 @@
 import { execFile } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { extname, join } from 'node:path'
+import { extname, join, resolve, sep } from 'node:path'
 import type { BackupInfo } from '@shared/types'
 
 const DATA = join(process.env.XDG_DATA_HOME || join(homedir(), '.local/share'), 'hubless')
@@ -49,6 +49,15 @@ export function listBackups(serial: string): BackupInfo[] {
         return []
       }
     })
+}
+
+/** A backup file the UI picked, accepted only if it lies inside that device's own backup folder. */
+export function backupPathFor(key: string, path: unknown): string {
+  if (typeof path !== 'string') throw new Error('Pick a backup from the list.')
+  const dir = resolve(backupDir(key))
+  const full = resolve(path)
+  if (!full.startsWith(dir + sep) || !full.endsWith('.json')) throw new Error('That backup is not in this device’s backup folder.')
+  return full
 }
 
 export function loadBackup(path: string): Map<number, Uint8Array> {

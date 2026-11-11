@@ -1,7 +1,7 @@
 {
   "name": "hubless",
   "productName": "Hubless",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "homepage": "https://github.com/Ynnad242/hubless",
   "repository": {
     "type": "git",
@@ -79,6 +79,14 @@
       "syncDesktopName": true,
       "executableName": "hubless",
       "maintainer": "Hubless contributors"
+    },
+    "electronFuses": {
+      "runAsNode": false,
+      "enableNodeOptionsEnvironmentVariable": false,
+      "enableNodeCliInspectArguments": false,
+      "enableCookieEncryption": true,
+      "onlyLoadAppFromAsar": true,
+      "loadBrowserProcessSpecificV8Snapshot": false
     },
     "extraResources": [
       {
