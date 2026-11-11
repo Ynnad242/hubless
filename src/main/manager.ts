@@ -83,6 +83,18 @@ export class DeviceManager extends EventEmitter {
   }
 
   stop() {
+    // Devices still plugged in were in use until now.
+    if (!this.demo && !this.frozen && this.live.size) {
+      for (const id of this.live.keys()) {
+        const k = this.known.get(id)
+        if (k) this.known.set(id, { ...k, lastSeen: Date.now() })
+      }
+      try {
+        writeFileSync(REGISTRY, JSON.stringify([...this.known.values()], null, 1))
+      } catch {
+        /* config folder gone (data deleted): nothing to keep */
+      }
+    }
     if (this.timer) clearInterval(this.timer)
     for (const d of this.buttonStreams.values()) d.close().catch(() => {})
     for (const t of this.transports.values()) t.close()
@@ -104,6 +116,15 @@ export class DeviceManager extends EventEmitter {
     const prev = this.known.get(d.id)
     if (prev && prev.name === d.name && prev.capabilities.length === d.capabilities.length && Date.now() - prev.lastSeen < 60_000) return
     this.known.set(d.id, { ...d, battery: null, status: 'inactive', note: undefined, lastSeen: Date.now() })
+    mkdirSync(CONFIG, { recursive: true })
+    writeFileSync(REGISTRY, JSON.stringify([...this.known.values()], null, 1))
+  }
+
+  /** Mark a remembered device as used just now (it was connected until this moment). */
+  private touch(id: string) {
+    const k = this.known.get(id)
+    if (this.demo || this.frozen || !k) return
+    this.known.set(id, { ...k, lastSeen: Date.now() })
     mkdirSync(CONFIG, { recursive: true })
     writeFileSync(REGISTRY, JSON.stringify([...this.known.values()], null, 1))
   }
@@ -378,8 +399,9 @@ export class DeviceManager extends EventEmitter {
     const present = new Set(list.map((d) => d.path))
     for (const [id, e] of this.live) {
       if (!this.demo && !present.has(e.path)) {
-        // Receiver, cable or dongle is gone.
+        // Receiver, cable or dongle is gone: it moves to "Not connected", last used now.
         this.live.delete(id)
+        this.touch(id)
         this.buttonStreams.get(id)?.close().catch(() => {})
         this.buttonStreams.delete(id)
         if (e.kind === 'logitech') {

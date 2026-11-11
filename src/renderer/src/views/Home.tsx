@@ -24,6 +24,16 @@ function BatteryIcon({ percent, charging }: { percent: number; charging: boolean
   return <I className={cn('size-4', percent <= 15 && !charging && 'text-destructive')} />
 }
 
+/** "Last used 3 days ago" for devices that aren't plugged in. */
+function lastUsed(ms: number) {
+  if (!ms) return 'Not connected'
+  const min = Math.max(0, (Date.now() - ms) / 60000)
+  const ago =
+    min < 2 ? 'just now' : min < 60 ? `${Math.round(min)} minutes ago` : min < 60 * 24 ? `${Math.round(min / 60)} hour${min < 90 ? '' : 's'} ago`
+    : min < 60 * 24 * 2 ? 'yesterday' : min < 60 * 24 * 60 ? `${Math.round(min / 1440)} days ago` : `${Math.round(min / 43200)} months ago`
+  return `Last used ${ago}`
+}
+
 const STATUS_TEXT: Record<DeviceSummary['status'], string> = {
   ready: '',
   asleep: 'Asleep · move it to wake',
@@ -67,7 +77,11 @@ function DeviceCard({ d, image, ownImage, onOpen, onImage, onClearImage, onForge
             )}
             {d.status === 'ready' && (d.connection.includes('USB') ? <><Usb className="size-3.5" /> Wired</> : <><Radio className="size-3.5" /> Wireless</>)}
             {d.status === 'asleep' && <Moon className="size-3.5" />}
-            {(d.note ?? STATUS_TEXT[d.status]) && <span>{d.note ?? STATUS_TEXT[d.status]}</span>}
+            {d.status === 'inactive' ? (
+              <span>{lastUsed(d.lastSeen)}</span>
+            ) : (
+              (d.note ?? STATUS_TEXT[d.status]) && <span>{d.note ?? STATUS_TEXT[d.status]}</span>
+            )}
           </div>
         </div>
         <DropdownMenu>
@@ -121,8 +135,13 @@ function DeviceCard({ d, image, ownImage, onOpen, onImage, onClearImage, onForge
 export function Home({ snap, images, onImages, onOpen }: Props) {
   const [busy, setBusy] = useState(false)
   const api = window.hubless
-  const devices = snap?.devices ?? []
+  const all = snap?.devices ?? []
   const perm = snap?.missingPermission ?? []
+  // Connected = plugged in right now (incl. asleep wireless and recognised-but-unsupported); the rest were seen before.
+  const connected = all.filter((d) => d.status !== 'inactive')
+  const remembered = all.filter((d) => d.status === 'inactive').sort((a, b) => b.lastSeen - a.lastSeen)
+  const [tab, setTab] = useState<'connected' | 'remembered'>('connected')
+  const devices = tab === 'connected' ? connected : remembered
 
   return (
     <div className="mx-auto w-full max-w-6xl px-8 py-8">
@@ -147,14 +166,50 @@ export function Home({ snap, images, onImages, onOpen }: Props) {
         </div>
       )}
 
+      <div role="tablist" aria-label="Devices" className="mb-6 inline-flex rounded-lg bg-surface p-1">
+        {(
+          [
+            ['connected', 'Connected', connected.length],
+            ['remembered', 'Not connected', remembered.length]
+          ] as const
+        ).map(([k, label, n]) => (
+          <button
+            key={k}
+            role="tab"
+            type="button"
+            aria-selected={tab === k}
+            onClick={() => setTab(k)}
+            className={cn(
+              'flex h-9 items-center gap-2 rounded-md px-4 text-sm font-medium transition-colors',
+              tab === k ? 'bg-surface-2 text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
+            )}
+          >
+            {label}
+            <span className={cn('rounded-full px-1.5 text-xs tabular-nums', tab === k ? 'bg-primary-solid text-white' : 'bg-surface-2')}>{n}</span>
+          </button>
+        ))}
+      </div>
+
       {devices.length === 0 ? (
-        <div className="flex h-[60vh] flex-col items-center justify-center gap-3 text-center">
-          <div className="h-40 opacity-60">
-            <DeviceArt kind="mouse" className="h-full" />
+        tab === 'connected' ? (
+          <div className="flex h-[55vh] flex-col items-center justify-center gap-3 text-center">
+            <div className="h-40 opacity-60">
+              <DeviceArt kind="mouse" className="h-full" />
+            </div>
+            <h2 className="text-xl font-bold">{snap?.searching ? 'Looking for your devices…' : 'Nothing plugged in'}</h2>
+            <p className="max-w-sm text-sm text-muted-foreground">
+              Plug in a receiver or cable and switch your device on. It appears here automatically.
+              {remembered.length > 0 && ` Devices you used before are under Not connected.`}
+            </p>
           </div>
-          <h2 className="text-xl font-bold">{snap?.searching ? 'Looking for your devices…' : 'No devices yet'}</h2>
-          <p className="max-w-sm text-sm text-muted-foreground">Plug in a receiver or cable and switch your mouse on. Devices appear here automatically.</p>
-        </div>
+        ) : (
+          <div className="flex h-[55vh] flex-col items-center justify-center gap-3 text-center">
+            <h2 className="text-xl font-bold">Everything you own is plugged in</h2>
+            <p className="max-w-sm text-sm text-muted-foreground">
+              When you unplug a device it moves here, so it's easy to find when you switch back. Its settings stay on the device.
+            </p>
+          </div>
+        )
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {devices.map((d) => (
