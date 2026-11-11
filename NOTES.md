@@ -158,3 +158,10 @@ Next: Razer driver (OpenRazer protocol: 90-byte feature reports) would light up 
   autostart, and Electron's ~/.config/Hubless on exit; tested against sandboxed XDG dirs). Accessibility: alt text on
   device photos, keyboard-visible hover buttons, --primary-solid #1b6fe0 for white-on-blue (4.8:1).
 - Still the user's call before publishing: vendor product photos (copyright), a real repo URL/contact in package.json.
+
+## Published (2026-11-11)
+Public repo https://github.com/Ynnad242/hubless (commits use 128772780+Ynnad242@users.noreply.github.com; history was
+rewritten before the first push to drop the personal email). Releasing: bump package.json version, commit, push, then
+`git tag -a vX.Y.Z -m "Hubless X.Y.Z" && git push origin vX.Y.Z`; .github/workflows/release.yml checks the tag matches
+package.json, runs tsc + vitest, builds AppImage/deb/rpm/pacman on ubuntu-24.04 (needs libusb-1.0-0-dev, libudev-dev,
+rpm, libarchive-tools) and publishes the release. First release: v0.16.1.
