@@ -241,7 +241,7 @@ export interface HublessApi {
   chooseDeviceImage(id: string): Promise<string | null>
   clearDeviceImage(id: string): Promise<void>
   /** version and license, for the About section */
-  appInfo(): Promise<{ version: string; license: string }>
+  appInfo(): Promise<{ version: string; license: string; homepage: string }>
   /** the shipped privacy statement or third-party notices, as Markdown text */
   readDocument(name: 'privacy' | 'licenses'): Promise<string>
   /** remove settings, device list, photos, backups and the autostart entry, then restart fresh */

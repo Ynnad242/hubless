@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { FileText, Scale, Trash2 } from 'lucide-react'
+import { ExternalLink, FileText, Scale, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import type { AppSettings } from '@shared/types'
 import { Button } from '@/components/ui/button'
@@ -121,7 +121,7 @@ export function DocumentDialog({ doc, onClose }: { doc: { name: Doc; text: strin
 
 /** Version, license, disclaimer and the shipped documents. */
 export function AboutDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
-  const [info, setInfo] = useState<{ version: string; license: string } | null>(null)
+  const [info, setInfo] = useState<{ version: string; license: string; homepage: string } | null>(null)
   const [doc, setDoc] = useState<{ name: Doc; text: string } | null>(null)
   useEffect(() => {
     if (open) void window.hubless.appInfo().then(setInfo)
@@ -154,6 +154,13 @@ export function AboutDialog({ open, onOpenChange }: { open: boolean; onOpenChang
             <Button variant="secondary" size="sm" onClick={() => void openDocument('licenses', setDoc)}>
               <Scale className="size-4" /> Open-source licenses
             </Button>
+            {info && (
+              <Button variant="secondary" size="sm" asChild>
+                <a href={info.homepage} target="_blank" rel="noreferrer">
+                  <ExternalLink className="size-4" /> GitHub · report a problem
+                </a>
+              </Button>
+            )}
           </div>
         </DialogContent>
       </Dialog>

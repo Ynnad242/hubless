@@ -2,6 +2,14 @@
   "name": "hubless",
   "productName": "Hubless",
   "version": "0.16.1",
+  "homepage": "https://github.com/Ynnad242/hubless",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ynnad242/hubless.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ynnad242/hubless/issues"
+  },
   "description": "One app for your gaming mice, keyboards and headsets on Linux",
   "license": "MIT",
   "main": "./out/main/index.js",
@@ -57,7 +65,8 @@
       "target": [
         "AppImage",
         "deb",
-        "rpm"
+        "rpm",
+        "pacman"
       ],
       "category": "Settings",
       "icon": "build/icon.png",
@@ -93,6 +102,14 @@
         "to": "docs/THIRD_PARTY_NOTICES.md"
       }
     ],
+    "deb": {
+      "afterInstall": "build/after-install.sh",
+      "afterRemove": "build/after-remove.sh"
+    },
+    "rpm": {
+      "afterInstall": "build/after-install.sh",
+      "afterRemove": "build/after-remove.sh"
+    },
     "pacman": {
       "depends": [
         "gtk3",
@@ -112,7 +129,6 @@
     }
   },
   "desktopName": "io.github.hubless.Hubless.desktop",
-  "homepage": "https://github.com/hubless-app/hubless",
   "author": {
     "name": "Hubless contributors"
   }

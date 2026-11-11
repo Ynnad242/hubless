@@ -175,7 +175,7 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
     storage.clearDeviceImage(id)
     manager.forget(id)
   },
-  appInfo: async () => ({ version: app.getVersion(), license: 'MIT' }),
+  appInfo: async () => ({ version: app.getVersion(), license: 'MIT', homepage: 'https://github.com/Ynnad242/hubless' }),
   readDocument: async (name) => storage.readDocument(name),
   deleteAllData: async () => {
     manager.freeze()

@@ -43,4 +43,4 @@ Hubless collects no personal data from anyone, so it collects none from children
 
 ## Contact
 
-Questions or concerns: open an issue in the project's repository.
+Questions or concerns: open an issue at https://github.com/Ynnad242/hubless/issues.

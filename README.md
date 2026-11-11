@@ -16,6 +16,72 @@ into their own memory.
 |---|---|
 | <img src="docs/screenshots/mouse-2-sensor.png" alt="DPI stages, quick picks and polling rate"> | <img src="docs/screenshots/mouse-3-buttons.png" alt="Button assignments on a picture of the mouse"> |
 
+<div align="center">
+
+**[⬇ Download the latest release](https://github.com/Ynnad242/hubless/releases/latest)** · [Report a problem](https://github.com/Ynnad242/hubless/issues) · Free and open source, forever
+
+</div>
+
+## Download and install
+
+1. Open the **[latest release](https://github.com/Ynnad242/hubless/releases/latest)** and download the file for your Linux:
+
+   | Your Linux | Download | Install it with |
+   |---|---|---|
+   | Arch, Manjaro, EndeavourOS, CachyOS, Omarchy | `hubless-<version>.pacman` | `sudo pacman -U ~/Downloads/hubless-*.pacman` |
+   | Ubuntu, Debian, Linux Mint, Pop!_OS, Zorin | `hubless_<version>_amd64.deb` | `sudo apt install ~/Downloads/hubless_*_amd64.deb` |
+   | Fedora, Nobara, Bazzite (layered), RHEL | `hubless-<version>.x86_64.rpm` | `sudo dnf install ~/Downloads/hubless-*.x86_64.rpm` |
+   | openSUSE | `hubless-<version>.x86_64.rpm` | `sudo zypper install ~/Downloads/hubless-*.x86_64.rpm` |
+   | Anything else | `Hubless-<version>.AppImage` | see [AppImage](#appimage) below |
+
+   Not sure which one you have? Run `cat /etc/os-release` in a terminal and look at the `NAME` line.
+
+2. **Open Hubless** from your app launcher (or type `hubless` in a terminal).
+
+3. **Plug in your mouse, keyboard or headset.** It shows up on the home screen within a few seconds. Click the
+   settings button on its card to configure it. Wireless Logitech mice may say "Asleep": move the mouse to wake it.
+
+That's it. The packages above also install a small system rule
+(`/usr/lib/udev/rules.d/70-hubless.rules`) that lets your user talk to supported devices without root, so you never
+have to run Hubless with `sudo`.
+
+### AppImage
+
+The AppImage runs without installing, on any distribution:
+
+```sh
+chmod +x ~/Downloads/Hubless-*.AppImage
+~/Downloads/Hubless-*.AppImage
+```
+
+It needs FUSE 2: `sudo pacman -S fuse2` (Arch), `sudo apt install libfuse2t64` (Ubuntu 24.04+) or
+`sudo apt install libfuse2` (older Ubuntu / Debian). On first start Hubless shows **“Allow Hubless to talk to your
+devices”**: click the button and enter your password once. Unplug and replug the device afterwards if it doesn't show
+up straight away.
+
+### Updating
+
+Download the new release and install it the same way. If Hubless is running in the tray, it restarts into the new
+version by itself. AppImage: replace the old file with the new one.
+
+### Uninstalling
+
+`sudo pacman -R hubless`, `sudo apt remove hubless` or `sudo dnf remove hubless` (AppImage: delete the file). This
+removes the app and its system rule. Your settings and device backups stay in your home folder until you delete them
+in **Menu → Settings → Delete all Hubless data**, or by hand (see [PRIVACY.md](PRIVACY.md)). Settings saved inside your
+devices stay on the devices.
+
+### Troubleshooting
+
+- **My device isn't listed.** Check [Supported devices](#supported-devices). Devices marked "support coming soon"
+  are recognised but can't be configured yet. Otherwise unplug and replug it, and if it still doesn't appear,
+  [open an issue](https://github.com/Ynnad242/hubless/issues) with the output of `lsusb`.
+- **The “Allow Hubless” banner keeps coming back.** Log out and back in once, or run Menu → Grant device access again.
+- **Changes don't stick.** Close other tools that talk to the same device (Solaar, Piper, OpenRazer's daemon,
+  Wootility in a browser) while you use Hubless.
+- **Something went wrong.** Every device page has *Restore a backup…*; a backup is made before the first change of
+  every session.
+
 ## Supported devices
 
 | Device | What works | Status |
@@ -40,25 +106,23 @@ their USB id and shows them by name, marked "support coming soon". They can't be
   manufacturers' software and comes without warranty (see LICENSE).
 - **Keeps running in the tray** if you want it to (for low-battery warnings). This can be turned off in Settings.
 
-## Install
-
-Arch Linux and derivatives: build the package and install it.
-
-```sh
-npm install
-npx electron-vite build && npx electron-builder --linux pacman
-sudo pacman -U dist/hubless-*.pacman
-```
-
-The package installs a udev rule (`/usr/lib/udev/rules.d/70-hubless.rules`) so the logged-in user can reach supported
-devices without root. Other distributions: `npx electron-builder --linux AppImage` (needs libfuse2) or `deb` / `rpm`.
-
-Try it without hardware: `hubless --demo`.
-
 ## Privacy
 
 Hubless has no accounts, analytics, telemetry or network access. Everything it stores is in your home folder and can
 be deleted from Settings. Details: [PRIVACY.md](PRIVACY.md).
+
+## Build from source
+
+You need Node.js 22+ and npm.
+
+```sh
+git clone https://github.com/Ynnad242/hubless.git && cd hubless
+npm install
+npx electron-vite build
+npx electron-builder --linux pacman     # or AppImage, deb, rpm → dist/
+```
+
+Try it without hardware: `hubless --demo` (or `npx electron . --demo` from the source folder).
 
 ## Development
 
@@ -82,7 +146,8 @@ those credits and the licenses of bundled libraries.
 
 Hubless is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting, Fractal Design, Endgame Gear or
 any other manufacturer. Product names and brands belong to their owners and are used only to identify compatible
-hardware. Product photos in `data/devices/` belong to their owners and are not covered by the MIT license; owners can
-ask for removal through an issue.
+hardware. Product photos in `data/devices/` belong to and are credited to their manufacturers (Logitech, Wooting, Fractal
+Design, Endgame Gear). They are not covered by the MIT license, are used only to show which hardware is supported, and
+will be removed on request through an [issue](https://github.com/Ynnad242/hubless/issues).
 
-Hubless itself is MIT licensed.
+Hubless is free and always will be. It is MIT licensed.
