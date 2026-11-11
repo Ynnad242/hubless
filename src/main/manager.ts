@@ -141,10 +141,12 @@ export class DeviceManager extends EventEmitter {
     for (const [id, d] of this.asleepIds) if (!shown.has(id)) shown.set(id, d)
     for (const [id, d] of this.unsupported) if (!shown.has(id)) shown.set(id, d)
     for (const [id, d] of this.known) if (!shown.has(id)) shown.set(id, { ...d, status: 'inactive', battery: null, note: undefined })
-    const order = { ready: 0, asleep: 1, unsupported: 2, inactive: 3 }
+    // Stable order: a device must not jump around when it falls asleep or wakes up (status changes all the time
+    // while the user is away), so status only separates plugged-in devices from remembered ones.
+    const order = { ready: 0, asleep: 0, unsupported: 0, inactive: 1 }
     const kinds = { mouse: 0, keyboard: 1, headset: 2 }
     return {
-      devices: [...shown.values()].sort((a, b) => order[a.status] - order[b.status] || kinds[a.kind] - kinds[b.kind] || a.name.localeCompare(b.name)),
+      devices: [...shown.values()].sort((a, b) => order[a.status] - order[b.status] || kinds[a.kind] - kinds[b.kind] || a.name.localeCompare(b.name) || a.id.localeCompare(b.id)),
       missingPermission: this.missingPermission,
       asleep: [...this.asleepIds.values()].map((d) => d.name),
       searching: this.searching

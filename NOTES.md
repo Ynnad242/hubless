@@ -186,3 +186,8 @@ to SHAs (checkout v7.0.1, setup-node v7.1.0). Tested on the packaged build in de
 - Photos: shipped as WebP q90 + lossless alpha (945 KB → 158 KB PNG→WebP, PSNR 44–50 dB). deviceImages(devices) returns
   only photos for the listed devices (renderer asks when the device list changes), data URLs cached per file mtime;
   photos picked by the user are downscaled to ≤1200 px with nativeImage.
+
+## v0.16.4 (2026-11-11)
+Home: Connected / Not connected tabs (lastSeen recorded on unplug and on quit). Card order no longer depends on
+status: snapshot sorts plugged-in devices by kind then name (asleep/ready flips while AFK made cards jump);
+test/manager.test.ts covers it.
