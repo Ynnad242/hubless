@@ -1,9 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Info, Settings2, ShieldCheck } from 'lucide-react'
-import { toast } from 'sonner'
-import type { AppSnapshot, Capability } from '@shared/types'
+import { Download, Settings } from 'lucide-react'
+import type { AppSnapshot, Capability, UpdateStatus } from '@shared/types'
 import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { AboutDialog, SettingsDialog } from '@/components/SettingsDialog'
 import type { MouseCtl } from '@/hooks/useMouse'
 import { DeviceView } from '@/views/DeviceView'
@@ -30,6 +28,11 @@ export default function App() {
   const [images, setImages] = useState<Record<string, string>>({})
   const [about, setAbout] = useState(false)
   const [settings, setSettings] = useState(false)
+  const [update, setUpdate] = useState<UpdateStatus>({ state: 'idle', checkedAt: null })
+  useEffect(() => {
+    void window.hubless.updateStatus().then(setUpdate)
+    return window.hubless.onUpdate(setUpdate)
+  }, [])
 
   useEffect(() => {
     void window.hubless.snapshot().then(setSnap)
@@ -65,36 +68,28 @@ export default function App() {
       <header className="flex h-16 shrink-0 items-center gap-3 px-8">
         <Logo />
         <span className="text-lg font-bold tracking-tight">Hubless</span>
-        <div className="ml-auto">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="text-muted-foreground">
-                Menu
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onSelect={async () => {
-                  const r = await window.hubless.grantAccess()
-                  ;(r.ok ? toast.success : toast.error)(r.message)
-                }}
-              >
-                <ShieldCheck className="size-4" /> Grant device access…
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setSettings(true)}>
-                <Settings2 className="size-4" /> Settings…
-              </DropdownMenuItem>
-              <DropdownMenuItem onSelect={() => setAbout(true)}>
-                <Info className="size-4" /> About Hubless
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        <Button variant="ghost" size="icon" className="ml-auto size-9 text-muted-foreground hover:text-foreground" aria-label="Settings" title="Settings" onClick={() => setSettings(true)}>
+          <Settings className="size-5" />
+        </Button>
       </header>
       <main className="min-h-0 flex-1 overflow-y-auto">
+        {update.state === 'ready' && (
+          <div className="mx-auto mt-2 flex w-full max-w-6xl items-center gap-4 px-8">
+            <div className="flex flex-1 items-center gap-4 rounded-xl border border-success/30 bg-success/8 px-5 py-3.5">
+              <Download className="size-5 shrink-0 text-success" />
+              <div className="flex-1 text-sm">
+                <span className="font-semibold">Hubless {update.version} is ready.</span>{' '}
+                <span className="text-muted-foreground">Restart to finish updating. Your settings and devices stay as they are.</span>
+              </div>
+              <Button size="sm" onClick={() => void window.hubless.installUpdate()}>
+                Restart to update
+              </Button>
+            </div>
+          </div>
+        )}
         <Home snap={snap} images={images} onImages={setImages} onOpen={setOpen} />
       </main>
-      <SettingsDialog open={settings} onOpenChange={setSettings} />
+      <SettingsDialog open={settings} onOpenChange={setSettings} update={update} onAbout={() => setAbout(true)} />
       <AboutDialog open={about} onOpenChange={setAbout} />
     </div>
   )

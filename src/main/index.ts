@@ -1,12 +1,13 @@
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { BrowserWindow, Menu, app, dialog, ipcMain, session, shell } from 'electron'
+import { BrowserWindow, Menu, Notification, app, dialog, ipcMain, session, shell } from 'electron'
 import type { Hits, HublessApi, ProfileData } from '@shared/types'
 import { DeviceManager } from './manager'
 import { TrayController, loadSettings, saveSettings } from './tray'
 import * as storage from './storage'
 import { fromHex } from './logitech/profile'
 import { handleSignals, watchForUpgrade } from './lifecycle'
+import { Updater } from './updater'
 
 const demo = process.argv.includes('--demo') || process.env.HUBLESS_DEMO === '1'
 /** Dev-only screenshot mode; ignored by the installed app. */
@@ -38,6 +39,14 @@ function restart() {
 }
 
 const tray = new TrayController(iconPath(), showWindow, quit)
+let notifiedUpdate = ''
+const updater = new Updater((s) => {
+  win?.webContents.send('hubless:update', s)
+  if (s.state === 'ready' && notifiedUpdate !== s.version && Notification.isSupported()) {
+    notifiedUpdate = s.version
+    new Notification({ title: `Hubless ${s.version} is ready`, body: 'Restart Hubless to finish updating. Your settings are kept.', icon: iconPath() }).show()
+  }
+})
 
 function createWindow() {
   win = new BrowserWindow({
@@ -100,7 +109,7 @@ function isAppUrl(url: string) {
 }
 
 // Every renderer call goes through here; method names match HublessApi.
-const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
+const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate'> = {
   snapshot: async () => manager.snapshot(),
   mouseState: (id) => manager.runMouse(id, async (s) => s.state()),
   saveProfile: (id, p: ProfileData) =>
@@ -187,6 +196,9 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
       return s.state
     }),
   appSettings: async () => loadSettings(),
+  updateStatus: async () => updater.status,
+  checkForUpdates: () => updater.check(),
+  installUpdate: async () => updater.install(),
   setAppSettings: async (patch) => {
     // Only the known settings, with the right types, reach the settings file and the autostart entry.
     const p = (patch ?? {}) as Record<string, unknown>
@@ -194,6 +206,10 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
     if (typeof p.runInTray === 'boolean') clean.runInTray = p.runInTray
     if (typeof p.startOnLogin === 'boolean') clean.startOnLogin = p.startOnLogin
     if (typeof p.lowBattery === 'number' && [0, 10, 15, 20, 30].includes(p.lowBattery)) clean.lowBattery = p.lowBattery
+    if (typeof p.autoUpdate === 'boolean') {
+      clean.autoUpdate = p.autoUpdate
+      updater.setAutomatic(p.autoUpdate)
+    }
     return saveSettings(clean)
   },
   forgetDevice: async (id) => {
@@ -260,7 +276,13 @@ app.whenReady().then(() => {
   if (!demo && !SHOTS) tray.ensure()
   manager.start()
   if (SHOTS) void screenshots(SHOTS)
-  else watchForUpgrade(restart)
+  else {
+    watchForUpgrade(restart)
+    updater
+      .init()
+      .then((ok) => ok && updater.setAutomatic(loadSettings().autoUpdate))
+      .catch((e) => console.error('updater failed to start', e))
+  }
 })
 
 /** Dev aid: HUBLESS_SHOTS=dir renders the home screen and every device section into dir, then quits. */
@@ -292,6 +314,7 @@ async function screenshots(dir: string) {
 app.on('window-all-closed', () => {
   manager.stop()
   if (wipeUserData) rmSync(app.getPath('userData'), { recursive: true, force: true })
+  else updater.installOnQuit()
   // node-hid keeps native read threads alive; exit explicitly once everything is saved.
   app.exit(0)
 })

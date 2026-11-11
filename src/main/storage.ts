@@ -178,7 +178,8 @@ const AUTOSTART_FILE = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.con
 
 /** Everything Hubless keeps on this computer (see PRIVACY.md). Device memory and the system udev rule are not touched. */
 export function deleteAllData() {
-  for (const p of [CONFIG_DIR, DATA, AUTOSTART_FILE]) rmSync(p, { recursive: true, force: true })
+  const updates = join(process.env.XDG_CACHE_HOME || join(homedir(), '.cache'), 'hubless-updater')
+  for (const p of [CONFIG_DIR, DATA, AUTOSTART_FILE, updates]) rmSync(p, { recursive: true, force: true })
 }
 
 /** PRIVACY.md / THIRD_PARTY_NOTICES.md, shipped as resources/docs in the package. */

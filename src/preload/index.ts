@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { AppSnapshot, HublessApi } from '@shared/types'
+import type { AppSnapshot, HublessApi, UpdateStatus } from '@shared/types'
 
 const call =
   (method: string) =>
@@ -9,7 +9,7 @@ const call =
 const methods = [
   'snapshot', 'mouseState', 'saveProfile', 'previewHits', 'watchDepth', 'activateProfile', 'setProfileEnabled', 'replaceProfile',
   'backup', 'listBackups', 'restoreBackup', 'openBackupsFolder', 'exportProfile', 'importProfile', 'grantAccess', 'forgetDevice', 'appSettings', 'setAppSettings',
-  'deviceImages', 'chooseDeviceImage', 'clearDeviceImage', 'appInfo', 'readDocument', 'deleteAllData',
+  'deviceImages', 'chooseDeviceImage', 'clearDeviceImage', 'appInfo', 'readDocument', 'deleteAllData', 'updateStatus', 'checkForUpdates', 'installUpdate',
   'keyboardState', 'keyboardAction', 'keyboardAnalog', 'headsetState', 'setHeadset'
 ]
 
@@ -30,6 +30,12 @@ api.onDepth = (cb: (id: string, l: number, r: number) => void) => {
   const listener = (_e: unknown, id: string, l: number, r: number) => cb(id, l, r)
   ipcRenderer.on('hubless:depth', listener)
   return () => ipcRenderer.removeListener('hubless:depth', listener)
+}
+
+api.onUpdate = (cb: (s: UpdateStatus) => void) => {
+  const listener = (_e: unknown, s: UpdateStatus) => cb(s)
+  ipcRenderer.on('hubless:update', listener)
+  return () => ipcRenderer.removeListener('hubless:update', listener)
 }
 
 contextBridge.exposeInMainWorld('hubless', api)

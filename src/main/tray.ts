@@ -8,7 +8,7 @@ import type { AppSettings, AppSnapshot } from '@shared/types'
 const CONFIG = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'), 'hubless')
 const FILE = join(CONFIG, 'settings.json')
 const AUTOSTART = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'), 'autostart', 'io.github.hubless.Hubless.desktop')
-const DEFAULTS: AppSettings = { runInTray: true, startOnLogin: false, lowBattery: 15 }
+const DEFAULTS: AppSettings = { runInTray: true, startOnLogin: false, lowBattery: 15, autoUpdate: true }
 
 export function loadSettings(): AppSettings {
   try {

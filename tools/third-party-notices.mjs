@@ -5,7 +5,7 @@ import { join } from 'node:path'
 
 const root = new URL('..', import.meta.url).pathname
 // Packages that end up in the app: the main-process dependency and everything bundled into the renderer.
-const ROOTS = ['node-hid', 'react', 'react-dom', 'radix-ui', 'lucide-react', 'sonner', 'clsx', 'tailwind-merge',
+const ROOTS = ['node-hid', 'electron-updater', 'react', 'react-dom', 'radix-ui', 'lucide-react', 'sonner', 'clsx', 'tailwind-merge',
   'class-variance-authority', 'tailwindcss', 'tw-animate-css']
 
 const pkgDir = (name) => join(root, 'node_modules', name)

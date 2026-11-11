@@ -7,7 +7,7 @@ export default defineConfig({
   main: {
     resolve: { alias: { '@shared': resolve('src/shared') } },
     // Electron built-in: plain fs that sees app.asar as a file (used to notice package upgrades).
-    build: { rolldownOptions: { external: ['original-fs'] } }
+    build: { rolldownOptions: { external: ['original-fs', 'electron-updater'] } }
   },
   preload: {
     resolve: { alias: { '@shared': resolve('src/shared') } }

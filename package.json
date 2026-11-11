@@ -1,7 +1,7 @@
 {
   "name": "hubless",
   "productName": "Hubless",
-  "version": "0.16.4",
+  "version": "0.17.0",
   "homepage": "https://github.com/Ynnad242/hubless",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "dist": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
+    "electron-updater": "^6.8.11",
     "node-hid": "^3.4.0"
   },
   "devDependencies": {

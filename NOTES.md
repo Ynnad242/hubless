@@ -191,3 +191,18 @@ to SHAs (checkout v7.0.1, setup-node v7.1.0). Tested on the packaged build in de
 Home: Connected / Not connected tabs (lastSeen recorded on unplug and on quit). Card order no longer depends on
 status: snapshot sorts plugged-in devices by kind then name (asleep/ready flips while AFK made cards jump);
 test/manager.test.ts covers it.
+
+## v0.17.0 (2026-11-11): self-update, gear icon
+- src/main/updater.ts wraps electron-updater 6.8 (external in electron.vite.config: bundling it lost the lazy
+  `autoUpdater` getter → undefined). Feed = GitHub releases (app-update.yml from package.json repository); the release
+  workflow must upload dist/latest-linux.yml (lists AppImage/deb/rpm/pacman + sha512). Setting autoUpdate (default on):
+  check at start + every 6 h, autoDownload. AppImage installs on quit (Updater.installOnQuit, called from
+  window-all-closed because app.exit skips the 'quit' hook) or via "Restart to update"; pacman/deb/rpm need pkexec, so
+  only on "Restart to update" (banner + notification + Settings). PacmanUpdater.installWithCommandRunner overridden to
+  never run `pacman -Sy` (partial upgrade). Cache ~/.cache/hubless-updater (removed by Delete all data).
+- Tested end to end with throwaway 0.90.0 → 0.90.1 builds on a local generic feed (-c.publish.provider=generic):
+  AppImage found/downloaded/verified, replaced byte-identically, relaunched as 0.90.1, settings kept; pacman build
+  downloaded the .pacman and reached ready (needsPassword) — install itself not run (needs the user's password).
+- Header "Menu" → gear icon opening Settings; Grant access and About moved into Settings. PRIVACY/SECURITY/README updated
+  for the update check (only network use).
+- Gotcha: `npx asar extract-file` writes into the cwd — never run it from the project root (it overwrote package.json).

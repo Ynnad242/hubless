@@ -246,6 +246,12 @@ export interface HublessApi {
   readDocument(name: 'privacy' | 'licenses'): Promise<string>
   /** remove settings, device list, photos, backups and the autostart entry, then restart fresh */
   deleteAllData(): Promise<void>
+  updateStatus(): Promise<UpdateStatus>
+  /** look for a new release now (and download it) */
+  checkForUpdates(): Promise<UpdateStatus>
+  /** install a downloaded update and restart */
+  installUpdate(): Promise<void>
+  onUpdate(cb: (s: UpdateStatus) => void): () => void
   onChange(cb: (snap: AppSnapshot) => void): () => void
   /** physical button state of a mouse (bit 0 left, 1 right, 2 middle, 3 back, 4 forward) */
   onButtons(cb: (id: string, mask: number) => void): () => void
@@ -258,4 +264,16 @@ export interface AppSettings {
   startOnLogin: boolean
   /** notify when a device's battery drops to this % (0 = off) */
   lowBattery: number
+  /** look for a new release on GitHub at start (and every few hours) and download it in the background */
+  autoUpdate: boolean
 }
+
+/** Where the app's self-update stands. */
+export type UpdateStatus =
+  | { state: 'unsupported'; reason: string } // running from source, or an install type that can't update itself
+  | { state: 'idle'; checkedAt: number | null }
+  | { state: 'checking' }
+  | { state: 'none'; checkedAt: number } // already the newest version
+  | { state: 'downloading'; version: string; percent: number }
+  | { state: 'ready'; version: string; needsPassword: boolean } // installs on restart (or when Hubless quits)
+  | { state: 'error'; message: string }

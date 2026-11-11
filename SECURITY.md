@@ -4,12 +4,13 @@
 
 Please report security problems privately, not in a public issue:
 **[Report a vulnerability](https://github.com/Ynnad242/hubless/security/advisories/new)** (GitHub private reporting).
-Include what you found, how to reproduce it and the Hubless version (Menu → About). You'll get a reply as soon as
+Include what you found, how to reproduce it and the Hubless version (⚙ Settings → About Hubless). You'll get a reply as soon as
 possible, and a fix will be released before details are made public.
 
 ## How Hubless is built to be safe
 
-- **No network.** Hubless has no server, accounts, telemetry or update checks, and never sends data anywhere.
+- **No data leaves the computer.** Hubless has no server, accounts or telemetry. Its only network traffic is the update
+  check against this repository's GitHub releases (can be turned off).
 - **No root at runtime.** Device access comes from a udev rule with `TAG+="uaccess"`, which grants only the user logged
   in at the computer (not every user, not remote sessions). Root is used once, through the system password prompt,
   to install that rule.
@@ -21,6 +22,8 @@ possible, and a fix will be released before details are made public.
   back and compared.
 - **Hardened binary.** Electron fuses disable "run as Node", `--inspect` and `NODE_OPTIONS` in released builds;
   DevTools and the reload shortcuts are off.
+- **Verified updates.** Updates come over HTTPS from this repository's releases and are checked against the SHA-512
+  checksums in the release's `latest-linux.yml` before anything is installed. Prereleases and downgrades are ignored.
 - **Supply chain.** Releases are built by GitHub Actions from the tagged source with `npm ci` (locked versions), and
   actions are pinned to exact commits. Dependabot watches dependencies weekly.
 

@@ -61,14 +61,22 @@ up straight away.
 
 ### Updating
 
-Download the new release and install it the same way. If Hubless is running in the tray, it restarts into the new
-version by itself. AppImage: replace the old file with the new one.
+Hubless updates itself. When it starts (and every few hours while it runs) it checks GitHub for a new release and
+downloads it in the background, verified against the release's checksums. Then:
+
+- **AppImage:** the update is installed when you quit Hubless, or right away with **Restart to update**.
+- **Arch, Ubuntu/Debian, Fedora/openSUSE packages:** press **Restart to update** in the banner or in ⚙ Settings →
+  Updates. Your system asks for your password, as for any package update.
+
+Your settings, device list, photos and backups are kept, and so are the settings stored in your devices. Turn
+**Update automatically** off in ⚙ Settings if you'd rather update by hand: download the new release and install it the
+same way as the first time.
 
 ### Uninstalling
 
 `sudo pacman -R hubless`, `sudo apt remove hubless` or `sudo dnf remove hubless` (AppImage: delete the file). This
 removes the app and its system rule. Your settings and device backups stay in your home folder until you delete them
-in **Menu → Settings → Delete all Hubless data**, or by hand (see [PRIVACY.md](PRIVACY.md)). Settings saved inside your
+in **⚙ Settings → Delete all Hubless data**, or by hand (see [PRIVACY.md](PRIVACY.md)). Settings saved inside your
 devices stay on the devices.
 
 ### Troubleshooting
@@ -76,7 +84,7 @@ devices stay on the devices.
 - **My device isn't listed.** Check [Supported devices](#supported-devices). Devices marked "support coming soon"
   are recognised but can't be configured yet. Otherwise unplug and replug it, and if it still doesn't appear,
   [open an issue](https://github.com/Ynnad242/hubless/issues) with the output of `lsusb`.
-- **The “Allow Hubless” banner keeps coming back.** Log out and back in once, or run Menu → Grant device access again.
+- **The “Allow Hubless” banner keeps coming back.** Log out and back in once, or press ⚙ Settings → Grant access again.
 - **Changes don't stick.** Close other tools that talk to the same device (Solaar, Piper, OpenRazer's daemon,
   Wootility in a browser) while you use Hubless.
 - **Something went wrong.** Every device page has *Restore a backup…*; a backup is made before the first change of
@@ -108,8 +116,8 @@ their USB id and shows them by name, marked "support coming soon". They can't be
 
 ## Privacy
 
-Hubless has no accounts, analytics, telemetry or network access. Everything it stores is in your home folder and can
-be deleted from Settings. Details: [PRIVACY.md](PRIVACY.md).
+Hubless has no accounts, analytics or telemetry. Its only network use is checking GitHub for new versions, which you can
+turn off in Settings. Everything it stores is in your home folder and can be deleted from Settings. Details: [PRIVACY.md](PRIVACY.md).
 
 ## Build from source
 

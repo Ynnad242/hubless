@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { ExternalLink, FileText, Scale, Trash2 } from 'lucide-react'
+import { ExternalLink, FileText, Info, RefreshCw, Scale, ShieldCheck, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
-import type { AppSettings } from '@shared/types'
+import type { AppSettings, UpdateStatus } from '@shared/types'
+import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -10,7 +11,7 @@ import { Caption, Row } from '@/components/kit'
 import { Markdown } from '@/components/Markdown'
 
 
-export function SettingsDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (o: boolean) => void }) {
+export function SettingsDialog({ open, onOpenChange, update, onAbout }: { open: boolean; onOpenChange: (o: boolean) => void; update: UpdateStatus; onAbout: () => void }) {
   const [s, setS] = useState<AppSettings | null>(null)
   const [doc, setDoc] = useState<{ name: Doc; text: string } | null>(null)
   const [confirmDelete, setConfirmDelete] = useState(false)
@@ -55,10 +56,58 @@ export function SettingsDialog({ open, onOpenChange }: { open: boolean; onOpenCh
             </div>
           )}
 
+          {s && (
+            <div className="space-y-3 border-t pt-4">
+              <Caption>Updates</Caption>
+              <Row label="Update automatically" hint="Looks for a new version when Hubless starts and downloads it in the background">
+                <Switch checked={s.autoUpdate} onCheckedChange={(v) => set({ autoUpdate: v })} disabled={update.state === 'unsupported'} />
+              </Row>
+              <div className="flex items-center gap-3">
+                <p className="flex-1 text-xs text-muted-foreground">{updateText(update)}</p>
+                {update.state === 'ready' ? (
+                  <Button size="sm" onClick={() => void api.installUpdate()}>
+                    Restart to update
+                  </Button>
+                ) : (
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    disabled={update.state === 'unsupported' || update.state === 'checking' || update.state === 'downloading'}
+                    onClick={() => void api.checkForUpdates()}
+                  >
+                    <RefreshCw className={cn('size-4', update.state === 'checking' && 'animate-spin')} /> Check now
+                  </Button>
+                )}
+              </div>
+              {update.state === 'downloading' && (
+                <div className="h-1.5 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-valuenow={update.percent} aria-valuemin={0} aria-valuemax={100}>
+                  <div className="h-full bg-primary transition-[width]" style={{ width: `${update.percent}%` }} />
+                </div>
+              )}
+            </div>
+          )}
+
+          <div className="space-y-3 border-t pt-4">
+            <Caption>Device access</Caption>
+            <div className="flex items-center gap-3">
+              <p className="flex-1 text-xs text-muted-foreground">If a plugged-in device doesn’t show up, let Hubless talk to it. You’ll be asked for your password once.</p>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={async () => {
+                  const r = await api.grantAccess()
+                  ;(r.ok ? toast.success : toast.error)(r.message)
+                }}
+              >
+                <ShieldCheck className="size-4" /> Grant access
+              </Button>
+            </div>
+          </div>
+
           <div className="space-y-3 border-t pt-4">
             <Caption>Your data</Caption>
             <p className="text-xs leading-relaxed text-muted-foreground">
-              Hubless has no accounts, analytics or telemetry and never sends anything over the internet. What it keeps (settings,
+              Hubless has no accounts, analytics or telemetry and never sends your data anywhere; it only asks GitHub for new versions. What it keeps (settings,
               devices seen before, your photos and device backups) stays in your home folder.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -69,6 +118,12 @@ export function SettingsDialog({ open, onOpenChange }: { open: boolean; onOpenCh
                 <Trash2 className="size-4" /> Delete all Hubless data…
               </Button>
             </div>
+          </div>
+          <div className="flex items-center justify-between border-t pt-4">
+            <span className="text-xs text-muted-foreground">Free and open source</span>
+            <Button variant="ghost" size="sm" onClick={onAbout}>
+              <Info className="size-4" /> About Hubless
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
@@ -167,4 +222,24 @@ export function AboutDialog({ open, onOpenChange }: { open: boolean; onOpenChang
       <DocumentDialog doc={doc} onClose={() => setDoc(null)} />
     </>
   )
+}
+
+function updateText(u: UpdateStatus) {
+  const when = (t: number | null) => (t ? `, checked ${new Date(t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : '')
+  switch (u.state) {
+    case 'unsupported':
+      return u.reason
+    case 'idle':
+      return 'Not checked yet.'
+    case 'checking':
+      return 'Looking for a new version…'
+    case 'none':
+      return `You have the latest version${when(u.checkedAt)}.`
+    case 'downloading':
+      return `Downloading Hubless ${u.version}… ${u.percent}%`
+    case 'ready':
+      return `Hubless ${u.version} is downloaded.${u.needsPassword ? ' Installing asks for your password.' : ''} Your settings are kept.`
+    case 'error':
+      return `Couldn’t update: ${u.message}`
+  }
 }
