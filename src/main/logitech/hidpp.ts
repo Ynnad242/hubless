@@ -154,7 +154,17 @@ export class HidrawTransport implements Transport {
     }
   }
 
+  private paired: { at: number; value: { slot: number; wpid: number; name: string; serial: string }[] } | null = null
+
+  /** Paired devices (3 register reads per slot). Pairings rarely change, so the answer is kept for a minute. */
   async pairedDevices() {
+    if (this.paired && Date.now() - this.paired.at < 60_000) return this.paired.value
+    const value = await this.readPairing()
+    this.paired = { at: Date.now(), value }
+    return value
+  }
+
+  private async readPairing() {
     const out: { slot: number; wpid: number; name: string; serial: string }[] = []
     for (let slot = 1; slot <= 6; slot++) {
       const info = await this.readRegister(0x83, 0xb5, [0x1f + slot])
@@ -172,10 +182,10 @@ export class HidrawTransport implements Transport {
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 /** HID++ endpoints: Logitech vendor interfaces (usage page 0xFF00) that aren't dj children. */
-export function endpoints(): { path: string; receiver: boolean; name: string }[] {
+export function endpoints(list: HID.Device[] = HID.devices()): { path: string; receiver: boolean; name: string }[] {
   const seen = new Set<string>()
   const out: { path: string; receiver: boolean; name: string }[] = []
-  for (const d of HID.devices()) {
+  for (const d of list) {
     if (d.vendorId !== LOGITECH || d.usagePage !== 0xff00 || !d.path || seen.has(d.path)) continue
     seen.add(d.path)
     // Receivers expose the HID++ channel on interface 2; dj children reuse the receiver's channel.

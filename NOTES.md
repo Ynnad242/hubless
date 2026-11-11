@@ -141,7 +141,7 @@ Terminal panel (no_new_privs): the user installs packages from their own termina
 - data/mice.json: 214 models / 309 USB ids from OpenRazer + libratbag (tools/build-catalog.py, tools/extract-mice.py)
   plus verified entries; `popular` from prosettings.net (Nov 2026). Unclaimed catalog mice show on Home by name with
   max DPI ("support coming soon"). Viper V4 Pro ids 00e5/00e6 come from a driver database, unverified.
-- Product photos ship with the app: data/devices/<vendor>-<model>.png (modelKey in src/shared/devices.ts), packaged as
+- Product photos ship with the app: data/devices/<vendor>-<model>.webp (modelKey in src/shared/devices.ts), packaged as
   resources/devices. User photos (~/.config/hubless/images/<device id>) still override. They are vendor product shots:
   publishing them publicly carries copyright risk — the user chose to ship them (2026-11-11).
 Next: Razer driver (OpenRazer protocol: 90-byte feature reports) would light up 89 catalog models; OP1 v2 layout check.
@@ -149,7 +149,7 @@ Next: Razer driver (OpenRazer protocol: 90-byte feature reports) would light up 
 ## v0.16.1 (2026-11-11): OP1 verified by input capture, OP1 photo, release hygiene
 - OP1 8k checked with the user's hands: at divider 4 the busiest second had 2002 reports (2 kHz); Back remapped to
   F13 arrived as keyboard usage 0x68 on interface 1. DPI-button cycling can't be seen over USB (handled on the mouse).
-- data/devices/endgame-gear-op1-8k.png (user's photo, cable cropped). PhotoMouse now also handles light mice: main
+- data/devices/endgame-gear-op1-8k.webp (user's photo, cable cropped). PhotoMouse now also handles light mice: main
   buttons = body above the horizontal seam (findLightButtons).
 - Release checklist pass: README rewritten for the Electron app (old GTK text/screenshots removed, claims toned down),
   PRIVACY.md, THIRD_PARTY_NOTICES.md (tools/third-party-notices.mjs; all bundled packages MIT/ISC/Apache-2.0/0BSD),
@@ -176,3 +176,13 @@ path must be inside the device's backup dir (storage.backupPathFor). HUBLESS_SHO
 (build-time only). Removed legacy-python/ and 9 unused shadcn components. GitHub: secret scanning + push protection,
 Dependabot alerts/security fixes + .github/dependabot.yml, private vulnerability reporting, SECURITY.md, Actions pinned
 to SHAs (checkout v7.0.1, setup-node v7.1.0). Tested on the packaged build in demo mode with throwaway XDG dirs.
+
+## v0.16.3 (2026-11-11): performance
+- HID.devices() costs ~13 ms and blocks the main thread. Was called 1×/2 s + 6× per scan (every 6 s); now once per poll
+  tick, passed to scan() and every *Endpoint(list) finder and watchButtons (manager.hid).
+- Receiver pairing (pairedDevices: 3 register reads × 6 slots = 18 HID++ round trips) was re-read every scan; now cached
+  60 s per transport.
+- manager.changed() emits only when the snapshot (minus lastSeen) differs, so the UI doesn't re-render every refresh.
+- Photos: shipped as WebP q90 + lossless alpha (945 KB → 158 KB PNG→WebP, PSNR 44–50 dB). deviceImages(devices) returns
+  only photos for the listed devices (renderer asks when the device list changes), data URLs cached per file mtime;
+  photos picked by the user are downscaled to ≤1200 px with nativeImage.

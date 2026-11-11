@@ -237,7 +237,7 @@ export interface HublessApi {
   headsetState(id: string): Promise<HeadsetState>
   setHeadset(id: string, patch: HeadsetPatch): Promise<HeadsetState>
   /** Custom card photos the user picked, as data URLs keyed by device id. */
-  deviceImages(): Promise<Record<string, string>>
+  deviceImages(devices: { id: string; vendor: string; name: string }[]): Promise<Record<string, string>>
   chooseDeviceImage(id: string): Promise<string | null>
   clearDeviceImage(id: string): Promise<void>
   /** version and license, for the About section */

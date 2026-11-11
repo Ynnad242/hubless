@@ -172,7 +172,8 @@ export function Home({ snap, images, onImages, onOpen }: Props) {
                 await api.clearDeviceImage(d.id)
                 const next = { ...images }
                 delete next[d.id]
-                onImages(next)
+                // Fall back to the photo shipped for this model, if there is one.
+                onImages({ ...next, ...(await api.deviceImages([{ id: d.id, vendor: d.vendor, name: d.name }])) })
               }}
               onForget={() => void api.forgetDevice(d.id)}
             />

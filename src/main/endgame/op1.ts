@@ -15,8 +15,8 @@ const OP_FIRMWARE = 0x02a1
 const OP_WRITE_CONFIG = 0x11a0
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
-export function endgameEndpoint() {
-  const d = HID.devices().find((x) => x.vendorId === EG_VID && MODELS[x.productId] && x.usagePage === 0xff01 && x.path)
+export function endgameEndpoint(list: HID.Device[] = HID.devices()) {
+  const d = list.find((x) => x.vendorId === EG_VID && MODELS[x.productId] && x.usagePage === 0xff01 && x.path)
   return d ? { path: d.path!, productId: d.productId, serial: d.serialNumber ?? '' } : null
 }
 

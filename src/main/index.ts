@@ -212,7 +212,7 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth'> = {
       quit()
     }, 100)
   },
-  deviceImages: async () => storage.deviceImages(),
+  deviceImages: async (devices) => storage.deviceImages(Array.isArray(devices) ? devices : []),
   chooseDeviceImage: async (id) => {
     const r = await dialog.showOpenDialog(win!, {
       title: 'Choose a Photo for This Device',

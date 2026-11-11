@@ -33,10 +33,16 @@ export default function App() {
 
   useEffect(() => {
     void window.hubless.snapshot().then(setSnap)
-    void window.hubless.deviceImages().then(setImages)
     ;(window as unknown as Hooks).__open = setOpen
     return window.hubless.onChange(setSnap)
   }, [])
+
+  // Fetch photos only for the devices on screen, and again only when that list changes (not on every status update).
+  const devicesKey = snap?.devices.map((d) => `${d.id}|${d.vendor}|${d.name}`).join('\n') ?? ''
+  useEffect(() => {
+    if (!snap) return
+    void window.hubless.deviceImages(snap.devices.map(({ id, vendor, name }) => ({ id, vendor, name }))).then(setImages)
+  }, [devicesKey]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const device = snap?.devices.find((d) => d.id === open && d.capabilities.length) ?? null
   // Leave the device page if the device disappears (unplugged, forgotten).

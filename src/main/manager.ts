@@ -130,8 +130,15 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
+  private lastSent = ''
+
+  /** Tell the UI, but only when something it shows actually changed (timestamps aside). */
   private changed() {
-    this.emit('changed', this.snapshot())
+    const snap = this.snapshot()
+    const key = JSON.stringify(snap, (k, v) => (k === 'lastSeen' ? undefined : v))
+    if (key === this.lastSent) return
+    this.lastSent = key
+    this.emit('changed', snap)
   }
 
   // ---------------------------------------------------------------- summaries
@@ -173,20 +180,21 @@ export class DeviceManager extends EventEmitter {
   }
 
   // ---------------------------------------------------------------- discovery
-  async scan() {
+  async scan(list: HID.Device[] = HID.devices()) {
+    this.hid = list
     if (this.scanning) return
     this.scanning = true
     try {
       if (this.demo) return await this.scanDemo()
-      const hid = HID.devices()
+      const hid = list
       const missing = new Set<string>()
       for (const [vid, name] of Object.entries(VENDORS)) {
         const paths = hid.filter((d) => d.vendorId === parseInt(vid, 16) && d.path).map((d) => d.path!)
         if (paths.length && paths.every((p) => !canOpen(p))) missing.add(name)
       }
-      await this.scanKeyboard()
-      await this.scanHeadset()
-      await this.scanEndgame()
+      await this.scanKeyboard(hid)
+      await this.scanHeadset(hid)
+      await this.scanEndgame(hid)
       // Recognised peripherals that no driver claimed: the vendors above, plus any mouse in the built-in catalog.
       this.unsupported.clear()
       const seen = new Set<string>()
@@ -212,7 +220,7 @@ export class DeviceManager extends EventEmitter {
         this.unsupported.set(id, summary)
         this.remember(summary)
       }
-      await this.scanLogitech()
+      await this.scanLogitech(hid)
       this.missingPermission = [...missing]
       this.searching = false
       this.changed()
@@ -221,8 +229,8 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
-  private async scanKeyboard() {
-    const ep = wootingEndpoint()
+  private async scanKeyboard(list: HID.Device[]) {
+    const ep = wootingEndpoint(list)
     if (!ep || !canOpen(ep.path)) return
     const id = `wooting-${ep.productId.toString(16).padStart(4, '0')}`
     if (this.live.has(id)) return
@@ -240,8 +248,8 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
-  private async scanEndgame() {
-    const ep = endgameEndpoint()
+  private async scanEndgame(list: HID.Device[]) {
+    const ep = endgameEndpoint(list)
     if (!ep || !canOpen(ep.path)) return
     const id = `endgame-gear-${ep.productId.toString(16).padStart(4, '0')}`
     if (this.live.has(id)) return
@@ -259,8 +267,8 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
-  private async scanHeadset() {
-    const path = scapeEndpoint()
+  private async scanHeadset(list: HID.Device[]) {
+    const path = scapeEndpoint(list)
     if (!path || !canOpen(path)) return
     const id = 'fractal-design-0001'
     if (this.live.has(id)) return
@@ -277,9 +285,9 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
-  private async scanLogitech() {
+  private async scanLogitech(list: HID.Device[]) {
     const asleep = new Map<string, DeviceSummary>()
-    for (const ep of endpoints()) {
+    for (const ep of endpoints(list)) {
       if (!canOpen(ep.path)) continue
       let t = this.transports.get(ep.path)
       if (!t) {
@@ -322,11 +330,12 @@ export class DeviceManager extends EventEmitter {
   }
 
   private buttonStreams = new Map<string, HID.HIDAsync>()
+  private hid: HID.Device[] = []
 
   /** Follow the mouse's own input reports so the UI can light up buttons as they're physically pressed. */
   private async watchButtons(id: string, src: { vid: number; pid: number; report: number }) {
     if (this.buttonStreams.has(id)) return
-    const d = HID.devices().find((x) => x.vendorId === src.vid && (src.pid ? x.productId === src.pid : true) && x.usagePage === 1 && x.usage === 2 && x.path)
+    const d = this.hid.find((x) => x.vendorId === src.vid && (src.pid ? x.productId === src.pid : true) && x.usagePage === 1 && x.usage === 2 && x.path)
     if (!d || !canOpen(d.path!)) return
     try {
       const dev = await HID.HIDAsync.open(d.path!)
@@ -364,7 +373,9 @@ export class DeviceManager extends EventEmitter {
   // ---------------------------------------------------------------- upkeep
   private async poll() {
     this.tick++
-    const present = new Set(HID.devices().map((d) => d.path))
+    // One USB enumeration per tick (13 ms, blocking) shared by the unplug check and the scan.
+    const list = this.demo ? [] : HID.devices()
+    const present = new Set(list.map((d) => d.path))
     for (const [id, e] of this.live) {
       if (!this.demo && !present.has(e.path)) {
         // Receiver, cable or dongle is gone.
@@ -380,7 +391,7 @@ export class DeviceManager extends EventEmitter {
       }
       if (e.summary.status === 'asleep' || this.tick % 4 === 0) await this.refresh(id, e)
     }
-    if (this.tick % 3 === 0 || !this.live.size) await this.scan()
+    if (this.tick % 3 === 0 || !this.live.size) await this.scan(list)
   }
 
   private async refresh(id: string, e: Live) {

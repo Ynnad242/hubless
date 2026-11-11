@@ -1,9 +1,11 @@
 // Backups, profile files and the one-time udev permission fix.
 import { execFile } from 'node:child_process'
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { extname, join, resolve, sep } from 'node:path'
+import { nativeImage } from 'electron'
 import type { BackupInfo } from '@shared/types'
+import { modelKey } from '@shared/devices'
 
 const DATA = join(process.env.XDG_DATA_HOME || join(homedir(), '.local/share'), 'hubless')
 
@@ -112,15 +114,36 @@ const asDataUrl = (path: string) => `data:${MIME[extname(path).toLowerCase()] ??
 /** Product photos shipped with the app, one per model, named by modelKey() (data/devices in the source tree). */
 const SHIPPED = [join(process.resourcesPath ?? '', 'devices'), join(__dirname, '../../data/devices')].find((d) => existsSync(d))
 
-/** User photos keyed by device id, plus the shipped ones keyed "model:<modelKey>". */
-export function deviceImages(): Record<string, string> {
+const urlCache = new Map<string, { mtime: number; url: string }>()
+
+/** A photo as a data URL, read and encoded once per file version. */
+function cachedUrl(path: string) {
+  const mtime = statSync(path).mtimeMs
+  const hit = urlCache.get(path)
+  if (hit && hit.mtime === mtime) return hit.url
+  const url = asDataUrl(path)
+  urlCache.set(path, { mtime, url })
+  return url
+}
+
+const findIn = (dir: string | undefined, base: string) =>
+  dir && existsSync(dir) ? readdirSync(dir).find((f) => f.slice(0, f.lastIndexOf('.')) === base && MIME[extname(f).toLowerCase()]) : undefined
+
+/** Photos for just these devices: the user's own (keyed by device id) or else the one shipped for the model
+ *  (keyed "model:<modelKey>"). Photos for devices that aren't on screen are never read or sent. */
+export function deviceImages(devices: { id: string; vendor: string; name: string }[]): Record<string, string> {
   const out: Record<string, string> = {}
-  const add = (dir: string | undefined, prefix: string) => {
-    if (!dir || !existsSync(dir)) return
-    for (const f of readdirSync(dir)) if (MIME[extname(f).toLowerCase()]) out[prefix + f.slice(0, f.lastIndexOf('.'))] = asDataUrl(join(dir, f))
+  for (const d of devices.slice(0, 64)) {
+    if (typeof d?.id !== 'string' || typeof d.vendor !== 'string' || typeof d.name !== 'string') continue
+    const own = findIn(IMAGES, safe(d.id))
+    if (own) {
+      out[d.id] = cachedUrl(join(IMAGES, own))
+      continue
+    }
+    const key = modelKey(d.vendor, d.name)
+    const shipped = findIn(SHIPPED, key)
+    if (shipped) out[`model:${key}`] = cachedUrl(join(SHIPPED!, shipped))
   }
-  add(SHIPPED, 'model:')
-  add(IMAGES, '')
   return out
 }
 
@@ -129,9 +152,18 @@ export function setDeviceImage(id: string, source: string) {
   if (!MIME[ext]) throw new Error('Pick a PNG, JPEG or WebP image.')
   mkdirSync(IMAGES, { recursive: true })
   clearDeviceImage(id)
+  // Phone photos are often 4000 px and several MB: keep at most 1200 px on the long side.
+  const img = nativeImage.createFromPath(source)
+  const { width, height } = img.getSize()
+  if (!img.isEmpty() && Math.max(width, height) > 1200) {
+    const dest = join(IMAGES, safe(id) + '.png')
+    const scaled = width >= height ? img.resize({ width: 1200, quality: 'best' }) : img.resize({ height: 1200, quality: 'best' })
+    writeFileSync(dest, scaled.toPNG())
+    return cachedUrl(dest)
+  }
   const dest = join(IMAGES, safe(id) + ext)
   copyFileSync(source, dest)
-  return asDataUrl(dest)
+  return cachedUrl(dest)
 }
 
 export function clearDeviceImage(id: string) {

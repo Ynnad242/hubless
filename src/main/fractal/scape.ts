@@ -66,8 +66,8 @@ export class ScapeTransport {
   }
 }
 
-export function scapeEndpoint(): string | null {
-  const d = HID.devices().find((x) => x.vendorId === FRACTAL && x.productId === 0x0001 && x.usagePage === 0xff00 && x.path)
+export function scapeEndpoint(list: HID.Device[] = HID.devices()): string | null {
+  const d = list.find((x) => x.vendorId === FRACTAL && x.productId === 0x0001 && x.usagePage === 0xff00 && x.path)
   return d?.path ?? null
 }
 

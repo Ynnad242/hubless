@@ -142,8 +142,8 @@ export class WootingTransport {
   }
 }
 
-export function wootingEndpoint(): { path: string; product: string; productId: number; serial: string } | null {
-  const d = HID.devices().find((x) => x.vendorId === WOOTING && x.usagePage === ARM_PAGE && x.path)
+export function wootingEndpoint(list: HID.Device[] = HID.devices()): { path: string; product: string; productId: number; serial: string } | null {
+  const d = list.find((x) => x.vendorId === WOOTING && x.usagePage === ARM_PAGE && x.path)
   return d ? { path: d.path!, product: d.product ?? 'Wooting keyboard', productId: d.productId, serial: d.serialNumber ?? '' } : null
 }
 
