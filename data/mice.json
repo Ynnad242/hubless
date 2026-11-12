@@ -4098,6 +4098,23 @@
    "source": "libratbag"
   },
   {
+   "vendor": "WLmouse",
+   "name": "Ying",
+   "kind": "mouse",
+   "protocol": "wlmouse",
+   "maxDpi": 30000,
+   "ids": [
+    {
+     "vid": 13991,
+     "pid": 43125,
+     "connection": null
+    }
+   ],
+   "popular": false,
+   "verified": false,
+   "source": "hubless (seen on hardware, protocol not yet supported)"
+  },
+  {
    "vendor": "openinput",
    "name": "openinput",
    "kind": "mouse",

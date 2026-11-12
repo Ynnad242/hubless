@@ -54,6 +54,7 @@ describe('mouse catalog', async () => {
     expect(lookup(0x3367, 0x1964)?.name).toBe('OP1 8k')
     expect(lookup(0x1532, 0x00c1)).toMatchObject({ vendor: 'Razer', name: 'Viper V3 Pro', maxDpi: 35000, popular: true })
     expect(lookup(0x046d, 0xc094)?.name).toBe('G Pro X Wireless Superlight')
+    expect(lookup(0x36a7, 0xa875)).toMatchObject({ vendor: 'WLmouse', name: 'Ying', maxDpi: 30000 })
     expect(lookup(0xdead, 0xbeef)).toBeUndefined()
     expect(catalogSize().models).toBeGreaterThan(200)
   })

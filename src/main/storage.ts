@@ -12,7 +12,7 @@ const DATA = join(process.env.XDG_DATA_HOME || join(homedir(), '.local/share'), 
 export const UDEV_RULE_PATH = '/etc/udev/rules.d/70-hubless.rules'
 // Vendors whose peripherals Hubless talks to.
 export const VENDORS: Record<string, string> = {
-  '046d': 'Logitech', '31e3': 'Wooting', '36bc': 'Fractal Design', '1532': 'Razer', '3367': 'Endgame Gear'
+  '046d': 'Logitech', '31e3': 'Wooting', '36bc': 'Fractal Design', '1532': 'Razer', '3367': 'Endgame Gear', '36a7': 'WLmouse'
 }
 export const UDEV_RULE =
   '# hubless: let the logged-in user configure their mice, keyboards and headsets\n' +

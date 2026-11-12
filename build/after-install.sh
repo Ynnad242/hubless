@@ -11,6 +11,8 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", TAG+="uaccess"
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="31e3", TAG+="uaccess"
 # Fractal Design
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="36bc", TAG+="uaccess"
+# WLmouse
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="36a7", TAG+="uaccess"
 # Razer
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", TAG+="uaccess"
 # Endgame Gear
