@@ -1,0 +1,61 @@
+#!/bin/sh
+# Installs a Hubless update without a password prompt, for installs from the .pacman/.deb/.rpm packages.
+#
+# Installed root-owned at /usr/lib/hubless/hubless-update. The polkit action io.github.hubless.update lets the
+# logged-in user (active local session) run it through pkexec without a password. That is safe because it only
+# installs the exact package published as the latest Hubless release: it copies the file it is given into a
+# root-owned folder, downloads the release's latest-linux.yml from GitHub itself (HTTPS), and installs the copy only
+# if its SHA-512 matches the one listed there. Any other file is refused.
+#
+# Usage: hubless-update /path/to/hubless-<version>.(pacman|deb|rpm)
+set -eu
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH
+FEED='https://github.com/Ynnad242/hubless/releases/latest/download/latest-linux.yml'
+
+fail() { echo "hubless-update: $2" >&2; exit "$1"; }
+
+[ "$#" -eq 1 ] || fail 2 "usage: hubless-update FILE"
+case "$1" in
+  *.pacman) fmt=pacman ;;
+  *.deb) fmt=deb ;;
+  *.rpm) fmt=rpm ;;
+  *) fail 2 "not a Hubless package" ;;
+esac
+
+work=$(mktemp -d /var/tmp/hubless-update.XXXXXX)
+trap 'rm -rf "$work"' EXIT INT TERM
+pkg="$work/hubless.$fmt"
+# Copy first and check the copy, so the file can't be swapped after the check.
+cp -- "$1" "$pkg" 2>/dev/null || fail 2 "can't read the downloaded update"
+
+if command -v curl >/dev/null 2>&1; then
+  curl -fsSL --proto '=https' --tlsv1.2 --max-time 60 -o "$work/feed.yml" "$FEED" || fail 3 "couldn't reach GitHub to verify the update"
+elif command -v wget >/dev/null 2>&1; then
+  wget -q --https-only --timeout=60 -O "$work/feed.yml" "$FEED" || fail 3 "couldn't reach GitHub to verify the update"
+else
+  fail 3 "curl or wget is needed to verify the update"
+fi
+
+# latest-linux.yml lists "  - url: <file>" followed by "    sha512: <base64>" for each package.
+want=$(awk -v ext=".$fmt" '
+  /^  - url: / { url = $3; next }
+  /^    sha512: / { if (length(url) > length(ext) && substr(url, length(url) - length(ext) + 1) == ext) { print $2; exit } }
+' "$work/feed.yml")
+[ -n "$want" ] || fail 4 "the latest release has no .$fmt package"
+want=$(printf '%s' "$want" | base64 -d 2>/dev/null | od -An -v -tx1 | tr -d ' \n')
+got=$(sha512sum "$pkg" | cut -d' ' -f1)
+[ "${#want}" -eq 128 ] && [ "$want" = "$got" ] || fail 4 "the file doesn't match the latest Hubless release"
+
+# Package managers that drop privileges to read the file (apt's _apt user) need to reach it.
+chmod 755 "$work"
+chmod 644 "$pkg"
+case "$fmt" in
+  pacman) pacman -U --noconfirm "$pkg" ;;
+  deb)
+    if command -v apt-get >/dev/null 2>&1; then apt-get install -y "$pkg"; else dpkg -i "$pkg"; fi ;;
+  rpm)
+    if command -v dnf >/dev/null 2>&1; then dnf install -y "$pkg"
+    elif command -v zypper >/dev/null 2>&1; then zypper --non-interactive install --allow-unsigned-rpm "$pkg"
+    else rpm -U --replacepkgs "$pkg"; fi ;;
+esac || fail 5 "the package manager couldn't install the update (is another install running?)"

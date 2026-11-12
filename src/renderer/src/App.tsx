@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Download, Settings } from 'lucide-react'
 import type { AppSnapshot, Capability, UpdateStatus } from '@shared/types'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { AboutDialog, SettingsDialog } from '@/components/SettingsDialog'
 import type { MouseCtl } from '@/hooks/useMouse'
 import { DeviceView } from '@/views/DeviceView'
@@ -59,9 +60,13 @@ export default function App() {
     w.__flush = m.flush
   }, [])
 
-  if (device?.kind === 'keyboard') return <KeyboardView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />
-  if (device?.kind === 'headset') return <HeadsetView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />
-  if (device) return <DeviceView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} expose={expose} />
+  // The update found when Hubless starts installs right away; this screen covers the app until it restarts.
+  const updating = (update.state === 'downloading' || update.state === 'ready' || update.state === 'installing') && update.startup
+  const screen = updating ? <UpdateScreen update={update} /> : null
+
+  if (device?.kind === 'keyboard') return <>{<KeyboardView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
+  if (device?.kind === 'headset') return <>{<HeadsetView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
+  if (device) return <>{<DeviceView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} expose={expose} />}{screen}</>
 
   return (
     <div className="flex h-full flex-col">
@@ -73,15 +78,17 @@ export default function App() {
         </Button>
       </header>
       <main className="min-h-0 flex-1 overflow-y-auto">
-        {update.state === 'ready' && (
+        {(update.state === 'ready' || update.state === 'installing') && !update.startup && (
           <div className="mx-auto mt-2 flex w-full max-w-6xl items-center gap-4 px-8">
             <div className="flex flex-1 items-center gap-4 rounded-xl border border-success/30 bg-success/8 px-5 py-3.5">
               <Download className="size-5 shrink-0 text-success" />
               <div className="flex-1 text-sm">
                 <span className="font-semibold">Hubless {update.version} is ready.</span>{' '}
-                <span className="text-muted-foreground">Restart to finish updating. Your settings and devices stay as they are.</span>
+                <span className="text-muted-foreground">
+                  {update.state === 'installing' ? 'Installing…' : 'It installs by itself when you close Hubless, or restart now. Your settings and devices stay as they are.'}
+                </span>
               </div>
-              <Button size="sm" onClick={() => void window.hubless.installUpdate()}>
+              <Button size="sm" disabled={update.state === 'installing'} onClick={() => void window.hubless.installUpdate()}>
                 Restart to update
               </Button>
             </div>
@@ -91,6 +98,35 @@ export default function App() {
       </main>
       <SettingsDialog open={settings} onOpenChange={setSettings} update={update} onAbout={() => setAbout(true)} />
       <AboutDialog open={about} onOpenChange={setAbout} />
+      {screen}
+    </div>
+  )
+}
+
+/** Full-window "Updating Hubless" screen shown while the update found at startup downloads and installs. */
+function UpdateScreen({ update }: { update: Extract<UpdateStatus, { state: 'downloading' | 'ready' | 'installing' }> }) {
+  const percent = update.state === 'downloading' ? update.percent : 100
+  const step = update.state === 'downloading' ? `Downloading… ${update.percent}%` : 'Installing…'
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 bg-background/95 backdrop-blur-sm" role="status" aria-live="polite">
+      <div className="scale-[2]">
+        <Logo />
+      </div>
+      <div className="mt-2 space-y-1.5 text-center">
+        <p className="text-lg font-semibold tracking-tight">Updating Hubless to {update.version}</p>
+        <p className="text-sm text-muted-foreground">Hubless restarts by itself when it’s done. Your settings and devices stay as they are.</p>
+      </div>
+      <div className="w-72 space-y-2">
+        <div className="h-1.5 overflow-hidden rounded-full bg-surface-2" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
+          <div className={cn('h-full bg-primary transition-[width] duration-300', update.state !== 'downloading' && 'animate-pulse')} style={{ width: `${percent}%` }} />
+        </div>
+        <p className="text-center text-xs tabular-nums text-muted-foreground">{step}</p>
+      </div>
+      {update.state === 'downloading' && (
+        <Button variant="ghost" size="sm" className="text-muted-foreground" onClick={() => void window.hubless.deferUpdate()}>
+          Not now
+        </Button>
+      )}
     </div>
   )
 }

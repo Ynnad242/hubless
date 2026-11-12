@@ -21,13 +21,16 @@ Everything stays in your home folder:
 Your device settings themselves (DPI, buttons, lighting, EQ, …) are written into the devices' own memory, not to
 your computer.
 
-The installer also adds one system file, `/usr/lib/udev/rules.d/70-hubless.rules`, which lets the logged-in user talk
-to supported mice, keyboards and headsets without root. It contains no personal data.
+The installer also adds three system files, none with personal data: `/usr/lib/udev/rules.d/70-hubless.rules`, which
+lets the logged-in user talk to supported mice, keyboards and headsets without root, and the update helper
+`/usr/lib/hubless/hubless-update` with its polkit rule `/usr/share/polkit-1/actions/io.github.hubless.update.policy`,
+which let Hubless install its own updates without a password.
 
 ## Update checks
 
 With **Update automatically** on (the default; ⚙ Settings → Updates), Hubless asks GitHub whether a newer release of
-Hubless exists when it starts and every six hours while it runs, and downloads it if so. These requests go to
+Hubless exists when it starts and every six hours while it runs, and downloads and installs it if so. The update
+helper asks GitHub once more for the release's checksums before it installs anything. These requests go to
 `github.com` / `api.github.com` (and GitHub's download servers) and contain nothing about you or your devices: like any
 web request they reveal your IP address, and they say which Hubless version is asking. GitHub's own privacy policy
 applies to them. Turn the switch off and Hubless makes no network requests at all; you can still press **Check now**
@@ -47,7 +50,7 @@ By hand:
 rm -rf ~/.config/hubless ~/.config/Hubless ~/.local/share/hubless ~/.cache/hubless-updater ~/.config/autostart/io.github.hubless.Hubless.desktop
 ```
 
-Uninstalling the package removes the udev rule.
+Uninstalling the package removes the udev rule, the update helper and its polkit rule.
 
 ## Children
 

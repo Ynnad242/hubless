@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+  "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<!-- Lets the logged-in user install Hubless updates without a password. The helper installs only the package
+     published as the latest Hubless release (checked against its SHA-512 on GitHub); see /usr/lib/hubless/hubless-update. -->
+<policyconfig>
+  <vendor>Hubless</vendor>
+  <vendor_url>https://github.com/Ynnad242/hubless</vendor_url>
+  <action id="io.github.hubless.update">
+    <description>Install a Hubless update</description>
+    <message>Hubless wants to install its latest version</message>
+    <icon_name>hubless</icon_name>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>yes</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/lib/hubless/hubless-update</annotate>
+  </action>
+</policyconfig>

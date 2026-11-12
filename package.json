@@ -99,6 +99,14 @@
         "to": "icon.png"
       },
       {
+        "from": "build/hubless-update",
+        "to": "hubless-update"
+      },
+      {
+        "from": "build/io.github.hubless.update.policy",
+        "to": "io.github.hubless.update.policy"
+      },
+      {
         "from": "data/devices",
         "to": "devices"
       },

@@ -43,7 +43,7 @@ into their own memory.
 
 That's it. The packages above also install a small system rule
 (`/usr/lib/udev/rules.d/70-hubless.rules`) that lets your user talk to supported devices without root, so you never
-have to run Hubless with `sudo`.
+have to run Hubless with `sudo`, and the update helper described in [Updating](#updating).
 
 ### AppImage
 
@@ -61,16 +61,18 @@ up straight away.
 
 ### Updating
 
-Hubless updates itself. When it starts (and every few hours while it runs) it checks GitHub for a new release and
-downloads it in the background, verified against the release's checksums. Then:
+You only download Hubless once. Every time it starts, it checks GitHub for a new release. If there is one, it shows
+**Updating Hubless**, downloads it (verified against the release's checksums), installs it and reopens by itself. If
+there isn't, it just opens. While it keeps running in the tray it checks again every few hours and installs quietly in
+the background.
 
-- **AppImage:** the update is installed when you quit Hubless, or right away with **Restart to update**.
-- **Arch, Ubuntu/Debian, Fedora/openSUSE packages:** press **Restart to update** in the banner or in ⚙ Settings →
-  Updates. Your system asks for your password, as for any package update.
+No password is needed for this. The `.pacman`, `.deb` and `.rpm` packages include a small root-owned helper
+(`/usr/lib/hubless/hubless-update`) that your user may run without a password. It only installs a file whose
+checksum matches the latest Hubless release on GitHub, so it can't be used to install anything else. The AppImage
+simply replaces its own file.
 
-Your settings, device list, photos and backups are kept, and so are the settings stored in your devices. Turn
-**Update automatically** off in ⚙ Settings if you'd rather update by hand: download the new release and install it the
-same way as the first time.
+Your settings, device list, photos and backups are kept, and so are the settings stored in your devices. You can see
+your version, check for updates or turn **Update automatically** off in ⚙ Settings → Updates.
 
 ### Uninstalling
 

@@ -206,3 +206,25 @@ test/manager.test.ts covers it.
 - Header "Menu" → gear icon opening Settings; Grant access and About moved into Settings. PRIVACY/SECURITY/README updated
   for the update check (only network use).
 - Gotcha: `npx asar extract-file` writes into the cwd — never run it from the project root (it overwrote package.json).
+
+## Unreleased: seamless updates (2026-11-11)
+- Startup: the update found by the first check installs right away. The renderer covers the app with "Updating Hubless
+  to X" (UpdateScreen in App.tsx, shown while status.startup) and the app restarts into the new version; "Not now"
+  (deferUpdate) turns it into the banner. No update → nothing shown, the app just opens.
+- Later updates (6 h check in the tray): install as soon as they're downloaded if the window is hidden, when the
+  window is closed to the tray, or on quit (installOnQuit). While the window is open: banner "Restart to update".
+- Package installs no longer use electron-updater's pkexec path: it needs a polkit authentication agent, and Omarchy /
+  plain Hyprland run none, so it failed there. Instead build/hubless-update (root helper, installed by after-install.sh
+  to /usr/lib/hubless/) + build/io.github.hubless.update.policy (allow_active=yes, exec.path = helper) → pkexec works
+  without an agent or password. The helper re-downloads latest-linux.yml itself and installs only a file whose sha512
+  matches the latest release's package (copy first, then hash, so no swap). Without the helper (pre-0.18 installs)
+  the old quitAndInstall + password path is the fallback.
+- AppImage restart: relaunch process.env.APPIMAGE (or the renamed file), not process.execPath: that lives in the
+  AppImage's temporary mount, which is gone once the old process exits (first test didn't reopen because of this).
+- after-remove.sh: skip on upgrades (rpm passes 1, deb "upgrade"), or rpm's old %postun deletes the files the new
+  %post just installed.
+- Tested: helper checks against the real v0.17.0 .pacman (accepted) and tampered / wrong-type / unreadable files
+  (refused), with the install line stubbed (needs root). AppImage 0.90.0 → 0.90.1 on a throttled local feed: update
+  screen with progress → replaced → reopened as 0.90.1 → settings kept → no screen when already up to date; "Not now"
+  → banner, file untouched while open, installed on quit. Not tested: close-to-tray install (demo mode has no tray),
+  and the real pacman install through the helper (needs this package installed as root first).

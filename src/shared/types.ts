@@ -251,6 +251,8 @@ export interface HublessApi {
   checkForUpdates(): Promise<UpdateStatus>
   /** install a downloaded update and restart */
   installUpdate(): Promise<void>
+  /** "Not now" on the startup update screen: install when Hubless closes instead */
+  deferUpdate(): Promise<void>
   onUpdate(cb: (s: UpdateStatus) => void): () => void
   onChange(cb: (snap: AppSnapshot) => void): () => void
   /** physical button state of a mouse (bit 0 left, 1 right, 2 middle, 3 back, 4 forward) */
@@ -274,6 +276,8 @@ export type UpdateStatus =
   | { state: 'idle'; checkedAt: number | null }
   | { state: 'checking' }
   | { state: 'none'; checkedAt: number } // already the newest version
-  | { state: 'downloading'; version: string; percent: number }
-  | { state: 'ready'; version: string; needsPassword: boolean } // installs on restart (or when Hubless quits)
+  // startup: found by the check when Hubless started, so it installs as soon as it's downloaded (unless deferred)
+  | { state: 'downloading'; version: string; percent: number; startup: boolean }
+  | { state: 'ready'; version: string; needsPassword: boolean; startup: boolean } // installs on restart (or when Hubless quits)
+  | { state: 'installing'; version: string; startup: boolean }
   | { state: 'error'; message: string }

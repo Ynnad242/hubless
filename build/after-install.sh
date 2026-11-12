@@ -20,4 +20,8 @@ RULES
 rm -f /etc/udev/rules.d/70-hubless.rules
 udevadm control --reload-rules || true
 udevadm trigger --action=add --subsystem-match=hidraw || true
+# Updates from inside the app: a root-owned helper that installs only the verified latest release, and the polkit
+# action that lets the logged-in user run it without a password (see the comments in both files).
+install -Dm755 /opt/Hubless/resources/hubless-update /usr/lib/hubless/hubless-update
+install -Dm644 /opt/Hubless/resources/io.github.hubless.update.policy /usr/share/polkit-1/actions/io.github.hubless.update.policy
 update-desktop-database /usr/share/applications 2>/dev/null || true

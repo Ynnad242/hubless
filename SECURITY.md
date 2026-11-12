@@ -24,6 +24,11 @@ possible, and a fix will be released before details are made public.
   DevTools and the reload shortcuts are off.
 - **Verified updates.** Updates come over HTTPS from this repository's releases and are checked against the SHA-512
   checksums in the release's `latest-linux.yml` before anything is installed. Prereleases and downgrades are ignored.
+  Package installs use a root-owned helper, `/usr/lib/hubless/hubless-update`, that the logged-in user (active local
+  session only) may run through pkexec without a password, via the polkit action `io.github.hubless.update`. The
+  helper takes no options: it copies the given file into a root-owned folder, downloads `latest-linux.yml` from GitHub
+  itself over HTTPS, and installs the copy only if its SHA-512 matches the latest release's package. Anything else is
+  refused, so the rule can't be used to install other software or older versions.
 - **Supply chain.** Releases are built by GitHub Actions from the tagged source with `npm ci` (locked versions), and
   actions are pinned to exact commits. Dependabot watches dependencies weekly.
 

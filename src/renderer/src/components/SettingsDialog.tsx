@@ -15,10 +15,12 @@ export function SettingsDialog({ open, onOpenChange, update, onAbout }: { open: 
   const [s, setS] = useState<AppSettings | null>(null)
   const [doc, setDoc] = useState<{ name: Doc; text: string } | null>(null)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [version, setVersion] = useState('')
   const api = window.hubless
   useEffect(() => {
     if (!open) return
     void api.appSettings().then(setS)
+    void api.appInfo().then((i) => setVersion(i.version))
   }, [open]) // eslint-disable-line react-hooks/exhaustive-deps
   const set = async (patch: Partial<AppSettings>) => setS(await api.setAppSettings(patch))
   const show = (name: Doc) => openDocument(name, setDoc)
@@ -58,15 +60,18 @@ export function SettingsDialog({ open, onOpenChange, update, onAbout }: { open: 
 
           {s && (
             <div className="space-y-3 border-t pt-4">
-              <Caption>Updates</Caption>
-              <Row label="Update automatically" hint="Looks for a new version when Hubless starts and downloads it in the background">
+              <div className="flex items-baseline justify-between">
+                <Caption>Updates</Caption>
+                {version && <span className="text-xs tabular-nums text-muted-foreground">Version {version}</span>}
+              </div>
+              <Row label="Update automatically" hint="Every time Hubless starts it looks for a new version and installs it, then opens as usual">
                 <Switch checked={s.autoUpdate} onCheckedChange={(v) => set({ autoUpdate: v })} disabled={update.state === 'unsupported'} />
               </Row>
               <div className="flex items-center gap-3">
                 <p className="flex-1 text-xs text-muted-foreground">{updateText(update)}</p>
-                {update.state === 'ready' ? (
-                  <Button size="sm" onClick={() => void api.installUpdate()}>
-                    Restart to update
+                {update.state === 'ready' || update.state === 'installing' ? (
+                  <Button size="sm" disabled={update.state === 'installing'} onClick={() => void api.installUpdate()}>
+                    {update.state === 'ready' ? 'Update now' : 'Installing…'}
                   </Button>
                 ) : (
                   <Button
@@ -238,7 +243,9 @@ function updateText(u: UpdateStatus) {
     case 'downloading':
       return `Downloading Hubless ${u.version}… ${u.percent}%`
     case 'ready':
-      return `Hubless ${u.version} is downloaded.${u.needsPassword ? ' Installing asks for your password.' : ''} Your settings are kept.`
+      return `Hubless ${u.version} is ready to install.${u.needsPassword ? ' Installing asks for your password.' : ' It installs when you close Hubless, or now.'} Your settings are kept.`
+    case 'installing':
+      return `Installing Hubless ${u.version}… Hubless restarts by itself.`
     case 'error':
       return `Couldn’t update: ${u.message}`
   }

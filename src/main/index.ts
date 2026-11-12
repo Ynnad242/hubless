@@ -31,10 +31,13 @@ function quit() {
 }
 
 /** Start the (possibly newly installed) app again, keeping it in the tray if the window was hidden. */
-function restart() {
+let restarting = false
+function restart(execPath?: string) {
+  if (restarting) return
+  restarting = true
   const args = process.argv.slice(1).filter((a) => a !== '--hidden')
   if (!win?.isVisible()) args.push('--hidden')
-  app.relaunch({ args })
+  app.relaunch(execPath ? { execPath, args } : { args })
   quit()
 }
 
@@ -42,11 +45,20 @@ const tray = new TrayController(iconPath(), showWindow, quit)
 let notifiedUpdate = ''
 const updater = new Updater((s) => {
   win?.webContents.send('hubless:update', s)
-  if (s.state === 'ready' && notifiedUpdate !== s.version && Notification.isSupported()) {
+  // Only worth a notification when the user has to do something (installs that ask for a password).
+  if (s.state === 'ready' && s.needsPassword && notifiedUpdate !== s.version && Notification.isSupported()) {
     notifiedUpdate = s.version
     new Notification({ title: `Hubless ${s.version} is ready`, body: 'Restart Hubless to finish updating. Your settings are kept.', icon: iconPath() }).show()
   }
 })
+// Seamless updates: an update found when Hubless starts installs right away (the window shows "Updating Hubless"),
+// and one found later installs as soon as the window is closed to the tray, or when Hubless quits. Either way Hubless
+// restarts into the new version by itself. While the window is open it only offers "Restart to update".
+updater.onReady = () => {
+  const s = updater.status
+  if (s.state === 'ready' && !s.needsPassword && (updater.installsNow || !win?.isVisible())) void updater.install()
+}
+updater.onInstalled = (execPath) => restart(execPath)
 
 function createWindow() {
   win = new BrowserWindow({
@@ -77,7 +89,13 @@ function createWindow() {
     // With "keep running in the tray", closing hides the window so battery alerts keep working.
     if (!quitting && !SHOTS && loadSettings().runInTray && tray.available) {
       e.preventDefault()
-      void win?.webContents.executeJavaScript('window.__flush ? window.__flush() : null').finally(() => win?.hide())
+      void win?.webContents
+        .executeJavaScript('window.__flush ? window.__flush() : null')
+        .finally(() => {
+          win?.hide()
+          const u = updater.status
+          if (u.state === 'ready' && !u.needsPassword) void updater.install()
+        })
       return
     }
     if (flushed || !win) return
@@ -199,6 +217,7 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate'> =
   updateStatus: async () => updater.status,
   checkForUpdates: () => updater.check(),
   installUpdate: async () => updater.install(),
+  deferUpdate: async () => updater.defer(),
   setAppSettings: async (patch) => {
     // Only the known settings, with the right types, reach the settings file and the autostart entry.
     const p = (patch ?? {}) as Record<string, unknown>
