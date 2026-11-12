@@ -244,7 +244,7 @@ test/manager.test.ts covers it.
 - Shared UI: MouseLimits gained buttons/liftOff/debounceMax/filters/motionSync/rippleControl; debounce shows on the Sensor
   page when a mouse has no Buttons page.
 
-## Unreleased: Razer (2026-11-12)
+## v0.19.0 (2026-11-12): Razer, device reports
 - data/razer.json from tools/extract-razer.py (parses OpenRazer's razermouse_driver.c switch blocks: per-pid transaction
   id, polling command v1/v2 + send-twice, DPI stages or not, interface, wait). 103 pids claimed (get_dpi_xy + polling);
   byte-DPI ancients (Naga Hex etc.) and models without DPI are left as "coming soon".

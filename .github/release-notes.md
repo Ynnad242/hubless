@@ -1,15 +1,15 @@
-## What's new in 0.18.0
+## What's new in 0.19.0
 
-- **Updates install themselves.** Every time Hubless starts it checks for a new version. If there is one, it shows
-  "Updating Hubless", installs it and reopens; if not, it just opens. No password needed: the packages include a small
-  helper that only installs the verified latest Hubless release. Your settings and devices are kept.
-- **Version and updates in ⚙ Settings**, with "Check now" and "Update now".
-- **WLmouse Ying support** (on the cable): DPI stages, polling rate, lift-off distance, angle snapping, motion sync,
-  ripple control and click debounce, with automatic backups.
-- **[Supported devices page](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md)** listing what works with each
-  device.
+- **Razer mice** (74 models, wired and HyperSpeed wireless: Viper, DeathAdder, Basilisk, Cobra, Naga and more): DPI
+  stages, polling rate up to 8000 Hz on 8K models, and battery level. Built from OpenRazer's protocol notes and tested
+  against a simulated mouse, not yet on real hardware, so they're marked untested. Hubless checks every reply before
+  writing anything, reads every change back and makes a backup first.
+- **Copy device report**: a read-only report for GitHub issues (Device settings, or a card's ⋯ menu), so owners can
+  help confirm untested devices. No serial numbers or personal data, and nothing is sent to the device.
+- `hubless --demo` now includes a simulated Razer Viper V3 Pro.
 
-Coming from 0.17.0 or older: install this version by hand once (below). From then on updates are automatic.
+Full list: [supported devices](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md). Installed 0.18.0? This
+update installs itself the next time you open Hubless.
 
 ## Install
 
