@@ -18,7 +18,7 @@ into their own memory.
 
 <div align="center">
 
-**[⬇ Download the latest release](https://github.com/Ynnad242/hubless/releases/latest)** · [Supported devices](DEVICES.md) · [Report a problem](https://github.com/Ynnad242/hubless/issues) · Free and open source, forever
+**[⬇ Download the latest release](https://github.com/Ynnad242/hubless/releases/latest)** · [Supported devices](DEVICES.md) · [Roadmap](ROADMAP.md) · [Report a problem](https://github.com/Ynnad242/hubless/issues) · Free and open source, forever
 
 </div>
 
