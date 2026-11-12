@@ -12,6 +12,8 @@ What's planned for Hubless, roughly in order. Want something else, or own a devi
 
 ## Keyboards
 
+- **Other Wooting keyboards** (Wooting 80HE, 60HE+, Two HE, UwU and older models): they speak the same protocol
+  as the 60HE Hubless already supports, with different layouts.
 - **Logitech G keyboards** (G915, G915 TKL, G PRO, G513, G815 and others): lighting, G-keys and game mode, over the
   same HID++ protocol Hubless already uses for Logitech mice.
 - **Custom keyboards with VIA or Vial** (QMK firmware): key mapping across layers, macros and lighting for any
