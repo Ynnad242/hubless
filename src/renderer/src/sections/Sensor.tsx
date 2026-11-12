@@ -241,9 +241,11 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
                   />
                 </Row>
               )}
-              <Row label="Angle snapping">
-                <Switch checked={draft.angleSnap} onCheckedChange={(v) => update((d) => (d.angleSnap = v))} />
-              </Row>
+              {state.limits?.angleSnap !== false && (
+                <Row label="Angle snapping">
+                  <Switch checked={draft.angleSnap} onCheckedChange={(v) => update((d) => (d.angleSnap = v))} />
+                </Row>
+              )}
               {draft.extras && (
                 <>
                   {(state.limits?.liftOff ?? [1, 2]).length > 0 && (

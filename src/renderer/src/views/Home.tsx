@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import {
-  BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, ImagePlus, Lock, MoreHorizontal, Moon, Radio, Settings2, Trash2, Usb
+  BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, ClipboardCopy, ImagePlus, Lock, MoreHorizontal, Moon, Radio, Settings2, Trash2, Usb
 } from 'lucide-react'
 import { toast } from 'sonner'
 import type { AppSnapshot, DeviceSummary } from '@shared/types'
@@ -9,6 +9,7 @@ import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 import { DeviceArt } from '@/components/DeviceArt'
+import { copyDeviceReport } from '@/lib/report'
 import { cn } from '@/lib/utils'
 import { photoFor } from '@shared/devices'
 
@@ -101,6 +102,11 @@ function DeviceCard({ d, image, ownImage, onOpen, onImage, onClearImage, onForge
               <ImagePlus className="size-4" /> Use your own photo…
             </DropdownMenuItem>
             {ownImage && <DropdownMenuItem onSelect={onClearImage}>Use the default picture</DropdownMenuItem>}
+            {d.status !== 'inactive' && (
+              <DropdownMenuItem onSelect={() => copyDeviceReport(d.id)}>
+                <ClipboardCopy className="size-4" /> Copy device report
+              </DropdownMenuItem>
+            )}
             {d.status === 'inactive' && (
               <>
                 <DropdownMenuSeparator />

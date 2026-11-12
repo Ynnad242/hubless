@@ -243,3 +243,17 @@ test/manager.test.ts covers it.
 - No button remapping (protocol not known yet); no wireless receiver (36a7:a874) support yet. Photo: data/devices/wlmouse-ying.webp.
 - Shared UI: MouseLimits gained buttons/liftOff/debounceMax/filters/motionSync/rippleControl; debounce shows on the Sensor
   page when a mouse has no Buttons page.
+
+## Unreleased: Razer (2026-11-12)
+- data/razer.json from tools/extract-razer.py (parses OpenRazer's razermouse_driver.c switch blocks: per-pid transaction
+  id, polling command v1/v2 + send-twice, DPI stages or not, interface, wait). 103 pids claimed (get_dpi_xy + polling);
+  byte-DPI ancients (Naga Hex etc.) and models without DPI are left as "coming soon".
+- src/main/razer/razer.ts: HidLink (node-hid feature report 0, 91 bytes with the id) → RazerTransport (checks class/cmd,
+  status) → RazerSession (readAll validates before any write, plan/restorePlan pure + tested, read-back after save,
+  backup before first change). Battery % = byte*100/255. No hardware tested: summary.verified = false.
+- src/main/razer/sim.ts: strict simulator used by tests and --demo (simulated Viper V3 Pro wireless).
+- Gotcha: the v2 polling read declares data size 1 but returns the code in byte 1; the transport returns all 80 args.
+- A Razer whose answers don't validate is put in manager.refused (card shows why, no retries, nothing written).
+- "Copy device report" (Device settings, and the home card's ⋯ menu): manager.report() — version, kernel, USB ids,
+  interfaces + HID report descriptors from sysfs, firmware, raw readings. No serials or paths; main writes the clipboard
+  (the renderer has no clipboard permission). Nothing is sent to the device.

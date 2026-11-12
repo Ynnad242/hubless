@@ -1358,7 +1358,9 @@ protocol layouts), which Hubless then checked against real hardware wherever pos
   > COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
   > OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-- **OpenRazer** (GPL-2.0-or-later) — Razer model names, USB ids and maximum DPI in `data/mice.json`.
+- **OpenRazer** (GPL-2.0-or-later) — Razer model names, USB ids and maximum DPI in `data/mice.json`, and the Razer
+  protocol facts in `data/razer.json` (report layout, command ids, per-model transaction ids and polling command),
+  extracted by `tools/extract-razer.py`. Hubless's Razer driver is its own code.
   https://github.com/openrazer/openrazer
 - **Solaar** (GPL-2.0) and **libratbag** — Logitech HID++ background. https://github.com/pwr-Solaar/Solaar
 - **egctl** (AGPL-3.0-or-later) — Endgame Gear OP1 8k v2 config offsets, used as a reference for the OP1 8k layout.

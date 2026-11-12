@@ -9,7 +9,7 @@ const call =
 const methods = [
   'snapshot', 'mouseState', 'saveProfile', 'previewHits', 'watchDepth', 'activateProfile', 'setProfileEnabled', 'replaceProfile',
   'backup', 'listBackups', 'restoreBackup', 'openBackupsFolder', 'exportProfile', 'importProfile', 'grantAccess', 'forgetDevice', 'appSettings', 'setAppSettings',
-  'deviceImages', 'chooseDeviceImage', 'clearDeviceImage', 'appInfo', 'readDocument', 'deleteAllData', 'updateStatus', 'checkForUpdates', 'installUpdate', 'deferUpdate',
+  'deviceImages', 'chooseDeviceImage', 'clearDeviceImage', 'appInfo', 'readDocument', 'deleteAllData', 'updateStatus', 'checkForUpdates', 'installUpdate', 'deferUpdate', 'copyDeviceReport',
   'keyboardState', 'keyboardAction', 'keyboardAnalog', 'headsetState', 'setHeadset'
 ]
 

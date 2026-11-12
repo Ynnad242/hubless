@@ -155,3 +155,25 @@ takes exactly the payload the read returns, `[profile, values…]`. Active profi
 Checked on hardware: every write above reads back as written, and a backup (the read payloads) restores byte for byte.
 On the cable the Ying answers `a2` (unsupported) to 2000/4000/8000 Hz; those rates are presumably for its wireless 8K
 receiver (`36a7:a874`), which Hubless doesn't claim yet.
+
+# Razer mice (per OpenRazer; not yet checked on hardware by Hubless)
+
+90-byte feature report, report id 0, on interface 0 (3 on Basilisk V3 / Naga X and a few others):
+`status, transaction id, remaining packets BE16, protocol 0, data size, class, command, args[80], crc, 0`.
+crc = XOR of bytes 2..87. Status in the reply: 1 busy (treated as ok), 2 ok, 3 failed, 4 timeout (wireless mouse
+asleep), 5 not supported. Reads set bit 7 of the command. The transaction id is per model (`0x1f` on current mice,
+`0x3f` on some, `0xff` on older ones); `data/razer.json` lists it, with the interface and how long to wait.
+
+| Setting | Class:cmd read / write | Args |
+|---|---|---|
+| Firmware | `00:81` | `[major, minor]` |
+| Polling (classic) | `00:85` / `00:05` | `[code]`: `08` 125, `02` 500, `01` 1000 |
+| Polling (8K models) | `00:c0` / `00:40` | `[0, code]`: `40` 125, `20` 250, `10` 500, `08` 1000, `04` 2000, `02` 4000, `01` 8000; some models want the write twice (arg 0 then 1). The read declares size 1 but the code is in byte 1 |
+| DPI | `04:85` / `04:05` | `[storage, x BE16, y BE16, 0, 0]`; writes use storage 1 |
+| DPI stages | `04:86` / `04:06` (size 0x26) | `[1, active (1-based), count, (n, x BE16, y BE16, 0, 0) × count]`, up to 5 |
+| Battery | `07:80` | byte 1 = level 0..255 |
+| Charging | `07:84` | byte 1 = 0/1 |
+
+Hubless writes stages then sets the live DPI to the active stage, reads everything back after each save, and stops
+before writing anything if a read doesn't look like this layout. `test/razer.test.ts` runs every claimed model against
+`src/main/razer/sim.ts`, a strict simulated mouse (wrong checksum, transaction id or size → command fails).

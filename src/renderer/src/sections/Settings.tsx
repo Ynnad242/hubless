@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FolderOpen, HardDriveDownload, History } from 'lucide-react'
+import { ClipboardCopy, FolderOpen, HardDriveDownload, History } from 'lucide-react'
 import { toast } from 'sonner'
 import type { BackupInfo, DeviceSummary } from '@shared/types'
 import { Button } from '@/components/ui/button'
@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { MouseArt } from '@/components/DeviceArt'
 import { Canvas, Caption, SidePanel } from '@/components/kit'
 import type { MouseCtl } from '@/hooks/useMouse'
+import { copyDeviceReport } from '@/lib/report'
 
 const FEATURE_NAMES: Record<number, string> = {
   0x0000: 'Root', 0x0001: 'Feature set', 0x0003: 'Firmware info', 0x0005: 'Device name', 0x1004: 'Battery',
@@ -56,6 +57,16 @@ export function Settings({ mouse, device, photo }: { mouse: MouseCtl; device: De
               <FolderOpen className="size-4" /> Open backups folder
             </Button>
           </div>
+        </div>
+        <div className="space-y-2 border-t pt-4">
+          <Caption>Help improve support</Caption>
+          <p className="text-xs text-muted-foreground">
+            {device.verified ? 'Something not working right?' : 'Hubless hasn’t been tested on this model yet.'} Copy a report of what the mouse told Hubless and
+            paste it into a GitHub issue. Copying it changes nothing on the mouse.
+          </p>
+          <Button variant="secondary" size="sm" className="justify-start" onClick={() => copyDeviceReport(device.id)}>
+            <ClipboardCopy className="size-4" /> Copy device report
+          </Button>
         </div>
         {state.features.length > 0 && <div className="mt-auto border-t pt-4">
           <button type="button" className="text-xs text-muted-foreground hover:text-foreground" onClick={() => setFeatures((f) => !f)}>

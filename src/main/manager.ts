@@ -2,13 +2,15 @@
 // and tells the UI what changed. One driver per family: Logitech HID++ mice, Wooting keyboards, Fractal Scape.
 import { accessSync, constants, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { EventEmitter } from 'node:events'
-import { homedir } from 'node:os'
-import { join } from 'node:path'
+import { homedir, release } from 'node:os'
+import { basename, join } from 'node:path'
 import HID from 'node-hid'
 import type { AppSnapshot, DeviceKind, DeviceSummary } from '@shared/types'
 import { lookup } from './catalog'
 import { EG_VID, EndgameSession, EndgameTransport, MODELS as EG_MODELS, endgameEndpoint } from './endgame/op1'
 import { MODELS as WL_MODELS, WlSession, WlTransport, wlmouseEndpoint } from './wlmouse/ying'
+import { HidLink, MODELS as RAZER_MODELS, RazerSession, RazerTransport, razerEndpoint } from './razer/razer'
+import { SimRazer } from './razer/sim'
 import { ScapeSession, ScapeTransport, scapeEndpoint } from './fractal/scape'
 import { LogitechDevice } from './logitech/device'
 import { HidrawTransport, Offline, Timeout, endpoints, type Transport } from './logitech/hidpp'
@@ -28,9 +30,10 @@ type Live =
   | { kind: 'scape'; summary: DeviceSummary; path: string; session: ScapeSession }
   | { kind: 'endgame'; summary: DeviceSummary; path: string; session: EndgameSession }
   | { kind: 'wlmouse'; summary: DeviceSummary; path: string; session: WlSession }
+  | { kind: 'razer'; summary: DeviceSummary; path: string; session: RazerSession }
 
 /** Any mouse the mouse pages can edit. */
-export type MouseSession = LogitechSession | EndgameSession | WlSession
+export type MouseSession = LogitechSession | EndgameSession | WlSession | RazerSession
 
 /** Peripherals recognised before (or without) a driver. */
 const KNOWN: { vid: number; pid?: number; kind: DeviceKind; vendor: string; name?: string }[] = [
@@ -53,6 +56,7 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 const cleanName = (product: string, vendor: string) =>
   product.replace(new RegExp(`^(${vendor.split(' ')[0]}\\s*)+`, 'i'), '').replace(/\s*\(ARM\)|\s+Dongle$/i, '').trim() || product
 const wpidOf = (slots: { slot: number; wpid: number }[], slot: number) => slots.find((x) => x.slot === slot)?.wpid ?? 0
+const isMouse = (e: Live): e is Extract<Live, { session: MouseSession }> => ['logitech', 'endgame', 'wlmouse', 'razer'].includes(e.kind)
 const offline = (e: unknown) => e instanceof Offline || e instanceof Timeout
 
 export class DeviceManager extends EventEmitter {
@@ -60,6 +64,8 @@ export class DeviceManager extends EventEmitter {
   private transports = new Map<string, Transport>()
   private asleepIds = new Map<string, DeviceSummary>()
   private unsupported = new Map<string, DeviceSummary>()
+  /** Mice whose driver refused them (answers it didn't expect): shown with the reason, not retried every scan. */
+  private refused = new Map<string, string>()
   private known = new Map<string, DeviceSummary>()
   private missingPermission: string[] = []
   private searching = true
@@ -129,6 +135,50 @@ export class DeviceManager extends EventEmitter {
     this.known.set(id, { ...k, lastSeen: Date.now() })
     mkdirSync(CONFIG, { recursive: true })
     writeFileSync(REGISTRY, JSON.stringify([...this.known.values()], null, 1))
+  }
+
+  /**
+   * A read-only report about one device for a GitHub issue: model, USB ids and interfaces, HID report descriptors,
+   * firmware and the raw settings Hubless read. Nothing is sent to the device; serial numbers and paths are left out.
+   */
+  report(id: string, appVersion: string) {
+    const e = this.live.get(id)
+    const d = e?.summary ?? this.unsupported.get(id) ?? this.known.get(id)
+    if (!d) throw new Error('That device is not known.')
+    const hid = this.hid.length ? this.hid : HID.devices()
+    const usb = e ? hid.find((x) => x.path === e.path) : hid.find((x) => id.endsWith(`-${x.productId.toString(16).padStart(4, '0')}`) && slug(d.vendor) === id.slice(0, id.lastIndexOf('-')))
+    const hex = (b: ArrayLike<number>) => Buffer.from(Array.from(b)).toString('hex')
+    const lines = [
+      '### Hubless device report',
+      '',
+      `- Hubless ${appVersion}, Linux ${release()}`,
+      `- Device: ${d.vendor} ${d.name}, ${d.status}${d.connection ? `, ${d.connection}` : ''}${e ? `, driver: ${e.kind}` : ', no driver'}${d.verified ? ', verified' : ''}`
+    ]
+    if (usb) {
+      const vp = `${usb.vendorId.toString(16).padStart(4, '0')}:${usb.productId.toString(16).padStart(4, '0')}`
+      lines.push(`- USB id: \`${vp}\` (${usb.manufacturer ?? '?'} / ${usb.product ?? '?'})`, '', '| Interface | Usage page:usage | Report descriptor |', '|---|---|---|')
+      const seen = new Set<string>()
+      for (const x of hid.filter((y) => y.vendorId === usb.vendorId && y.productId === usb.productId)) {
+        let desc = ''
+        if (x.path && !seen.has(x.path)) {
+          seen.add(x.path)
+          try {
+            desc = hex(readFileSync(`/sys/class/hidraw/${basename(x.path)}/device/report_descriptor`))
+          } catch {
+            desc = '(unreadable)'
+          }
+        }
+        lines.push(`| ${x.interface} | ${(x.usagePage ?? 0).toString(16)}:${(x.usage ?? 0).toString(16)} | ${desc ? `\`${desc}\`` : '″'} |`)
+      }
+    }
+    if (e && (e.kind === 'razer' || e.kind === 'wlmouse' || e.kind === 'endgame')) {
+      const s = e.session
+      lines.push('', `- Firmware: ${s.fw || '?'}`)
+      if (e.kind === 'razer') lines.push(`- Razer model: ${e.session.model.id}, transaction id 0x${e.session.model.dpi![2].toString(16)}`)
+      const readings = e.kind === 'endgame' ? { config: e.session.config } : (s as RazerSession | WlSession).readings
+      for (const [k, v] of Object.entries(readings)) if (v) lines.push(`- ${k}: \`${hex(v).replace(/(00)+$/, '')}\``)
+    }
+    return lines.join('\n') + '\n'
   }
 
   forget(id: string) {
@@ -201,6 +251,14 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
+  private razerSummary(id: string, s: RazerSession, status: DeviceSummary['status'] = 'ready'): DeviceSummary {
+    return {
+      id, kind: 'mouse', vendor: 'Razer', name: s.name, status, battery: s.battery,
+      connection: s.model.wireless ? 'HyperSpeed wireless' : 'USB cable',
+      capabilities: ['sensor', 'device'], verified: false, demo: false, lastSeen: Date.now()
+    }
+  }
+
   private headsetSummary(id: string, s: ScapeSession): DeviceSummary {
     const st = s.state
     return {
@@ -228,6 +286,7 @@ export class DeviceManager extends EventEmitter {
       await this.scanHeadset(hid)
       await this.scanEndgame(hid)
       await this.scanWlmouse(hid)
+      await this.scanRazer(hid)
       // Recognised peripherals that no driver claimed: the vendors above, plus any mouse in the built-in catalog.
       this.unsupported.clear()
       const seen = new Set<string>()
@@ -247,7 +306,7 @@ export class DeviceManager extends EventEmitter {
           id, kind: (model?.kind === 'keyboard' ? 'keyboard' : (k?.kind ?? 'mouse')) as DeviceKind, vendor,
           name: model?.name ?? k!.name ?? cleanName(d.product ?? 'Device', vendor),
           connection: 'USB', status: 'unsupported', battery: null, capabilities: [], verified: false, demo: false, lastSeen: Date.now(),
-          note: model?.maxDpi ? `Up to ${model.maxDpi.toLocaleString('en-US')} DPI · support coming soon` : undefined,
+          note: this.refused.get(id) ?? (model?.maxDpi ? `Up to ${model.maxDpi.toLocaleString('en-US')} DPI · support coming soon` : undefined),
           model: model && { protocol: model.protocol, maxDpi: model.maxDpi, popular: model.popular }
         }
         this.unsupported.set(id, summary)
@@ -315,6 +374,25 @@ export class DeviceManager extends EventEmitter {
     } catch (e) {
       t.close()
       if (!offline(e)) console.error('WLmouse failed to load', e)
+    }
+  }
+
+  private async scanRazer(list: HID.Device[]) {
+    const ep = razerEndpoint(list)
+    if (!ep || !canOpen(ep.path)) return
+    const id = `razer-${ep.model.pid.toString(16).padStart(4, '0')}`
+    if (this.live.has(id) || this.refused.has(id)) return
+    const link = await HidLink.open(ep.path, ep.model.waitMs)
+    const s = new RazerSession(new RazerTransport(link, ep.model.dpi![2]), ep.model, ep.serial)
+    try {
+      await s.load()
+      const summary = this.razerSummary(id, s)
+      this.live.set(id, { kind: 'razer', summary, path: ep.path, session: s })
+      this.remember(summary)
+    } catch (e) {
+      link.close()
+      // A wireless mouse that is off answers "timeout": try again on a later scan. Anything else: leave it alone.
+      if (!offline(e)) this.refused.set(id, `Hubless couldn't read this mouse safely, so it changed nothing (${(e as Error).message})`)
     }
   }
 
@@ -415,7 +493,12 @@ export class DeviceManager extends EventEmitter {
       const fake = (id: string, kind: DeviceKind, vendor: string, name: string): DeviceSummary => ({
         id, kind, vendor, name, status: 'inactive', connection: 'USB', battery: null, capabilities: [], verified: false, demo: true, lastSeen: 0
       })
-      this.known.set('demo-old', fake('demo-old', 'mouse', 'Razer', 'DeathAdder V3'))
+      // A simulated Razer Viper V3 Pro (wireless), driven through the real Razer driver.
+      const viper = [...RAZER_MODELS.values()].find((m) => m.id === 'VIPER_V3_PRO_WIRELESS')!
+      const r = new RazerSession(new RazerTransport(new SimRazer(viper), viper.dpi![2]), viper, '')
+      await r.load()
+      this.live.set('razer-demo', { kind: 'razer', summary: { ...this.razerSummary('razer-demo', r), demo: true }, session: r, path: 'demo-razer' })
+      this.known.set('demo-old', fake('demo-old', 'mouse', 'Endgame Gear', 'OP1 8k'))
     }
     this.searching = false
     this.changed()
@@ -462,6 +545,9 @@ export class DeviceManager extends EventEmitter {
       } else if (e.kind === 'wlmouse') {
         await e.session.ping()
         e.summary = this.wlSummary(id, e.session)
+      } else if (e.kind === 'razer') {
+        await e.session.ping()
+        e.summary = this.razerSummary(id, e.session)
       } else {
         await e.session.ping()
       }
@@ -515,13 +601,13 @@ export class DeviceManager extends EventEmitter {
   /** Any editable mouse (Logitech or Endgame Gear). */
   runMouse<T>(id: string, job: (s: MouseSession) => Promise<T>): Promise<T> {
     const e = this.live.get(id)
-    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame' && e.kind !== 'wlmouse')) throw new Error('That mouse is not connected right now.')
+    if (!e || !isMouse(e)) throw new Error('That mouse is not connected right now.')
     return this.guard(id, () => job(e.session), 'The mouse is asleep. Move it or click a button to wake it up.')
   }
 
   mouseSession(id: string): MouseSession {
     const e = this.live.get(id)
-    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame' && e.kind !== 'wlmouse')) throw new Error('That mouse is not connected right now.')
+    if (!e || !isMouse(e)) throw new Error('That mouse is not connected right now.')
     return e.session
   }
 

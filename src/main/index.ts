@@ -1,6 +1,6 @@
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
-import { BrowserWindow, Menu, Notification, app, dialog, ipcMain, session, shell } from 'electron'
+import { BrowserWindow, Menu, Notification, app, clipboard, dialog, ipcMain, session, shell } from 'electron'
 import type { Hits, HublessApi, ProfileData } from '@shared/types'
 import { DeviceManager } from './manager'
 import { TrayController, loadSettings, saveSettings } from './tray'
@@ -218,6 +218,7 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate'> =
   checkForUpdates: () => updater.check(),
   installUpdate: async () => updater.install(),
   deferUpdate: async () => updater.defer(),
+  copyDeviceReport: async (id) => clipboard.writeText(manager.report(String(id), app.getVersion())),
   setAppSettings: async (patch) => {
     // Only the known settings, with the right types, reach the settings file and the autostart entry.
     const p = (patch ?? {}) as Record<string, unknown>

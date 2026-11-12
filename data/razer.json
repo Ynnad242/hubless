@@ -1,0 +1,5199 @@
+{
+ "generated": "tools/extract-razer.py from OpenRazer driver/razermouse_driver.c",
+ "models": [
+  {
+   "id": "ABYSSUS_1800",
+   "pid": 32,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "ABYSSUS_2000",
+   "pid": 94,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_HEX_RED",
+   "pid": 54,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA",
+   "pid": 21,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_2012",
+   "pid": 46,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_2014",
+   "pid": 64,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_HEX",
+   "pid": 65,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_2012_WIRED",
+   "pid": 36,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_2012_WIRELESS",
+   "pid": 37,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_WIRED",
+   "pid": 68,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_WIRELESS",
+   "pid": 69,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_TE_WIRED",
+   "pid": 70,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": null,
+   "setPoll": null,
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "TAIPAN",
+   "pid": 52,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "IMPERATOR",
+   "pid": 47,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "VARSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "OUROBOROS",
+   "pid": 50,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_2013",
+   "pid": 55,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "OROCHI_2013",
+   "pid": 57,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "VARSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "OROCHI_CHROMA",
+   "pid": 72,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_CHROMA",
+   "pid": 67,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_HEX_V2",
+   "pid": 80,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_CHROMA",
+   "pid": 83,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_EPIC_CHROMA",
+   "pid": 62,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_EPIC_CHROMA_DOCK",
+   "pid": 63,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_ELITE",
+   "pid": 92,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DIAMONDBACK_CHROMA",
+   "pid": 76,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": null,
+   "setPoll": null,
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "ABYSSUS_V2",
+   "pid": 91,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_3500",
+   "pid": 84,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "LANCEHEAD_WIRED",
+   "pid": 89,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    63
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    63
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "LANCEHEAD_WIRELESS",
+   "pid": 90,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    63
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    63
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "LANCEHEAD_TE_WIRED",
+   "pid": 96,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_TRINITY",
+   "pid": 103,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_ELITE",
+   "pid": 108,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_ESSENTIAL",
+   "pid": 110,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_ESSENTIAL_2021",
+   "pid": 152,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_1800",
+   "pid": 56,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "LANCEHEAD_WIRELESS_RECEIVER",
+   "pid": 111,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "LANCEHEAD_WIRELESS_WIRED",
+   "pid": 112,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_WIRELESS_RECEIVER",
+   "pid": 114,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    63
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    63
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "MAMBA_WIRELESS_WIRED",
+   "pid": 115,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    63
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    63
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "ABYSSUS_ELITE_DVA_EDITION",
+   "pid": 106,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "ABYSSUS_ESSENTIAL",
+   "pid": 107,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_ESSENTIAL_WHITE_EDITION",
+   "pid": 113,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER",
+   "pid": 120,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_MINI",
+   "pid": 138,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_MINI_SE_WIRED",
+   "pid": 158,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "VIPER_MINI_SE_WIRELESS",
+   "pid": 159,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "VIPER_ULTIMATE_WIRED",
+   "pid": 122,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_ULTIMATE_WIRELESS",
+   "pid": 123,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK",
+   "pid": 100,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_ESSENTIAL",
+   "pid": 101,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_ULTIMATE_RECEIVER",
+   "pid": 136,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_ULTIMATE_WIRED",
+   "pid": 134,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V2",
+   "pid": 133,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3",
+   "pid": 153,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V2",
+   "pid": 132,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V2_PRO_WIRED",
+   "pid": 124,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    63
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    63
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V2_PRO_WIRELESS",
+   "pid": 125,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    63
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    63
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V2_MINI",
+   "pid": 140,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    63
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    63
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    63
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    63
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V2_X_HYPERSPEED",
+   "pid": 156,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_2000",
+   "pid": 79,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "ATHERIS_RECEIVER",
+   "pid": 98,
+   "interface": 0,
+   "waitMs": 400,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_X_HYPERSPEED",
+   "pid": 131,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_X",
+   "pid": 150,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_LEFT_HANDED_2020",
+   "pid": 141,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_PRO_WIRED",
+   "pid": 143,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_PRO_WIRELESS",
+   "pid": 144,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_V2_PRO_WIRED",
+   "pid": 167,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_V2_PRO_WIRELESS",
+   "pid": 168,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_8K",
+   "pid": 145,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "OROCHI_V2_RECEIVER",
+   "pid": 148,
+   "interface": 0,
+   "waitMs": 400,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "OROCHI_V2_BLUETOOTH",
+   "pid": 149,
+   "interface": 0,
+   "waitMs": 400,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_RECEIVER",
+   "pid": 119,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_WIRED",
+   "pid": 128,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_V2_PRO_WIRED",
+   "pid": 165,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_V2_PRO_WIRELESS",
+   "pid": 166,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "COBRA_HYPERSPEED_WIRELESS",
+   "pid": 219,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "COBRA_HYPERSPEED_WIRED",
+   "pid": 218,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "COBRA_PRO_WIRED",
+   "pid": 175,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "COBRA_PRO_WIRELESS",
+   "pid": 176,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V3",
+   "pid": 178,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "DEATHADDER_V3_PRO_WIRED",
+   "pid": 182,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V3_PRO_WIRELESS",
+   "pid": 183,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V3_PRO_WIRED_ALT",
+   "pid": 194,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V3_PRO_WIRELESS_ALT",
+   "pid": 195,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V3_HYPERSPEED_WIRED",
+   "pid": 196,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V3_HYPERSPEED_WIRELESS",
+   "pid": 197,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "HYPERPOLLING_WIRELESS_DONGLE",
+   "pid": 179,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "BASILISK_V3_PRO_WIRED",
+   "pid": 170,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_PRO_WIRELESS",
+   "pid": 171,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_35K",
+   "pid": 203,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_PRO_35K_WIRED",
+   "pid": 204,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_PRO_35K_WIRELESS",
+   "pid": 205,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_PRO_35K_PHANTOM_GREEN_EDITION_WIRED",
+   "pid": 214,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_PRO_35K_PHANTOM_GREEN_EDITION_WIRELESS",
+   "pid": 215,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_MINI_RECEIVER",
+   "pid": 154,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V2_LITE",
+   "pid": 161,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "COBRA",
+   "pid": 163,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    255
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    255
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": null,
+   "charging": null,
+   "idle": null,
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_V2_HYPERSPEED_RECEIVER",
+   "pid": 180,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_V3_HYPERSPEED",
+   "pid": 184,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_V3_X_HYPERSPEED",
+   "pid": 185,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_MOBILE_RECEIVER",
+   "pid": 212,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "BASILISK_MOBILE_WIRED",
+   "pid": 211,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "DEATHADDER_V4_PRO_WIRED",
+   "pid": 190,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "DEATHADDER_V4_PRO_WIRELESS",
+   "pid": 191,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "VIPER_V3_PRO_WIRED",
+   "pid": 192,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_V3_PRO_WIRELESS",
+   "pid": 193,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate2",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate2",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": true
+  },
+  {
+   "id": "VIPER_V3_PRO_SE_WIRED",
+   "pid": 222,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "VIPER_V3_PRO_SE_WIRELESS",
+   "pid": 223,
+   "interface": 0,
+   "waitMs": 60,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "NAGA_EPIC",
+   "pid": 31,
+   "interface": 0,
+   "waitMs": 1,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy_byte",
+    null,
+    255
+   ],
+   "setDpi": null,
+   "stages": null,
+   "setStages": null,
+   "poll": [
+    "get_polling_rate",
+    null,
+    255
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    255
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    255
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    255
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    255
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    255
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_V2_VERTICAL_EDITION_WIRELESS",
+   "pid": 200,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_V2_VERTICAL_EDITION_WIRED",
+   "pid": 199,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_V2_WIRED",
+   "pid": 208,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": false,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  },
+  {
+   "id": "PRO_CLICK_V2_WIRELESS",
+   "pid": 209,
+   "interface": 0,
+   "waitMs": 31,
+   "wireless": true,
+   "dpi": [
+    "get_dpi_xy",
+    "NOSTORE",
+    31
+   ],
+   "setDpi": null,
+   "stages": [
+    "get_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "setStages": [
+    "set_dpi_stages",
+    "VARSTORE",
+    31
+   ],
+   "poll": [
+    "get_polling_rate",
+    null,
+    31
+   ],
+   "setPoll": [
+    "set_polling_rate",
+    "polling_rate",
+    31
+   ],
+   "battery": [
+    "get_battery_level",
+    null,
+    31
+   ],
+   "charging": [
+    "get_charging_status",
+    null,
+    31
+   ],
+   "idle": [
+    "get_idle_time",
+    null,
+    31
+   ],
+   "firmware": [
+    "get_firmware_version",
+    null,
+    31
+   ],
+   "pollTwice": false
+  }
+ ]
+}

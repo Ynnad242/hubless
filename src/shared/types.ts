@@ -59,6 +59,7 @@ export interface MouseLimits {
   filters?: boolean // slam-click and jitter filters (default true)
   motionSync?: boolean // default true
   rippleControl?: boolean // default true
+  angleSnap?: boolean // default true
 }
 
 export interface Battery {
@@ -257,6 +258,8 @@ export interface HublessApi {
   checkForUpdates(): Promise<UpdateStatus>
   /** install a downloaded update and restart */
   installUpdate(): Promise<void>
+  /** copy a read-only report about a device (for a GitHub issue) to the clipboard */
+  copyDeviceReport(id: string): Promise<void>
   /** "Not now" on the startup update screen: install when Hubless closes instead */
   deferUpdate(): Promise<void>
   onUpdate(cb: (s: UpdateStatus) => void): () => void

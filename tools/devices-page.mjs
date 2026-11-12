@@ -19,9 +19,13 @@ const workingNames = new Set(working.map(([v, n]) => `${v}|${n}`.toLowerCase()))
 
 // Logitech HID++ 2.0 mice are driven by the Logitech driver (DPI, polling, buttons, onboard profiles).
 const logitech = catalog.filter((m) => m.protocol === 'logitech-hidpp20' && m.kind === 'mouse' && !workingNames.has(`${m.vendor}|${m.name}`.toLowerCase()))
+// Razer mice the Razer driver handles (same filter as src/main/razer/razer.ts MODELS).
+const razerData = JSON.parse(readFileSync(new URL('../data/razer.json', import.meta.url), 'utf8')).models.filter((m) => m.dpi?.[0] === 'get_dpi_xy' && m.poll)
+const razerPids = new Map(razerData.map((m) => [m.pid, m]))
+const razer = catalog.filter((m) => m.vendor === 'Razer' && m.ids.some((i) => i.vid === 0x1532 && razerPids.has(i.pid)))
 const vendors = new Map()
 for (const m of catalog) {
-  if (workingNames.has(`${m.vendor}|${m.name}`.toLowerCase()) || logitech.includes(m)) continue
+  if (workingNames.has(`${m.vendor}|${m.name}`.toLowerCase()) || logitech.includes(m) || razer.includes(m)) continue
   if (!vendors.has(m.vendor)) vendors.set(m.vendor, [])
   vendors.get(m.vendor).push(m)
 }
@@ -50,6 +54,8 @@ ${working.map(([v, n, k, id, what]) => `| **${v} ${n}** | ${k} | ${id} | ${what}
 
 ## 🧪 Should work
 
+### Logitech
+
 Logitech G mice that use HID++ 2.0 (${logitech.length} models), wired or through their LIGHTSPEED receiver: **DPI, polling rate,
 buttons and onboard profiles**. The PRO X2 SUPERSTRIKE's trigger settings are specific to that mouse.
 
@@ -62,6 +68,32 @@ ${logitech.sort((a, b) => Number(b.popular) - Number(a.popular) || a.name.locale
 </details>
 
 If you try one of these, please [report how it went](https://github.com/Ynnad242/hubless/issues/new), good or bad.
+
+### Razer
+
+${razer.length} Razer mice, wired or through their HyperSpeed receiver: **DPI stages (or DPI on older models), polling
+rate (up to 8000 Hz on 8K models) and battery level**. Built from OpenRazer's protocol notes and tested against a
+simulated mouse; not yet on real hardware. Hubless reads everything first, changes nothing if the mouse answers
+unexpectedly, and reads every change back.
+
+<details><summary>${razer.length} Razer mice · including ${razer.filter((m) => m.popular).slice(0, 4).map((m) => m.name).join(', ')}</summary>
+
+| Model | Max DPI | DPI stages | Polling up to | USB ids |
+|---|---|---|---|---|
+${razer
+  .sort((a, b) => Number(b.popular) - Number(a.popular) || a.name.localeCompare(b.name))
+  .map((m) => {
+    const rs = m.ids.map((i) => razerPids.get(i.pid)).filter(Boolean)
+    const stages = rs.some((r) => r.stages) ? 'yes' : 'one DPI'
+    const fast = rs.some((r) => r.poll[0] === 'get_polling_rate2') ? '8000 Hz' : '1000 Hz'
+    return `| ${m.name}${m.popular ? ' ⭐' : ''} | ${dpi(m)} | ${stages} | ${fast} | ${ids(m)} |`
+  })
+  .join('\n')}
+
+</details>
+
+If you own one of these, open it in Hubless and use **Device settings → Copy device report**, then paste it into an
+issue. Once a model checks out it moves to ✅ Works.
 
 ## 🔜 Recognised, support coming soon
 
