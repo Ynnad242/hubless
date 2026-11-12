@@ -1,3 +1,16 @@
+## What's new in 0.18.0
+
+- **Updates install themselves.** Every time Hubless starts it checks for a new version. If there is one, it shows
+  "Updating Hubless", installs it and reopens; if not, it just opens. No password needed: the packages include a small
+  helper that only installs the verified latest Hubless release. Your settings and devices are kept.
+- **Version and updates in ⚙ Settings**, with "Check now" and "Update now".
+- **WLmouse Ying support** (on the cable): DPI stages, polling rate, lift-off distance, angle snapping, motion sync,
+  ripple control and click debounce, with automatic backups.
+- **[Supported devices page](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md)** listing what works with each
+  device.
+
+Coming from 0.17.0 or older: install this version by hand once (below). From then on updates are automatic.
+
 ## Install
 
 Download the file for your Linux below, then:

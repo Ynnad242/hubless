@@ -207,7 +207,7 @@ test/manager.test.ts covers it.
   for the update check (only network use).
 - Gotcha: `npx asar extract-file` writes into the cwd — never run it from the project root (it overwrote package.json).
 
-## Unreleased: seamless updates (2026-11-11)
+## v0.18.0 (2026-11-11): seamless updates
 - Startup: the update found by the first check installs right away. The renderer covers the app with "Updating Hubless
   to X" (UpdateScreen in App.tsx, shown while status.startup) and the app restarts into the new version; "Not now"
   (deferUpdate) turns it into the banner. No update → nothing shown, the app just opens.
@@ -229,7 +229,7 @@ test/manager.test.ts covers it.
   → banner, file untouched while open, installed on quit. Not tested: close-to-tray install (demo mode has no tray),
   and the real pacman install through the helper (needs this package installed as root first).
 
-## Unreleased: WLmouse Ying (2026-11-11)
+## v0.18.0 (2026-11-11): WLmouse Ying
 - src/main/wlmouse/ying.ts: transport + codec (decode/plan, unit-tested in test/wlmouse.test.ts) + session. Protocol
   facts from OpenMouse's mouse-protocol (AGPL, code not copied); details in docs/PROTOCOL.md.
 - Gotcha: the config report is on interface 2. Interface 1 also has a usage-page-0xFFFF collection and just echoes the
