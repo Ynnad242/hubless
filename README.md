@@ -100,11 +100,12 @@ devices stay on the devices.
 |---|---|---|
 | Logitech PRO X2 SUPERSTRIKE | HITS triggers, DPI stages, polling, buttons, 5 onboard profiles | ✅ Tested on hardware |
 | Endgame Gear OP1 8k | DPI, polling up to 8 kHz, lift-off, angle snap, motion sync, ripple, debounce, buttons | ✅ Tested on hardware |
+| WLmouse Ying (cable) | DPI stages, polling, lift-off, angle snap, motion sync, ripple, debounce | ✅ Tested on hardware |
 | Wooting 60HE | Actuation, rapid trigger, per-key settings, key mapping, Mod-Tap / Snap Tap, lighting | ✅ Tested on hardware |
 | Fractal Design Scape | Battery, EQ, noise cancelling, sidetone, lighting | ✅ Tested on hardware |
 | 61 other Logitech G mice | DPI, polling, buttons, onboard profiles | 🧪 Should work, untested |
 
-About 160 more devices (Razer, SteelSeries, ASUS, Glorious, Roccat, WLmouse and more) are recognised by name and marked
+About 160 more devices (Razer, SteelSeries, ASUS, Glorious, Roccat and more) are recognised by name and marked
 "support coming soon"; they can't be configured yet. [DEVICES.md](DEVICES.md) lists every one.
 
 ## What to expect
@@ -153,14 +154,14 @@ Protocol notes: [docs/PROTOCOL.md](docs/PROTOCOL.md). The mouse catalog is gener
 
 ## Credits and legal
 
-Protocol knowledge builds on Solaar, libratbag, OpenRazer, egctl, scapectl, Wooting protocol notes and the
+Protocol knowledge builds on Solaar, libratbag, OpenRazer, egctl, OpenMouse, scapectl, Wooting protocol notes and the
 SUPERSTRIKE research by kazehana99k and SuperStrike Studio; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for
 those credits and the licenses of bundled libraries.
 
-Hubless is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting, Fractal Design, Endgame Gear or
-any other manufacturer. Product names and brands belong to their owners and are used only to identify compatible
+Hubless is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting, Fractal Design, Endgame Gear,
+WLmouse or any other manufacturer. Product names and brands belong to their owners and are used only to identify compatible
 hardware. Product photos in `data/devices/` belong to and are credited to their manufacturers (Logitech, Wooting, Fractal
-Design, Endgame Gear). They are not covered by the MIT license, are used only to show which hardware is supported, and
+Design, Endgame Gear, WLmouse). They are not covered by the MIT license, are used only to show which hardware is supported, and
 will be removed on request through an [issue](https://github.com/Ynnad242/hubless/issues).
 
 Hubless is free and always will be. It is MIT licensed.

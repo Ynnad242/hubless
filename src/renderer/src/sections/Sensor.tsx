@@ -246,15 +246,35 @@ export function Sensor({ mouse }: { mouse: MouseCtl }) {
               </Row>
               {draft.extras && (
                 <>
-                  <Row label="Lift-off distance">
-                    <Pick value={String(draft.extras.liftOffMm)} items={[['1', '1 mm'], ['2', '2 mm']]} onChange={(v) => update((d) => (d.extras!.liftOffMm = Number(v)))} />
-                  </Row>
-                  <Row label="Motion sync" hint="Aligns sensor frames with USB polls">
-                    <Switch checked={draft.extras.motionSync} onCheckedChange={(v) => update((d) => (d.extras!.motionSync = v))} />
-                  </Row>
-                  <Row label="Ripple control" hint="Smooths jitter at high DPI">
-                    <Switch checked={draft.extras.rippleControl} onCheckedChange={(v) => update((d) => (d.extras!.rippleControl = v))} />
-                  </Row>
+                  {(state.limits?.liftOff ?? [1, 2]).length > 0 && (
+                    <Row label="Lift-off distance">
+                      <Pick
+                        value={String(draft.extras.liftOffMm)}
+                        items={(state.limits?.liftOff ?? [1, 2]).map((mm) => [String(mm), `${mm} mm`])}
+                        onChange={(v) => update((d) => (d.extras!.liftOffMm = Number(v)))}
+                      />
+                    </Row>
+                  )}
+                  {state.limits?.motionSync !== false && (
+                    <Row label="Motion sync" hint="Aligns sensor frames with USB polls">
+                      <Switch checked={draft.extras.motionSync} onCheckedChange={(v) => update((d) => (d.extras!.motionSync = v))} />
+                    </Row>
+                  )}
+                  {state.limits?.rippleControl !== false && (
+                    <Row label="Ripple control" hint="Smooths jitter at high DPI">
+                      <Switch checked={draft.extras.rippleControl} onCheckedChange={(v) => update((d) => (d.extras!.rippleControl = v))} />
+                    </Row>
+                  )}
+                  {/* Mice without a Buttons page keep their click debounce here. */}
+                  {state.limits?.buttons === false && (state.limits.debounceMax ?? 25) > 0 && (
+                    <Row label="Click debounce" hint="Lower is faster; raise it if clicks double up">
+                      <Pick
+                        value={String(draft.extras.debounceMs)}
+                        items={Array.from({ length: (state.limits.debounceMax ?? 25) + 1 }, (_, ms) => [String(ms), `${ms} ms`])}
+                        onChange={(v) => update((d) => (d.extras!.debounceMs = Number(v)))}
+                      />
+                    </Row>
+                  )}
                 </>
               )}
               {draft.rateWiredHz != null && (

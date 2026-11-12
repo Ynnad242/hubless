@@ -228,3 +228,18 @@ test/manager.test.ts covers it.
   screen with progress → replaced → reopened as 0.90.1 → settings kept → no screen when already up to date; "Not now"
   → banner, file untouched while open, installed on quit. Not tested: close-to-tray install (demo mode has no tray),
   and the real pacman install through the helper (needs this package installed as root first).
+
+## Unreleased: WLmouse Ying (2026-11-11)
+- src/main/wlmouse/ying.ts: transport + codec (decode/plan, unit-tested in test/wlmouse.test.ts) + session. Protocol
+  facts from OpenMouse's mouse-protocol (AGPL, code not copied); details in docs/PROTOCOL.md.
+- Gotcha: the config report is on interface 2. Interface 1 also has a usage-page-0xFFFF collection and just echoes the
+  request back (status 00), which looks like "no answer".
+- On the cable only 125–1000 Hz are accepted (2K–8K → a2 unsupported). 1000 Hz reads as 01 or 10; 01 is written.
+- Backup = the read payloads keyed (page << 8 | read cmd); restore writes them with the write cmd (cmd & 0x7f).
+- Hardware: test/wlmouse-hw.test.ts (HUBLESS_HW=1) changes 11 settings with read-back, restores, compares byte for byte;
+  passed twice on firmware 2.18. Also checked through the app UI (preset 800 → mouse → back to 1600, backup made).
+  Original settings of the user's Ying: ~/.local/share/hubless/backups/3F311937/*_original.json.
+- Close the installed Hubless while running hardware tests: two processes talking to the same report collide.
+- No button remapping (protocol not known yet); no wireless receiver (36a7:a874) support yet. Photo: data/devices/wlmouse-ying.webp.
+- Shared UI: MouseLimits gained buttons/liftOff/debounceMax/filters/motionSync/rippleControl; debounce shows on the Sensor
+  page when a mouse has no Buttons page.

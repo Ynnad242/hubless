@@ -1363,6 +1363,9 @@ protocol layouts), which Hubless then checked against real hardware wherever pos
 - **Solaar** (GPL-2.0) and **libratbag** — Logitech HID++ background. https://github.com/pwr-Solaar/Solaar
 - **egctl** (AGPL-3.0-or-later) — Endgame Gear OP1 8k v2 config offsets, used as a reference for the OP1 8k layout.
   https://github.com/Creationsss/egctl
+- **OpenMouse mouse-protocol** (AGPL-3.0) — WLmouse / CompX feature-report commands (page, command and payload
+  formats), used as a reference for the WLmouse Ying driver, which is Hubless's own code.
+  https://github.com/OpenMouse-Project/openmouse
 - **scapectl** (GPL) — Fractal Scape command overview. Fractal Design's own Adjust web app — EQ write format.
 - **Wooting protocol notes** by eng1n88r (MIT) — Wooting 60HE configuration protocol.
 - **SUPERSTRIKE research** by kazehana99k and SuperStrike Studio — HITS trigger commands.
@@ -1371,7 +1374,7 @@ protocol layouts), which Hubless then checked against real hardware wherever pos
 ## Trademarks and product photos
 
 Hubless is an independent project. It is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting,
-Fractal Design, Endgame Gear or any other manufacturer named in it. All product names, logos and brands are the
+Fractal Design, Endgame Gear, WLmouse or any other manufacturer named in it. All product names, logos and brands are the
 property of their respective owners and are used only to identify compatible hardware.
 
 The product photos in `data/devices/` show hardware made by those manufacturers. They remain the property of their

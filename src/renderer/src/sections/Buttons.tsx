@@ -173,7 +173,7 @@ export function Buttons({ mouse, id, photo }: { mouse: MouseCtl; id: string; pho
                   className="h-8 w-16 tabular-nums"
                   aria-label="Debounce in milliseconds"
                   onBlur={(e) => {
-                    const v = Math.max(0, Math.min(25, Math.round(Number(e.target.value) || 0)))
+                    const v = Math.max(0, Math.min(state?.limits?.debounceMax ?? 25, Math.round(Number(e.target.value) || 0)))
                     update((d) => (d.extras!.debounceMs = v))
                   }}
                   onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
@@ -181,14 +181,18 @@ export function Buttons({ mouse, id, photo }: { mouse: MouseCtl; id: string; pho
                 <span className="text-muted-foreground">ms</span>
               </span>
             </div>
-            <label className="flex items-center justify-between gap-3 text-sm">
-              Slam-click filter
-              <Switch checked={draft.extras.slamClickFilter} onCheckedChange={(v) => update((d) => (d.extras!.slamClickFilter = v))} />
-            </label>
-            <label className="flex items-center justify-between gap-3 text-sm">
-              Jitter filter
-              <Switch checked={draft.extras.jitterFilter} onCheckedChange={(v) => update((d) => (d.extras!.jitterFilter = v))} />
-            </label>
+            {state?.limits?.filters !== false && (
+              <>
+                <label className="flex items-center justify-between gap-3 text-sm">
+                  Slam-click filter
+                  <Switch checked={!!draft.extras.slamClickFilter} onCheckedChange={(v) => update((d) => (d.extras!.slamClickFilter = v))} />
+                </label>
+                <label className="flex items-center justify-between gap-3 text-sm">
+                  Jitter filter
+                  <Switch checked={!!draft.extras.jitterFilter} onCheckedChange={(v) => update((d) => (d.extras!.jitterFilter = v))} />
+                </label>
+              </>
+            )}
           </div>
         )}
         <Button

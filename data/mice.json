@@ -4107,12 +4107,17 @@
     {
      "vid": 13991,
      "pid": 43125,
-     "connection": null
+     "connection": "wired"
+    },
+    {
+     "vid": 13991,
+     "pid": 43124,
+     "connection": "wireless"
     }
    ],
    "popular": false,
-   "verified": false,
-   "source": "hubless (seen on hardware, protocol not yet supported)"
+   "verified": true,
+   "source": "hubless"
   },
   {
    "vendor": "openinput",

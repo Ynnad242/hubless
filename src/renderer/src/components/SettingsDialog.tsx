@@ -199,12 +199,12 @@ export function AboutDialog({ open, onOpenChange }: { open: boolean; onOpenChang
           <div className="space-y-3 text-sm text-muted-foreground">
             <p>Free and open source under the {info?.license ?? 'MIT'} license. No accounts, analytics or telemetry.</p>
             <p>
-              Not affiliated with or endorsed by Logitech, Razer, Wooting, Fractal Design, Endgame Gear or any other manufacturer. Product
+              Not affiliated with or endorsed by Logitech, Razer, Wooting, Fractal Design, Endgame Gear, WLmouse or any other manufacturer. Product
               names and photos belong to their owners and are used only to identify compatible hardware.
             </p>
             <p>
               Hubless writes settings into your devices’ memory, making a backup first. It is provided as is, without warranty. Protocol
-              research builds on Solaar, libratbag, OpenRazer, egctl and the SUPERSTRIKE community.
+              research builds on Solaar, libratbag, OpenRazer, egctl, OpenMouse and the SUPERSTRIKE community.
             </p>
           </div>
           <div className="flex flex-wrap gap-2 pt-1">

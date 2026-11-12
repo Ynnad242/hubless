@@ -17,6 +17,7 @@ device name and the output of `lsusb`. Devices people ask for get supported firs
 |---|---|---|---|
 | **Logitech PRO X2 SUPERSTRIKE** | Mouse | `046d:40bd` (LIGHTSPEED receiver) | HITS triggers (actuation, rapid trigger, haptics, live press depth), DPI stages, polling rate, buttons, 5 onboard profiles, backups |
 | **Endgame Gear OP1 8k** | Mouse | `3367:1964` | DPI levels, polling up to 8 kHz, lift-off distance, angle snapping, motion sync, ripple control, click filters, debounce, buttons, backups |
+| **WLmouse Ying** | Mouse | `36a7:a875` (USB cable) | Up to 6 DPI stages (50–30,000), polling 125–1000 Hz on the cable, lift-off 0.7 / 1 / 2 mm, angle snapping, motion sync, ripple control, click debounce, backups. Not yet: button remapping, the wireless receiver |
 | **Wooting 60HE** | Keyboard | `31e3:1312` | Actuation, rapid trigger, Tachyon mode, per-key actuation and rapid trigger, live key travel, key mapping (3 layers), Mod-Tap / Toggle / Snap Tap, lighting, rename |
 | **Fractal Design Scape** | Headset | `36bc:0001` (dongle) | Battery, EQ presets and custom EQ, EQ codes, noise cancelling, sidetone and its volume, lighting on/off |
 
@@ -88,7 +89,7 @@ If you try one of these, please [report how it went](https://github.com/Ynnad242
 
 ## 🔜 Recognised, support coming soon
 
-161 devices (mostly mice) from 12 brands. Hubless shows them on the home screen with their name and
+160 devices (mostly mice) from 11 brands. Hubless shows them on the home screen with their name and
 maximum DPI, marked "support coming soon".
 
 ### ASUS
@@ -347,16 +348,6 @@ maximum DPI, marked "support coming soon".
 | Rival 650 Wireless | 12,000 | `1038:172b`, `1038:1726` |
 | Sensei 310 | 12,000 | `1038:1722` |
 | Sensei Raw | 5,670 | `1038:1369` |
-
-</details>
-
-### WLmouse
-
-<details><summary>1 device</summary>
-
-| Model | Max DPI | USB ids |
-|---|---|---|
-| Ying | 30,000 | `36a7:a875` |
 
 </details>
 

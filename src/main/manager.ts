@@ -8,6 +8,7 @@ import HID from 'node-hid'
 import type { AppSnapshot, DeviceKind, DeviceSummary } from '@shared/types'
 import { lookup } from './catalog'
 import { EG_VID, EndgameSession, EndgameTransport, MODELS as EG_MODELS, endgameEndpoint } from './endgame/op1'
+import { MODELS as WL_MODELS, WlSession, WlTransport, wlmouseEndpoint } from './wlmouse/ying'
 import { ScapeSession, ScapeTransport, scapeEndpoint } from './fractal/scape'
 import { LogitechDevice } from './logitech/device'
 import { HidrawTransport, Offline, Timeout, endpoints, type Transport } from './logitech/hidpp'
@@ -26,9 +27,10 @@ type Live =
   | { kind: 'wooting'; summary: DeviceSummary; path: string; session: WootingSession }
   | { kind: 'scape'; summary: DeviceSummary; path: string; session: ScapeSession }
   | { kind: 'endgame'; summary: DeviceSummary; path: string; session: EndgameSession }
+  | { kind: 'wlmouse'; summary: DeviceSummary; path: string; session: WlSession }
 
 /** Any mouse the mouse pages can edit. */
-export type MouseSession = LogitechSession | EndgameSession
+export type MouseSession = LogitechSession | EndgameSession | WlSession
 
 /** Peripherals recognised before (or without) a driver. */
 const KNOWN: { vid: number; pid?: number; kind: DeviceKind; vendor: string; name?: string }[] = [
@@ -192,6 +194,13 @@ export class DeviceManager extends EventEmitter {
     }
   }
 
+  private wlSummary(id: string, s: WlSession): DeviceSummary {
+    return {
+      id, kind: 'mouse', vendor: 'WLmouse', name: s.name, status: 'ready', battery: null, connection: 'USB cable',
+      capabilities: ['sensor', 'device'], verified: true, demo: false, lastSeen: Date.now()
+    }
+  }
+
   private headsetSummary(id: string, s: ScapeSession): DeviceSummary {
     const st = s.state
     return {
@@ -218,6 +227,7 @@ export class DeviceManager extends EventEmitter {
       await this.scanKeyboard(hid)
       await this.scanHeadset(hid)
       await this.scanEndgame(hid)
+      await this.scanWlmouse(hid)
       // Recognised peripherals that no driver claimed: the vendors above, plus any mouse in the built-in catalog.
       this.unsupported.clear()
       const seen = new Set<string>()
@@ -287,6 +297,24 @@ export class DeviceManager extends EventEmitter {
     } catch (e) {
       t.close()
       if (!offline(e)) console.error('Endgame Gear mouse failed to load', e)
+    }
+  }
+
+  private async scanWlmouse(list: HID.Device[]) {
+    const ep = wlmouseEndpoint(list)
+    if (!ep || !canOpen(ep.path)) return
+    const id = `wlmouse-${ep.productId.toString(16).padStart(4, '0')}`
+    if (this.live.has(id)) return
+    const t = await WlTransport.open(ep.path)
+    try {
+      const s = new WlSession(t, WL_MODELS[ep.productId], ep.productId, ep.serial)
+      await s.load()
+      const summary = this.wlSummary(id, s)
+      this.live.set(id, { kind: 'wlmouse', summary, path: ep.path, session: s })
+      this.remember(summary)
+    } catch (e) {
+      t.close()
+      if (!offline(e)) console.error('WLmouse failed to load', e)
     }
   }
 
@@ -431,6 +459,9 @@ export class DeviceManager extends EventEmitter {
       } else if (e.kind === 'endgame') {
         await e.session.ping()
         e.summary = this.endgameSummary(id, e.session)
+      } else if (e.kind === 'wlmouse') {
+        await e.session.ping()
+        e.summary = this.wlSummary(id, e.session)
       } else {
         await e.session.ping()
       }
@@ -484,13 +515,13 @@ export class DeviceManager extends EventEmitter {
   /** Any editable mouse (Logitech or Endgame Gear). */
   runMouse<T>(id: string, job: (s: MouseSession) => Promise<T>): Promise<T> {
     const e = this.live.get(id)
-    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame')) throw new Error('That mouse is not connected right now.')
+    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame' && e.kind !== 'wlmouse')) throw new Error('That mouse is not connected right now.')
     return this.guard(id, () => job(e.session), 'The mouse is asleep. Move it or click a button to wake it up.')
   }
 
   mouseSession(id: string): MouseSession {
     const e = this.live.get(id)
-    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame')) throw new Error('That mouse is not connected right now.')
+    if (!e || (e.kind !== 'logitech' && e.kind !== 'endgame' && e.kind !== 'wlmouse')) throw new Error('That mouse is not connected right now.')
     return e.session
   }
 

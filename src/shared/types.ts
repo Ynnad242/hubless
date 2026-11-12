@@ -42,8 +42,8 @@ export interface MouseExtras {
   debounceMs: number // 0..25
   motionSync: boolean
   rippleControl: boolean
-  slamClickFilter: boolean
-  jitterFilter: boolean
+  slamClickFilter?: boolean // Endgame Gear only
+  jitterFilter?: boolean
 }
 
 /** What a non-Logitech mouse can do; missing means "like a Logitech onboard profile". */
@@ -53,6 +53,12 @@ export interface MouseLimits {
   shiftStage: boolean
   profiles: boolean
   functions: number[] // Logitech function ids the mouse supports
+  buttons?: boolean // false: buttons can't be remapped (no Buttons page; debounce moves to Sensor)
+  liftOff?: number[] // lift-off choices in mm (default 1 and 2)
+  debounceMax?: number // ms (default 25; 0 = no debounce setting)
+  filters?: boolean // slam-click and jitter filters (default true)
+  motionSync?: boolean // default true
+  rippleControl?: boolean // default true
 }
 
 export interface Battery {

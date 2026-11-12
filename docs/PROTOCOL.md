@@ -129,3 +129,29 @@ Button types: `00` mouse (value = HID button bit 1/2/4/8 back/16 forward), `01` 
 `[modifiers, usage]`, `09` DPI cycle (value `f1`), `0c` fixed DPI `[split, x, y]`, `20` consumer usage (8-bit),
 `ff` disabled. The OP1 8k v2 (`3367:1978`, per egctl) keeps offsets 21–70 but its button table starts at 77 with
 the debounce byte first, so Hubless does not claim the v2 until it is checked on hardware.
+
+# WLmouse Ying (USB `36a7:a875` on the cable, firmware 2.18)
+
+Config goes over **interface 2** (usage page `0xFFFF`, 64-byte feature report, no report id). Interface 1 also has a
+`0xFFFF` collection (report 5) that only echoes requests back.
+
+Request (feature report 0, 64 bytes): `00 00 target len page cmd args…` with target `02` = the mouse (`00` = a
+receiver). The answer comes back in the same report: `status 00 target len page cmd payload…`, status `a1` ok, `a2`
+unsupported, `a0`/`a3` busy (ask again). Reads set bit 7 of the command; the write is the same command without it and
+takes exactly the payload the read returns, `[profile, values…]`. Active profile: page 0 cmd `85` → `[profile]`.
+
+| Setting | Page | Read | Payload |
+|---|---|---|---|
+| Firmware | 0 | `81` (len 0x10) | `01 00 major minor pid_hi pid_lo` (2.18, `a875`) |
+| DPI stages | 1 | `81` args `[profile, 6]` | `[profile, count, (x BE16, y BE16) × count]`, 50–30000 step 50, up to 6 |
+| Active stage | 1 | `82` | `[profile, stage 1-based]` |
+| Polling | 1 | `80` | `08` 125, `04` 250, `02` 500, `01`/`10` 1000, `20` 2000, `40` 4000, `80` 8000 |
+| Angle snapping | 1 | `84` | 0/1 |
+| Lift-off | 1 | `88` | `87` 0.7 mm, `01` 1 mm, `02` 2 mm |
+| Motion sync | 1 | `89` | 0/1 |
+| Ripple control | 1 | `8a` | 0/1 |
+| Debounce | 0 | `88` | ms, 0–15 |
+
+Checked on hardware: every write above reads back as written, and a backup (the read payloads) restores byte for byte.
+On the cable the Ying answers `a2` (unsupported) to 2000/4000/8000 Hz; those rates are presumably for its wireless 8K
+receiver (`36a7:a874`), which Hubless doesn't claim yet.

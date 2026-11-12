@@ -11,6 +11,7 @@ const dpi = (m) => (m.maxDpi ? m.maxDpi.toLocaleString('en-US') : '—')
 const working = [
   ['Logitech', 'PRO X2 SUPERSTRIKE', 'Mouse', '`046d:40bd` (LIGHTSPEED receiver)', 'HITS triggers (actuation, rapid trigger, haptics, live press depth), DPI stages, polling rate, buttons, 5 onboard profiles, backups'],
   ['Endgame Gear', 'OP1 8k', 'Mouse', '`3367:1964`', 'DPI levels, polling up to 8 kHz, lift-off distance, angle snapping, motion sync, ripple control, click filters, debounce, buttons, backups'],
+  ['WLmouse', 'Ying', 'Mouse', '`36a7:a875` (USB cable)', 'Up to 6 DPI stages (50–30,000), polling 125–1000 Hz on the cable, lift-off 0.7 / 1 / 2 mm, angle snapping, motion sync, ripple control, click debounce, backups. Not yet: button remapping, the wireless receiver'],
   ['Wooting', '60HE', 'Keyboard', '`31e3:1312`', 'Actuation, rapid trigger, Tachyon mode, per-key actuation and rapid trigger, live key travel, key mapping (3 layers), Mod-Tap / Toggle / Snap Tap, lighting, rename'],
   ['Fractal Design', 'Scape', 'Headset', '`36bc:0001` (dongle)', 'Battery, EQ presets and custom EQ, EQ codes, noise cancelling, sidetone and its volume, lighting on/off'],
 ]

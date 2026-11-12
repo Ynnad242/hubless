@@ -48,7 +48,8 @@ for e in raw['ratbag']:
 add('Logitech', 'PRO X2 SUPERSTRIKE', 0x046d, 0x40bd, 'wireless', 'logitech-hidpp20', 44000, source='hubless', verified=True)
 add('Endgame Gear', 'OP1 8k', 0x3367, 0x1964, 'wired', 'endgame', 26000, source='hubless', verified=True)
 add('Endgame Gear', 'OP1 8k v2', 0x3367, 0x1978, 'wired', 'endgame-v2', 26000, source='egctl')
-add('WLmouse', 'Ying', 0x36a7, 0xa875, None, 'wlmouse', 30000, source='hubless (seen on hardware, protocol not yet supported)')
+add('WLmouse', 'Ying', 0x36a7, 0xa875, 'wired', 'wlmouse', 30000, source='hubless', verified=True)
+add('WLmouse', 'Ying', 0x36a7, 0xa874, 'wireless', 'wlmouse', 30000, source='OpenMouse product list')
 add('Razer', 'Viper V4 Pro', 0x1532, 0x00e5, None, 'razer', None, source='driver database (unverified ids)')
 add('Razer', 'Viper V4 Pro', 0x1532, 0x00e6, None, 'razer', None, source='driver database (unverified ids)')
 
