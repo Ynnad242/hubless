@@ -198,6 +198,8 @@ export interface DeviceSummary {
   lastSeen: number
   /** overrides the status line on the home card, e.g. "Headset off" */
   note?: string
+  /** modelKey() of the photo shipped for this model, when it differs from the one its name gives */
+  photo?: string
   /** what the built-in catalog knows about this model */
   model?: Pick<CatalogModel, 'protocol' | 'maxDpi' | 'popular'>
 }
@@ -244,7 +246,7 @@ export interface HublessApi {
   headsetState(id: string): Promise<HeadsetState>
   setHeadset(id: string, patch: HeadsetPatch): Promise<HeadsetState>
   /** Custom card photos the user picked, as data URLs keyed by device id. */
-  deviceImages(devices: { id: string; vendor: string; name: string }[]): Promise<Record<string, string>>
+  deviceImages(devices: { id: string; vendor: string; name: string; photo?: string }[]): Promise<Record<string, string>>
   chooseDeviceImage(id: string): Promise<string | null>
   clearDeviceImage(id: string): Promise<void>
   /** version and license, for the About section */

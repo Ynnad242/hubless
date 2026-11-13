@@ -5,7 +5,7 @@ import { homedir } from 'node:os'
 import { extname, join, resolve, sep } from 'node:path'
 import { nativeImage } from 'electron'
 import type { BackupInfo } from '@shared/types'
-import { modelKey } from '@shared/devices'
+import { photoKey } from '@shared/devices'
 
 const DATA = join(process.env.XDG_DATA_HOME || join(homedir(), '.local/share'), 'hubless')
 
@@ -131,7 +131,7 @@ const findIn = (dir: string | undefined, base: string) =>
 
 /** Photos for just these devices: the user's own (keyed by device id) or else the one shipped for the model
  *  (keyed "model:<modelKey>"). Photos for devices that aren't on screen are never read or sent. */
-export function deviceImages(devices: { id: string; vendor: string; name: string }[]): Record<string, string> {
+export function deviceImages(devices: { id: string; vendor: string; name: string; photo?: string }[]): Record<string, string> {
   const out: Record<string, string> = {}
   for (const d of devices.slice(0, 64)) {
     if (typeof d?.id !== 'string' || typeof d.vendor !== 'string' || typeof d.name !== 'string') continue
@@ -140,7 +140,7 @@ export function deviceImages(devices: { id: string; vendor: string; name: string
       out[d.id] = cachedUrl(join(IMAGES, own))
       continue
     }
-    const key = modelKey(d.vendor, d.name)
+    const key = photoKey(d)
     const shipped = findIn(SHIPPED, key)
     if (shipped) out[`model:${key}`] = cachedUrl(join(SHIPPED!, shipped))
   }

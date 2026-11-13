@@ -40,10 +40,12 @@ protocol layouts), which Hubless then checked against real hardware wherever pos
 ## Trademarks and product photos
 
 Hubless is an independent project. It is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting,
-Fractal Design, Endgame Gear, WLmouse or any other manufacturer named in it. All product names, logos and brands are the
+Fractal Design, Endgame Gear, WLmouse, Glorious or any other manufacturer named in it. All product names, logos and brands are the
 property of their respective owners and are used only to identify compatible hardware.
 
 The product photos in `data/devices/` show hardware made by those manufacturers. They remain the property of their
 owners and are not covered by Hubless's MIT license; they are credited to those companies and used only to show
-which hardware is supported. Hubless is free and will never be sold. If you own one of these images and want it
+which hardware is supported. They come from the manufacturers' own websites (logitechg.com, razer.com,
+wooting.io, fractal-design.com, endgamegear.com, wlmouse.com, gloriousgaming.com), with the background removed.
+Hubless is free and will never be sold. If you own one of these images and want it
 removed, open an issue at https://github.com/Ynnad242/hubless/issues and it will be taken out.

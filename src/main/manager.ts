@@ -6,6 +6,7 @@ import { homedir, release } from 'node:os'
 import { basename, join } from 'node:path'
 import HID from 'node-hid'
 import type { AppSnapshot, DeviceKind, DeviceSummary } from '@shared/types'
+import { modelKey } from '@shared/devices'
 import { lookup } from './catalog'
 import { EG_VID, EndgameSession, EndgameTransport, MODELS as EG_MODELS, endgameEndpoint } from './endgame/op1'
 import { MODELS as WL_MODELS, WlSession, WlTransport, wlmouseEndpoint } from './wlmouse/ying'
@@ -66,6 +67,9 @@ export class DeviceManager extends EventEmitter {
   private unsupported = new Map<string, DeviceSummary>()
   /** Mice whose driver refused them (answers it didn't expect): shown with the reason, not retried every scan. */
   private refused = new Map<string, string>()
+  /** Catalog model of a Logitech mouse, found by USB id: names its shipped photo, since the name the mouse reports
+   *  ("G203 LIGHTSYNC Gaming Mouse") often differs from the catalog's. */
+  private photoKeys = new Map<string, string>()
   private known = new Map<string, DeviceSummary>()
   private missingPermission: string[] = []
   private searching = true
@@ -224,7 +228,7 @@ export class DeviceManager extends EventEmitter {
     if (s.editable) caps.push('sensor', 'buttons', 'profiles')
     caps.push('device')
     return {
-      id, kind: 'mouse', vendor: 'Logitech', name: d.name, status, battery: s.battery,
+      id, kind: 'mouse', vendor: 'Logitech', name: d.name, photo: this.photoKeys.get(id), status, battery: s.battery,
       connection: this.demo ? 'Demo' : d.index === 0xff ? 'USB cable' : 'LIGHTSPEED wireless',
       capabilities: caps, verified: s.verified, demo: this.demo, lastSeen: Date.now()
     }
@@ -445,6 +449,8 @@ export class DeviceManager extends EventEmitter {
           const s = new LogitechSession(dev)
           await s.load()
           const id = `logitech-${dev.serial || serial || ep.path}`
+          const cat = lookup(0x046d, ep.receiver ? wpidOf(slots, slot) : ep.pid)
+          if (cat) this.photoKeys.set(id, modelKey(cat.vendor, cat.name))
           const summary = this.mouseSummary(id, s)
           this.live.set(id, { kind: 'logitech', summary, session: s, path: ep.path })
           void this.watchButtons(id, { vid: 0x046d, pid: ep.receiver ? wpidOf(slots, slot) : 0, report: 0x02 })
@@ -489,6 +495,8 @@ export class DeviceManager extends EventEmitter {
       this.sim = new SimTransport()
       const s = new LogitechSession(await new LogitechDevice(this.sim, 1).connect())
       await s.load()
+      const cat = lookup(0x046d, 0x40bd) // the simulated mouse's wireless id, as on a real receiver
+      if (cat) this.photoKeys.set('demo', modelKey(cat.vendor, cat.name))
       this.live.set('demo', { kind: 'logitech', summary: this.mouseSummary('demo', s), session: s, path: 'demo' })
       const fake = (id: string, kind: DeviceKind, vendor: string, name: string): DeviceSummary => ({
         id, kind, vendor, name, status: 'inactive', connection: 'USB', battery: null, capabilities: [], verified: false, demo: true, lastSeen: 0

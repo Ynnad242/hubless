@@ -257,3 +257,20 @@ test/manager.test.ts covers it.
 - "Copy device report" (Device settings, and the home card's ⋯ menu): manager.report() — version, kernel, USB ids,
   interfaces + HID report descriptors from sysfs, firmware, raw readings. No serials or paths; main writes the clipboard
   (the renderer has no clipboard permission). Nothing is sent to the device.
+
+## Preloaded device photos (2026-11-13, after 0.19.0)
+- data/devices now holds 29 transparent PNGs (≤1600 px, ~13 MB) for every fully supported device, every popular catalog
+  mouse and a few current Razer/Logitech models. Old WebPs removed. All from manufacturer sites, background removed,
+  cable cropped (PhotoMouse needs the body to start at the top). test/photos.test.ts checks format, size, that each
+  file names a real model, and that every `popular` catalog mouse has one.
+- Sources: Logitech resource.logitechg.com originals (2000–3600 px, already transparent, *top-angle-gallery-1*);
+  Razer only publishes ~500–600 px cutouts publicly (store 500x500 PNGs, dl.razerzone.com support images; press kits
+  sit behind a Razer SharePoint login), so Razer photos are ~370–560 px: 2x the 176 px home card, and Razer has no
+  button page. Wooting 60he-prebuilt-ANSI (2560), Fractal Scape 3/4 shot (2560, holes in headband removed), WLmouse
+  Ying MG black (2000, receiver cropped), Endgame OP1 8k top-down (Endgame no longer lists v1; also used for v2),
+  Glorious Model O Eternal top (same shell as Model O/O-).
+- Logitech mice report their own name ("G203 LIGHTSYNC Gaming Mouse"), not the catalog's, so manager sets
+  DeviceSummary.photo = modelKey of the catalog model looked up by USB id (wpid on a receiver, pid wired);
+  photoKey()/photoFor() use it before the name.
+- New photo: tools/device-photo.py <source> data/devices/<modelKey>.png [crop] [seed=x,y] [holes] [nocable]
+  (corner-colour flood fill, soft edge, edge colours un-mixed from the background), then the photos test.

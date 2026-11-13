@@ -42,10 +42,10 @@ export default function App() {
   }, [])
 
   // Fetch photos only for the devices on screen, and again only when that list changes (not on every status update).
-  const devicesKey = snap?.devices.map((d) => `${d.id}|${d.vendor}|${d.name}`).join('\n') ?? ''
+  const devicesKey = snap?.devices.map((d) => `${d.id}|${d.vendor}|${d.name}|${d.photo ?? ''}`).join('\n') ?? ''
   useEffect(() => {
     if (!snap) return
-    void window.hubless.deviceImages(snap.devices.map(({ id, vendor, name }) => ({ id, vendor, name }))).then(setImages)
+    void window.hubless.deviceImages(snap.devices.map(({ id, vendor, name, photo }) => ({ id, vendor, name, photo }))).then(setImages)
   }, [devicesKey]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const device = snap?.devices.find((d) => d.id === open && d.capabilities.length) ?? null
