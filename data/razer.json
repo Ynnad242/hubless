@@ -33,7 +33,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "ABYSSUS_2000",
@@ -67,7 +68,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_HEX_RED",
@@ -101,7 +103,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA",
@@ -135,7 +138,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_2012",
@@ -169,7 +173,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_2014",
@@ -203,7 +208,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_HEX",
@@ -237,7 +243,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "MAMBA_2012_WIRED",
@@ -283,7 +290,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "MAMBA_2012_WIRELESS",
@@ -329,7 +337,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "MAMBA_WIRED",
@@ -375,7 +384,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "MAMBA_WIRELESS",
@@ -421,7 +431,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "MAMBA_TE_WIRED",
@@ -447,7 +458,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "TAIPAN",
@@ -481,7 +493,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "IMPERATOR",
@@ -515,7 +528,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "OUROBOROS",
@@ -561,7 +575,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_2013",
@@ -595,7 +610,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "OROCHI_2013",
@@ -629,7 +645,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "OROCHI_CHROMA",
@@ -667,7 +684,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_CHROMA",
@@ -701,7 +719,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_HEX_V2",
@@ -735,7 +754,8 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_CHROMA",
@@ -769,7 +789,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_EPIC_CHROMA",
@@ -815,7 +836,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_EPIC_CHROMA_DOCK",
@@ -861,7 +883,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_ELITE",
@@ -895,7 +918,33 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DIAMONDBACK_CHROMA",
@@ -921,7 +970,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "ABYSSUS_V2",
@@ -955,7 +1005,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_3500",
@@ -989,7 +1040,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "LANCEHEAD_WIRED",
@@ -1043,7 +1095,57 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "LANCEHEAD_WIRELESS",
@@ -1097,7 +1199,57 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "LANCEHEAD_TE_WIRED",
@@ -1139,7 +1291,57 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_TRINITY",
@@ -1173,7 +1375,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "MAMBA_ELITE",
@@ -1207,7 +1410,57 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_ESSENTIAL",
@@ -1241,7 +1494,31 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_ESSENTIAL_2021",
@@ -1275,7 +1552,20 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_1800",
@@ -1309,7 +1599,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "LANCEHEAD_WIRELESS_RECEIVER",
@@ -1363,7 +1654,57 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "LANCEHEAD_WIRELESS_WIRED",
@@ -1417,7 +1758,57 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "MAMBA_WIRELESS_RECEIVER",
@@ -1463,7 +1854,33 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "MAMBA_WIRELESS_WIRED",
@@ -1509,7 +1926,33 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "ABYSSUS_ELITE_DVA_EDITION",
@@ -1543,7 +1986,21 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "ABYSSUS_ESSENTIAL",
@@ -1577,7 +2034,21 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_ESSENTIAL_WHITE_EDITION",
@@ -1611,7 +2082,31 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "VIPER",
@@ -1653,7 +2148,21 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "VIPER_MINI",
@@ -1695,7 +2204,21 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "VIPER_MINI_SE_WIRED",
@@ -1749,7 +2272,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "VIPER_MINI_SE_WIRELESS",
@@ -1803,7 +2327,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "VIPER_ULTIMATE_WIRED",
@@ -1857,7 +2382,21 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "VIPER_ULTIMATE_WIRELESS",
@@ -1911,7 +2450,21 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK",
@@ -1945,7 +2498,33 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_ESSENTIAL",
@@ -1987,7 +2566,21 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_ULTIMATE_RECEIVER",
@@ -2033,7 +2626,57 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_ULTIMATE_WIRED",
@@ -2079,7 +2722,57 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V2",
@@ -2113,7 +2806,33 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3",
@@ -2155,7 +2874,39 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_V2",
@@ -2189,7 +2940,33 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_V2_PRO_WIRED",
@@ -2243,7 +3020,21 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_V2_PRO_WIRELESS",
@@ -2297,7 +3088,21 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_V2_MINI",
@@ -2339,7 +3144,21 @@
     null,
     63
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 63,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_V2_X_HYPERSPEED",
@@ -2393,7 +3212,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_2000",
@@ -2427,7 +3247,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "ATHERIS_RECEIVER",
@@ -2481,7 +3302,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "BASILISK_X_HYPERSPEED",
@@ -2535,7 +3357,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_X",
@@ -2577,7 +3400,33 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "left",
+     "led": 17,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_LEFT_HANDED_2020",
@@ -2611,7 +3460,45 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "right",
+     "led": 16,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_PRO_WIRED",
@@ -2665,7 +3552,33 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_PRO_WIRELESS",
@@ -2719,7 +3632,33 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_V2_PRO_WIRED",
@@ -2773,7 +3712,21 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_V2_PRO_WIRELESS",
@@ -2827,7 +3780,21 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "VIPER_8K",
@@ -2869,7 +3836,21 @@
     null,
     255
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "OROCHI_V2_RECEIVER",
@@ -2923,7 +3904,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "OROCHI_V2_BLUETOOTH",
@@ -2977,7 +3959,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "PRO_CLICK_RECEIVER",
@@ -3031,7 +4014,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "PRO_CLICK_WIRED",
@@ -3085,7 +4069,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "VIPER_V2_PRO_WIRED",
@@ -3139,7 +4124,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "VIPER_V2_PRO_WIRELESS",
@@ -3193,7 +4179,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "COBRA_HYPERSPEED_WIRELESS",
@@ -3247,7 +4234,31 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "COBRA_HYPERSPEED_WIRED",
@@ -3301,7 +4312,31 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "COBRA_PRO_WIRED",
@@ -3355,7 +4390,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "COBRA_PRO_WIRELESS",
@@ -3409,7 +4479,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "DEATHADDER_V3",
@@ -3451,7 +4556,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V3_PRO_WIRED",
@@ -3505,7 +4611,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V3_PRO_WIRELESS",
@@ -3559,7 +4666,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V3_PRO_WIRED_ALT",
@@ -3613,7 +4721,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V3_PRO_WIRELESS_ALT",
@@ -3667,7 +4776,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V3_HYPERSPEED_WIRED",
@@ -3721,7 +4831,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V3_HYPERSPEED_WIRELESS",
@@ -3775,7 +4886,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "HYPERPOLLING_WIRELESS_DONGLE",
@@ -3829,7 +4941,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "BASILISK_V3_PRO_WIRED",
@@ -3883,7 +4996,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3_PRO_WIRELESS",
@@ -3937,7 +5085,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3_35K",
@@ -3983,7 +5166,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3_PRO_35K_WIRED",
@@ -4037,7 +5255,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3_PRO_35K_WIRELESS",
@@ -4091,7 +5344,42 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3_PRO_35K_PHANTOM_GREEN_EDITION_WIRED",
@@ -4145,7 +5433,31 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_V3_PRO_35K_PHANTOM_GREEN_EDITION_WIRELESS",
@@ -4199,7 +5511,31 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    },
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "PRO_CLICK_MINI_RECEIVER",
@@ -4253,7 +5589,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V2_LITE",
@@ -4295,7 +5632,21 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "COBRA",
@@ -4337,7 +5688,20 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "logo",
+     "led": 4,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "NAGA_V2_HYPERSPEED_RECEIVER",
@@ -4391,7 +5755,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "VIPER_V3_HYPERSPEED",
@@ -4445,7 +5810,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "BASILISK_V3_X_HYPERSPEED",
@@ -4499,7 +5865,21 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "scroll",
+     "led": 1,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum",
+      "breath"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "BASILISK_MOBILE_RECEIVER",
@@ -4553,7 +5933,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "BASILISK_MOBILE_WIRED",
@@ -4607,7 +5988,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V4_PRO_WIRED",
@@ -4661,7 +6043,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "DEATHADDER_V4_PRO_WIRELESS",
@@ -4715,7 +6098,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "VIPER_V3_PRO_WIRED",
@@ -4769,7 +6153,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "VIPER_V3_PRO_WIRELESS",
@@ -4823,7 +6208,8 @@
     null,
     31
    ],
-   "pollTwice": true
+   "pollTwice": true,
+   "lighting": []
   },
   {
    "id": "VIPER_V3_PRO_SE_WIRED",
@@ -4877,7 +6263,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "VIPER_V3_PRO_SE_WIRELESS",
@@ -4931,7 +6318,8 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "NAGA_EPIC",
@@ -4977,7 +6365,8 @@
     null,
     255
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": []
   },
   {
    "id": "PRO_CLICK_V2_VERTICAL_EDITION_WIRELESS",
@@ -5031,7 +6420,20 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "PRO_CLICK_V2_VERTICAL_EDITION_WIRED",
@@ -5085,7 +6487,20 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "PRO_CLICK_V2_WIRED",
@@ -5139,7 +6554,20 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   },
   {
    "id": "PRO_CLICK_V2_WIRELESS",
@@ -5193,7 +6621,20 @@
     null,
     31
    ],
-   "pollTwice": false
+   "pollTwice": false,
+   "lighting": [
+    {
+     "zone": "all",
+     "led": 0,
+     "tx": 31,
+     "effects": [
+      "static",
+      "none",
+      "spectrum"
+     ],
+     "brightness": true
+    }
+   ]
   }
  ]
 }

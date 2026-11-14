@@ -274,3 +274,22 @@ test/manager.test.ts covers it.
   photoKey()/photoFor() use it before the name.
 - New photo: tools/device-photo.py <source> data/devices/<modelKey>.png [crop] [seed=x,y] [holes] [nocable]
   (corner-colour flood fill, soft edge, edge colours un-mixed from the background), then the photos test.
+
+## Mouse lighting (2026-11-13)
+- Lighting page for every mouse with RGB (capability 'lighting'; src/renderer/src/sections/Lighting.tsx). Per zone:
+  Off / Colour / Breathing / Colour cycle, colour, brightness, speed (where the zone supports it), "Use on all zones".
+  Shared types: LightSetting (in ProfileData.lighting) and LightZone (MouseState.lighting), so it saves through the
+  normal saveProfile path.
+- Logitech (src/main/logitech/lighting.ts): zones from 0x8070 (fn0 count, fn1 location) or 0x8071 (fn0 [ff ff 00] /
+  [c ff 00]); settings live in the onboard profile (formats 1-6, 255-byte sectors): LEDs at 0xD0/0xDB, power-saving
+  copies at 0xE6/0xF1 (kept equal, like libratbag). Modes 00 off, 01 fixed rgb, 03 cycle (period BE @6, intensity @8),
+  0A breathing (rgb, period BE @4, waveform, intensity @7); intensity 0 = 100 %. Other modes kept byte for byte.
+  Writing the active profile re-selects it so the light changes at once (only when lighting changed: re-selecting
+  resets the DPI stage). Static has no brightness in the profile. SUPERSTRIKE (format 8) has no RGB.
+- Razer: tools/extract-razer.py now records per model the zones (logo 0x04, scroll 0x01, backlight 0x05, left 0x11,
+  right 0x10, whole mouse 0x00) that use the extended-matrix commands (class 0x0F: 02 effect, 04/84 brightness) with
+  their transaction id; 53 models. Older Chroma mice (classic 0x03 commands) get no lighting page. Effects can't be
+  read back, so Hubless remembers what it set (~/.config/hubless/lighting.json, storage.savedLighting) and shows
+  "Not set yet" before that; brightness is read from the mouse and checked after writes.
+- Demo mode adds a simulated G502 HERO (SimTransport('g502'), format 2 with 0x8070) and Basilisk V3 Pro.
+- Not tested on hardware: the user owns no RGB mouse. OP1 8k DPI-indicator colours (config bytes 31..50) not exposed.

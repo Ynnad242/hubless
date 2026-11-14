@@ -128,3 +128,27 @@
     opacity: 0;
   }
 }
+
+/* Mouse lighting preview (Lighting page) */
+@keyframes hubless-breathe {
+  0%,
+  100% {
+    transform: scale(0.85);
+    filter: blur(40px) brightness(0.35);
+  }
+  50% {
+    transform: scale(1);
+    filter: blur(40px) brightness(1);
+  }
+}
+@keyframes hubless-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [style*='hubless-breathe'],
+  [style*='hubless-spin'] {
+    animation: none !important;
+  }
+}

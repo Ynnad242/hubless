@@ -4,7 +4,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync,
 import { homedir } from 'node:os'
 import { extname, join, resolve, sep } from 'node:path'
 import { nativeImage } from 'electron'
-import type { BackupInfo } from '@shared/types'
+import type { BackupInfo, LightSetting } from '@shared/types'
 import { photoKey } from '@shared/devices'
 
 const DATA = join(process.env.XDG_DATA_HOME || join(homedir(), '.local/share'), 'hubless')
@@ -177,6 +177,30 @@ const CONFIG_DIR = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'
 const AUTOSTART_FILE = join(process.env.XDG_CONFIG_HOME || join(homedir(), '.config'), 'autostart', 'io.github.hubless.Hubless.desktop')
 
 /** Everything Hubless keeps on this computer (see PRIVACY.md). Device memory and the system udev rule are not touched. */
+// Lighting a mouse can't report back (Razer mice keep their effect but can't say which it is): what Hubless last set.
+const LIGHTING = join(CONFIG_DIR, 'lighting.json')
+
+export function savedLighting(key: string): LightSetting[] | null {
+  try {
+    const all = JSON.parse(readFileSync(LIGHTING, 'utf8')) as Record<string, LightSetting[]>
+    return Array.isArray(all[key]) ? all[key] : null
+  } catch {
+    return null
+  }
+}
+
+export function saveLighting(key: string, lighting: LightSetting[]) {
+  let all: Record<string, LightSetting[]> = {}
+  try {
+    all = JSON.parse(readFileSync(LIGHTING, 'utf8'))
+  } catch {
+    /* first time */
+  }
+  all[key] = lighting
+  mkdirSync(CONFIG_DIR, { recursive: true })
+  writeFileSync(LIGHTING, JSON.stringify(all, null, 1))
+}
+
 export function deleteAllData() {
   const updates = join(process.env.XDG_CACHE_HOME || join(homedir(), '.cache'), 'hubless-updater')
   for (const p of [CONFIG_DIR, DATA, AUTOSTART_FILE, updates]) rmSync(p, { recursive: true, force: true })

@@ -226,6 +226,7 @@ export class DeviceManager extends EventEmitter {
     const caps: DeviceSummary['capabilities'] = []
     if (s.hitsCaps) caps.push('triggers')
     if (s.editable) caps.push('sensor', 'buttons', 'profiles')
+    if (s.zones.length) caps.push('lighting')
     caps.push('device')
     return {
       id, kind: 'mouse', vendor: 'Logitech', name: d.name, photo: this.photoKeys.get(id), status, battery: s.battery,
@@ -259,7 +260,7 @@ export class DeviceManager extends EventEmitter {
     return {
       id, kind: 'mouse', vendor: 'Razer', name: s.name, status, battery: s.battery,
       connection: s.model.wireless ? 'HyperSpeed wireless' : 'USB cable',
-      capabilities: ['sensor', 'device'], verified: false, demo: false, lastSeen: Date.now()
+      capabilities: s.model.lighting.length ? ['sensor', 'lighting', 'device'] : ['sensor', 'device'], verified: false, demo: false, lastSeen: Date.now()
     }
   }
 
@@ -506,6 +507,15 @@ export class DeviceManager extends EventEmitter {
       const r = new RazerSession(new RazerTransport(new SimRazer(viper), viper.dpi![2]), viper, '')
       await r.load()
       this.live.set('razer-demo', { kind: 'razer', summary: { ...this.razerSummary('razer-demo', r), demo: true }, session: r, path: 'demo-razer' })
+      // Two mice with RGB lighting: a G502 HERO (cable) and a Basilisk V3 Pro (wireless).
+      const g = new LogitechSession(await new LogitechDevice(new SimTransport('g502'), 0xff).connect())
+      await g.load()
+      this.photoKeys.set('demo-g502', modelKey('Logitech', 'G502 Hero'))
+      this.live.set('demo-g502', { kind: 'logitech', summary: this.mouseSummary('demo-g502', g), session: g, path: 'demo-g502' })
+      const basilisk = RAZER_MODELS.get(0x00ab)!
+      const b = new RazerSession(new RazerTransport(new SimRazer(basilisk), basilisk.dpi![2]), basilisk, 'demo-basilisk')
+      await b.load()
+      this.live.set('razer-demo-2', { kind: 'razer', summary: { ...this.razerSummary('razer-demo-2', b), demo: true }, session: b, path: 'demo-razer-2' })
       this.known.set('demo-old', fake('demo-old', 'mouse', 'Endgame Gear', 'OP1 8k'))
     }
     this.searching = false

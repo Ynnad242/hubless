@@ -30,7 +30,7 @@ def body(name):
 
 def outer_switch(fn):
     """The first `switch(device->usb_pid)` of a function as [(case names or ['default'], statements)]."""
-    m = re.search(r'switch\s*\(\s*(?:device->usb_pid|usb_dev->descriptor\.idProduct)\s*\)\s*\{', fn)
+    m = re.search(r'switch\s*\(\s*(?:device->usb_pid|dev->usb_pid|usb_dev->descriptor\.idProduct)\s*\)\s*\{', fn)
     if not m:
         return []
     depth, k = 1, m.end()
@@ -113,6 +113,76 @@ for names, stmts in outer_switch(second):
     if 'set_polling_rate2' in stmts:
         twice.update(n for n in names if n != 'default')
 
+# ---------------------------------------------------------------- lighting
+# Only the "extended matrix" commands (class 0x0F: effect 0x02, brightness 0x04/0x84) that every current Razer mouse
+# uses; older Chroma mice with the classic per-LED commands get no lighting page.
+probe = c[c.index('static int razer_mouse_probe'):]
+probe = probe[probe.index('usb_interface_protocol == USB_INTERFACE_PROTOCOL_MOUSE'):probe.index('\n}\n')]
+created = {}  # pid name -> set of attribute names the driver creates
+falling = []  # cases that fall through into the next group
+for names, stmts in outer_switch(probe):
+    attrs_here = set(re.findall(r'dev_attr_(\w+)', stmts))
+    for n in names + falling:
+        created.setdefault(n, set()).update(attrs_here)
+    falling = falling + names if re.search(r'\bfallthrough;', stmts) else []
+
+LED = {'logo': 0x04, 'scroll': 0x01, 'backlight': 0x05, 'left': 0x11, 'right': 0x10, 'all': 0x00}
+EFFECT_BUILDER = {'static': 'extended_matrix_effect_static', 'none': 'extended_matrix_effect_none',
+                  'spectrum': 'extended_matrix_effect_spectrum', 'breath': 'extended_matrix_effect_breathing_single'}
+
+
+def extended(fn_name, builder):
+    """pid name -> transaction id, for the pids whose case uses razer_chroma_<builder> (the 0x0F commands)."""
+    fn = body(fn_name)
+    # Some functions build the request in one switch and set the transaction id in a second one.
+    later = {}
+    sw = list(re.finditer(r'switch\s*\(\s*device->usb_pid\s*\)', fn))
+    if len(sw) > 1:
+        for names, stmts in outer_switch(fn[sw[1].start():]):
+            tx = re.search(r'transaction_id\.id\s*=\s*(0x[0-9A-Fa-f]+)', stmts)
+            for nm in names:
+                later[nm] = int(tx[1], 16) if tx else None
+    res, default = {}, None
+    for names, stmts in outer_switch(fn):
+        if not re.search(r'razer_chroma_' + builder + r'\(', stmts):
+            continue
+        tx = re.search(r'transaction_id\.id\s*=\s*(0x[0-9A-Fa-f]+)', stmts)
+        for nm in names:
+            t = int(tx[1], 16) if tx else later.get(nm)
+            if nm == 'default':
+                default = t
+            else:
+                res[nm] = t
+    return lambda nm: res.get(nm, default)
+
+
+fx = {e: (extended(f'razer_attr_write_matrix_effect_{e}_common', b), extended(f'razer_attr_write_matrix_effect_{e}', b))
+      for e, b in EFFECT_BUILDER.items()}
+bright = (extended('razer_attr_write_led_brightness', 'extended_matrix_brightness'),
+          extended('razer_attr_write_matrix_brightness', 'extended_matrix_brightness'))
+
+
+def lighting(n):
+    zones = []
+    for zone, led in LED.items():
+        prefix = '' if zone == 'all' else f'{zone}_'
+        have = created.get(n, set())
+        effects, tx = [], None
+        for e in EFFECT_BUILDER:
+            if f'{prefix}matrix_effect_{e}' not in have:
+                continue
+            t = fx[e][1 if zone == 'all' else 0](n)
+            if t is not None and (tx is None or t == tx):
+                effects.append(e)
+                tx = t
+        if 'static' not in effects:
+            continue
+        b = bright[1 if zone == 'all' else 0](n)
+        has_b = (f'{prefix}led_brightness' if zone != 'all' else 'matrix_brightness') in have and b == tx
+        zones.append({'zone': zone, 'led': led, 'tx': tx, 'effects': effects, 'brightness': has_b})
+    return zones
+
+
 models = []
 for n in supported:
     if n not in pids:
@@ -131,10 +201,12 @@ for n in supported:
         # [command, first argument, transaction id]; command names follow OpenRazer's request builders
         **rec,
         'pollTwice': n in twice,
+        'lighting': lighting(n),
     })
 
 json.dump({'generated': 'tools/extract-razer.py from OpenRazer driver/razermouse_driver.c', 'models': models},
           open(out, 'w'), indent=1)
 print(len(models), 'Razer mice with DPI control;',
       sum(1 for m in models if m['stages']), 'with DPI stages;',
-      sum(1 for m in models if m['poll'] and m['poll'][0] == 'get_polling_rate2'), 'with the 8K polling command')
+      sum(1 for m in models if m['poll'] and m['poll'][0] == 'get_polling_rate2'), 'with the 8K polling command;',
+      sum(1 for m in models if m['lighting']), 'with lighting')

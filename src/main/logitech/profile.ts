@@ -1,6 +1,7 @@
 // Onboard profile sectors. Format 8 (PRO X2/X3 SUPERSTRIKE) is verified byte-for-byte on a PRO X2;
 // formats 1-6 use the common G-series layout. Encoding patches the original bytes so unknown fields survive.
 import type { Hits, ProfileData, Stage } from '@shared/types'
+import { ALT_LEDS, LEDS, LED_SIZE, LIGHT_SECTOR_MIN, decodeLed, encodeLed } from './lighting'
 
 export function crc16(data: Uint8Array): number {
   let crc = 0xffff
@@ -91,7 +92,8 @@ export function decode(sector: number, raw: Uint8Array, fmt: number, isEnabled =
     angleSnap: raw[17] === 1, hits: null, sleepS: null, offS: null,
     buttons: Array.from({ length: 16 }, (_, i) => act(32 + 4 * i)),
     shiftButtons: Array.from({ length: 16 }, (_, i) => act(96 + 4 * i)),
-    name: raw.length >= 208 ? nameFrom(raw.subarray(160, 208)) : ''
+    name: raw.length >= 208 ? nameFrom(raw.subarray(160, 208)) : '',
+    ...(raw.length >= LIGHT_SECTOR_MIN && { lighting: LEDS.map((o) => decodeLed(raw.subarray(o, o + LED_SIZE))) })
   }
 }
 
@@ -126,6 +128,14 @@ export function encode(profile: ProfileData): Uint8Array {
     p.buttons.slice(0, 16).forEach((a, i) => put(32 + 4 * i, a))
     p.shiftButtons.slice(0, 16).forEach((a, i) => put(96 + 4 * i, a))
     if (b.length >= 210) b.set(nameBytes(p.name, 48), 160)
+    if (b.length >= LIGHT_SECTOR_MIN)
+      p.lighting?.slice(0, LEDS.length).forEach((l, i) => {
+        const old = b.slice(LEDS[i], LEDS[i] + LED_SIZE)
+        const led = encodeLed(l, old)
+        if (led.every((v, j) => v === old[j])) return
+        b.set(led, LEDS[i])
+        b.set(led, ALT_LEDS[i])
+      })
   }
   return withCrc(b)
 }

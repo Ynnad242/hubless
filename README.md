@@ -103,8 +103,8 @@ devices stay on the devices.
 | WLmouse Ying (cable) | DPI stages, polling, lift-off, angle snap, motion sync, ripple, debounce | ✅ Tested on hardware |
 | Wooting 60HE | Actuation, rapid trigger, per-key settings, key mapping, Mod-Tap / Snap Tap, lighting | ✅ Tested on hardware |
 | Fractal Design Scape | Battery, EQ, noise cancelling, sidetone, lighting | ✅ Tested on hardware |
-| 61 other Logitech G mice | DPI, polling, buttons, onboard profiles | 🧪 Should work, untested |
-| 74 Razer mice (Viper, DeathAdder, Basilisk, Cobra, Naga…) | DPI stages, polling up to 8 kHz, battery | 🧪 Should work, tested on a simulated mouse |
+| 61 other Logitech G mice | DPI, polling, buttons, onboard profiles, RGB lighting (G502, G203, G Pro and others with RGB) | 🧪 Should work, untested |
+| 74 Razer mice (Viper, DeathAdder, Basilisk, Cobra, Naga…) | DPI stages, polling up to 8 kHz, battery, RGB lighting on 53 of them | 🧪 Should work, tested on a simulated mouse |
 
 About 90 more devices (SteelSeries, ASUS, Glorious, Roccat, older Razer and more) are recognised by name and marked
 "support coming soon"; they can't be configured yet. Own an untested one? **Device settings → Copy device report**

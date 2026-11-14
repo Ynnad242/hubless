@@ -35,6 +35,27 @@ export interface ProfileData {
   raw: string // the whole sector as hex; unknown bytes are kept
   /** Settings that only some mice have (Endgame Gear today). */
   extras?: MouseExtras
+  /** One entry per lighting zone in MouseState.lighting (mice with RGB only). */
+  lighting?: LightSetting[]
+}
+
+// ---------------------------------------------------------------- mouse lighting
+/** off · one colour · breathing in one colour · cycling through all colours · 'other': an effect Hubless can't
+ *  edit (left as it is until the zone is changed). */
+export type LightEffect = 'off' | 'static' | 'breathing' | 'cycle' | 'other'
+
+export interface LightSetting {
+  effect: LightEffect
+  color: string // #rrggbb
+  brightness: number // 0..100 percent
+  speedMs: number // one breath or one colour cycle
+}
+
+export interface LightZone {
+  label: string // "Logo", "Scroll wheel", …
+  effects: LightEffect[] // what this zone can do, besides 'other'
+  brightness: LightEffect[] // effects whose brightness can be set
+  speed: LightEffect[] // effects whose speed can be set
 }
 
 export interface MouseExtras {
@@ -87,6 +108,8 @@ export interface MouseState {
   onboard: { fmt: number; profiles: number; buttons: number; sectorSize: number } | null
   features: { index: number; id: number; hidden: boolean; version: number }[]
   limits?: MouseLimits
+  /** The mouse's lighting zones; missing or empty: no lighting Hubless can change. */
+  lighting?: LightZone[]
 }
 
 // ---------------------------------------------------------------- keyboards (Wooting)

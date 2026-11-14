@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Crosshair, Layers, MousePointerClick, SquareMousePointer } from 'lucide-react'
+import { Crosshair, Layers, Lightbulb, MousePointerClick, SquareMousePointer } from 'lucide-react'
 import type { Capability, DeviceSummary } from '@shared/types'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { type MouseCtl, useMouse } from '@/hooks/useMouse'
 import { Buttons } from '@/sections/Buttons'
+import { Lighting } from '@/sections/Lighting'
 import { Profiles } from '@/sections/Profiles'
 import { Sensor } from '@/sections/Sensor'
 import { Settings as DeviceSettings } from '@/sections/Settings'
@@ -14,6 +15,7 @@ const RAIL: RailItem[] = [
   { key: 'triggers', label: 'HITS triggers', icon: MousePointerClick },
   { key: 'sensor', label: 'Sensor & DPI', icon: Crosshair },
   { key: 'buttons', label: 'Buttons', icon: SquareMousePointer },
+  { key: 'lighting', label: 'Lighting', icon: Lightbulb },
   { key: 'profiles', label: 'Profiles', icon: Layers }
 ]
 
@@ -31,6 +33,7 @@ export function DeviceView({ device, photo, onBack, expose }: { device: DeviceSu
     triggers: <Triggers mouse={mouse} id={device.id} photo={photo} />,
     sensor: <Sensor mouse={mouse} />,
     buttons: <Buttons mouse={mouse} id={device.id} photo={photo} />,
+    lighting: <Lighting mouse={mouse} device={device} photo={photo} />,
     profiles: <Profiles mouse={mouse} id={device.id} />,
     device: <DeviceSettings mouse={mouse} device={device} photo={photo} />
   }[section as 'triggers']

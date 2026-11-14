@@ -1,8 +1,9 @@
 // Everything the app knows about one Logitech mouse, and the safe ways to change it.
-import type { Battery, DpiGridData, Hits, MouseState, ProfileData } from '@shared/types'
+import type { Battery, DpiGridData, Hits, LightZone, MouseState, ProfileData } from '@shared/types'
 import * as storage from '../storage'
 import { F, type LogitechDevice } from './device'
 import { HidppError, Timeout } from './hidpp'
+import { LEDS, LIGHT_SECTOR_MIN, ZONE_NAMES, logitechZone } from './lighting'
 import { decode, encode, fromHex, stageCount, toHex, withCrc } from './profile'
 
 const ONBOARD = 1
@@ -17,6 +18,8 @@ export class LogitechSession {
   hitsCaps: MouseState['hitsCaps'] = null
   factory: Uint8Array | null = null
   notice = ''
+  /** RGB zones stored in the onboard profiles (none for mice without RGB). */
+  zones: LightZone[] = []
   private backedUp = false
 
   constructor(public dev: LogitechDevice) {}
@@ -42,6 +45,11 @@ export class LogitechSession {
     this.grid = await d.dpiGrid()
     if (d.isSuperstrike) this.hitsCaps = await d.hitsCaps()
     if (!this.editable) return
+    this.zones = []
+    if (d.onboard!.fmt !== 8 && d.onboard!.sectorSize >= LIGHT_SECTOR_MIN) {
+      const locs = (await d.lightZones()).slice(0, LEDS.length)
+      this.zones = locs.map((loc, i) => logitechZone(ZONE_NAMES[loc] ?? (locs.length === 1 ? 'Lights' : `Zone ${i + 1}`)))
+    }
     if ((await d.onboardMode()) !== ONBOARD) {
       // Another tool left the mouse in host mode, where the stored profiles are ignored.
       await d.setOnboardMode(ONBOARD)
@@ -65,8 +73,10 @@ export class LogitechSession {
 
   state(): MouseState {
     const d = this.dev
+    const n = this.zones.length
     return {
-      profiles: this.profiles, activeSector: this.activeSector, stage: this.stage, rates: this.rates,
+      profiles: this.profiles.map((p) => ({ ...p, lighting: n ? p.lighting?.slice(0, n) : undefined })),
+      lighting: this.zones, activeSector: this.activeSector, stage: this.stage, rates: this.rates,
       grid: this.grid, hitsCaps: this.hitsCaps, hasFactory: !!this.factory, firmware: d.firmware,
       serial: d.serial, protocol: d.protocol, onboard: d.onboard, features: d.featureList
     }
@@ -94,6 +104,10 @@ export class LogitechSession {
     const saved = decode(next.sector, data, next.fmt, old.enabled)
     this.profiles[slot] = saved
     if (next.sector !== this.activeSector) return saved
+    if (JSON.stringify(saved.lighting) !== JSON.stringify(old.lighting)) {
+      // The mouse reads its lights from the profile when it is selected: select it again to show the change now.
+      await this.quiet(() => this.dev.setCurrentProfile(next.sector))
+    }
     this.stage = await this.dev.currentStage()
     if (saved.defaultStage !== old.defaultStage || this.stage >= stageCount(saved)) {
       // Also repairs a live stage the firmware dropped to 0xFF after its stage was switched off.

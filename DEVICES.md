@@ -26,7 +26,8 @@ device name and the output of `lsusb`. Devices people ask for get supported firs
 ### Logitech
 
 Logitech G mice that use HID++ 2.0 (52 models), wired or through their LIGHTSPEED receiver: **DPI, polling rate,
-buttons and onboard profiles**. The PRO X2 SUPERSTRIKE's trigger settings are specific to that mouse.
+buttons, onboard profiles and RGB lighting** (on mice with RGB, such as the G502, G203 and G Pro; the mouse tells
+Hubless which lights it has). The PRO X2 SUPERSTRIKE's trigger settings are specific to that mouse.
 
 <details><summary>52 Logitech mice · including G Pro Wireless, G Pro X Wireless Superlight, G502 Hero, G502 X</summary>
 
@@ -92,88 +93,88 @@ If you try one of these, please [report how it went](https://github.com/Ynnad242
 ### Razer
 
 74 Razer mice, wired or through their HyperSpeed receiver: **DPI stages (or DPI on older models), polling
-rate (up to 8000 Hz on 8K models) and battery level**. Built from OpenRazer's protocol notes and tested against a
+rate (up to 8000 Hz on 8K models), battery level and RGB lighting** (per zone where the mouse has lights). Built from OpenRazer's protocol notes and tested against a
 simulated mouse; not yet on real hardware. Hubless reads everything first, changes nothing if the mouse answers
 unexpectedly, and reads every change back.
 
 <details><summary>74 Razer mice · including Basilisk V3, Basilisk V3 Pro, Cobra Pro, DeathAdder V3</summary>
 
-| Model | Max DPI | DPI stages | Polling up to | USB ids |
-|---|---|---|---|---|
-| Basilisk V3 ⭐ | 26,000 | yes | 1000 Hz | `1532:0099` |
-| Basilisk V3 Pro ⭐ | 30,000 | yes | 1000 Hz | `1532:00aa` wired, `1532:00ab` wireless |
-| Cobra Pro ⭐ | 30,000 | yes | 1000 Hz | `1532:00af` wired, `1532:00b0` wireless |
-| DeathAdder V3 ⭐ | 30,000 | yes | 8000 Hz | `1532:00b2` |
-| DeathAdder V3 Pro ⭐ | 35,000 | yes | 1000 Hz | `1532:00b6` wired, `1532:00b7` wireless, `1532:00c2` wired, `1532:00c3` wireless |
-| DeathAdder V4 Pro ⭐ | 45,000 | yes | 8000 Hz | `1532:00be` wired, `1532:00bf` wireless |
-| Orochi V2 ⭐ | 18,000 | yes | 1000 Hz | `1532:0094` wireless, `1532:0095` bluetooth |
-| Viper Mini ⭐ | 8,500 | yes | 1000 Hz | `1532:008a` |
-| Viper V2 Pro ⭐ | 30,000 | yes | 1000 Hz | `1532:00a5` wired, `1532:00a6` wireless |
-| Viper V3 Pro ⭐ | 35,000 | yes | 8000 Hz | `1532:00c0` wired, `1532:00c1` wireless |
-|  | 20,000 | one DPI | 1000 Hz | `1532:0088` |
-| Abyssus 2000 | 2,000 | one DPI | 1000 Hz | `1532:005e` |
-| Abyssus Elite (D.Va Edition) | 7,200 | one DPI | 1000 Hz | `1532:006a` |
-| Abyssus Essential | 7,200 | one DPI | 1000 Hz | `1532:006b` |
-| Abyssus V2 | 5,000 | one DPI | 1000 Hz | `1532:005b` |
-| Atheris | 7,200 | yes | 1000 Hz | `1532:0062` wireless |
-| Basilisk | 16,000 | one DPI | 1000 Hz | `1532:0064` |
-| Basilisk Essential | 6,400 | yes | 1000 Hz | `1532:0065` |
-| Basilisk Mobile | 18,000 | yes | 1000 Hz | `1532:00d3` wired, `1532:00d4` wireless |
-| Basilisk Ultimate | 20,000 | one DPI | 1000 Hz | `1532:0086` |
-| Basilisk V2 | 20,000 | one DPI | 1000 Hz | `1532:0085` |
-| Basilisk V3 35K | 35,000 | yes | 1000 Hz | `1532:00cb` |
-| Basilisk V3 Pro 35K | 35,000 | yes | 1000 Hz | `1532:00cc` wired, `1532:00cd` wireless |
-| Basilisk V3 Pro 35K Phantom Green Edition | 35,000 | yes | 1000 Hz | `1532:00d6` wired, `1532:00d7` wireless |
-| Basilisk V3 X HyperSpeed | 18,000 | yes | 1000 Hz | `1532:00b9` |
-| Basilisk X HyperSpeed | 16,000 | yes | 1000 Hz | `1532:0083` |
-| Cobra | 8,500 | yes | 1000 Hz | `1532:00a3` |
-| Cobra HyperSpeed | 26,000 | yes | 1000 Hz | `1532:00da`, `1532:00db` wireless |
-| DeathAdder 2000 | 2,000 | one DPI | 1000 Hz | `1532:004f` |
-| DeathAdder 3500 | 3,500 | one DPI | 1000 Hz | `1532:0054` |
-| DeathAdder Chroma | 10,000 | one DPI | 1000 Hz | `1532:0043` |
-| DeathAdder Elite | 16,000 | one DPI | 1000 Hz | `1532:005c` |
-| DeathAdder Essential | 6,400 | one DPI | 1000 Hz | `1532:006e` |
-| DeathAdder Essential (2021) | 6,400 | one DPI | 1000 Hz | `1532:0098` |
-| DeathAdder Essential (White Edition) | 6,400 | one DPI | 1000 Hz | `1532:0071` |
-| DeathAdder V2 | 20,000 | one DPI | 1000 Hz | `1532:0084` |
-| DeathAdder V2 Lite | 8,500 | yes | 1000 Hz | `1532:00a1` |
-| DeathAdder V2 Mini | 8,500 | yes | 1000 Hz | `1532:008c` |
-| DeathAdder V2 Pro | 20,000 | yes | 1000 Hz | `1532:007c` wired, `1532:007d` wireless |
-| DeathAdder V2 X HyperSpeed | 14,000 | yes | 1000 Hz | `1532:009c` |
-| DeathAdder V3 HyperSpeed | 26,000 | yes | 1000 Hz | `1532:00c4` wired, `1532:00c5` wireless |
-| HyperPolling Wireless | 30,000 | yes | 8000 Hz | `1532:00b3` wireless |
-| Imperator 2012 | 6,400 | one DPI | 1000 Hz | `1532:002f` |
-| Lancehead | 16,000 | yes | 1000 Hz | `1532:0059` wired, `1532:005a` wireless |
-| Lancehead Tournament Edition | 16,000 | yes | 1000 Hz | `1532:0060` |
-| Lancehead Wireless | 16,000 | yes | 1000 Hz | `1532:0070` wired, `1532:006f` wireless |
-| Mamba 2012 | 6,400 | one DPI | 1000 Hz | `1532:0025` wireless, `1532:0024` wired |
-| Mamba Chroma | 16,000 | one DPI | 1000 Hz | `1532:0045` wireless, `1532:0044` wired |
-| Mamba Elite | 16,000 | one DPI | 1000 Hz | `1532:006c` |
-| Mamba Wireless | 16,000 | one DPI | 1000 Hz | `1532:0073` wired, `1532:0072` wireless |
-| Naga 2014 | 8,200 | one DPI | 1000 Hz | `1532:0040` |
-| Naga Chroma | 16,000 | one DPI | 1000 Hz | `1532:0053` |
-| Naga Epic Chroma | 8,200 | one DPI | 1000 Hz | `1532:003e` wired, `1532:003f` wireless |
-| Naga Hex V2 | 16,000 | one DPI | 1000 Hz | `1532:0050` |
-| Naga Left Handed Edition 2020 | 20,000 | one DPI | 1000 Hz | `1532:008d` |
-| Naga Pro | 20,000 | yes | 1000 Hz | `1532:008f` wired, `1532:0090` wireless |
-| Naga Trinity | 16,000 | one DPI | 1000 Hz | `1532:0067` |
-| Naga V2 HyperSpeed | 30,000 | yes | 1000 Hz | `1532:00b4` wireless |
-| Naga V2 Pro | 30,000 | yes | 1000 Hz | `1532:00a7` wired, `1532:00a8` wireless |
-| Naga X | 18,000 | yes | 1000 Hz | `1532:0096` |
-| Orochi | 8,200 | one DPI | 1000 Hz | `1532:0048` wired |
-| Orochi 2013 | 6,400 | one DPI | 1000 Hz | `1532:0039` |
-| Ouroboros | 8,200 | one DPI | 1000 Hz | `1532:0032` |
-| Pro Click | 16,000 | yes | 1000 Hz | `1532:0077` wireless, `1532:0080` wired |
-| Pro Click Mini | 12,000 | yes | 1000 Hz | `1532:009a` wireless |
-| Pro Click V2 | 30,000 | yes | 1000 Hz | `1532:00d0` wired, `1532:00d1` wireless |
-| Pro Click V2 Vertical Edition | 30,000 | yes | 1000 Hz | `1532:00c7` wired, `1532:00c8` wireless |
-| Taipan | 8,200 | one DPI | 1000 Hz | `1532:0034` |
-| Viper | 16,000 | yes | 1000 Hz | `1532:0078` |
-| Viper 8KHz | 20,000 | yes | 8000 Hz | `1532:0091` |
-| Viper Mini SE | 30,000 | yes | 8000 Hz | `1532:009e` wired, `1532:009f` wireless |
-| Viper Ultimate | 20,000 | yes | 1000 Hz | `1532:007a` wired, `1532:007b` wireless |
-| Viper V3 HyperSpeed | 30,000 | yes | 1000 Hz | `1532:00b8` |
-| Viper V3 Pro SE | 35,000 | yes | 1000 Hz | `1532:00de` wired, `1532:00df` wireless |
+| Model | Max DPI | DPI stages | Polling up to | Lighting | USB ids |
+|---|---|---|---|---|---|
+| Basilisk V3 ⭐ | 26,000 | yes | 1000 Hz | logo, scroll wheel, whole mouse | `1532:0099` |
+| Basilisk V3 Pro ⭐ | 30,000 | yes | 1000 Hz | logo, scroll wheel, whole mouse | `1532:00aa` wired, `1532:00ab` wireless |
+| Cobra Pro ⭐ | 30,000 | yes | 1000 Hz | logo, scroll wheel, whole mouse | `1532:00af` wired, `1532:00b0` wireless |
+| DeathAdder V3 ⭐ | 30,000 | yes | 8000 Hz | — | `1532:00b2` |
+| DeathAdder V3 Pro ⭐ | 35,000 | yes | 1000 Hz | — | `1532:00b6` wired, `1532:00b7` wireless, `1532:00c2` wired, `1532:00c3` wireless |
+| DeathAdder V4 Pro ⭐ | 45,000 | yes | 8000 Hz | — | `1532:00be` wired, `1532:00bf` wireless |
+| Orochi V2 ⭐ | 18,000 | yes | 1000 Hz | — | `1532:0094` wireless, `1532:0095` bluetooth |
+| Viper Mini ⭐ | 8,500 | yes | 1000 Hz | logo | `1532:008a` |
+| Viper V2 Pro ⭐ | 30,000 | yes | 1000 Hz | — | `1532:00a5` wired, `1532:00a6` wireless |
+| Viper V3 Pro ⭐ | 35,000 | yes | 8000 Hz | — | `1532:00c0` wired, `1532:00c1` wireless |
+|  | 20,000 | one DPI | 1000 Hz | logo, scroll wheel, left side, right side | `1532:0088` |
+| Abyssus 2000 | 2,000 | one DPI | 1000 Hz | — | `1532:005e` |
+| Abyssus Elite (D.Va Edition) | 7,200 | one DPI | 1000 Hz | logo | `1532:006a` |
+| Abyssus Essential | 7,200 | one DPI | 1000 Hz | logo | `1532:006b` |
+| Abyssus V2 | 5,000 | one DPI | 1000 Hz | — | `1532:005b` |
+| Atheris | 7,200 | yes | 1000 Hz | — | `1532:0062` wireless |
+| Basilisk | 16,000 | one DPI | 1000 Hz | logo, scroll wheel | `1532:0064` |
+| Basilisk Essential | 6,400 | yes | 1000 Hz | logo | `1532:0065` |
+| Basilisk Mobile | 18,000 | yes | 1000 Hz | — | `1532:00d3` wired, `1532:00d4` wireless |
+| Basilisk Ultimate | 20,000 | one DPI | 1000 Hz | logo, scroll wheel, left side, right side | `1532:0086` |
+| Basilisk V2 | 20,000 | one DPI | 1000 Hz | logo, scroll wheel | `1532:0085` |
+| Basilisk V3 35K | 35,000 | yes | 1000 Hz | logo, scroll wheel, whole mouse | `1532:00cb` |
+| Basilisk V3 Pro 35K | 35,000 | yes | 1000 Hz | logo, scroll wheel, whole mouse | `1532:00cc` wired, `1532:00cd` wireless |
+| Basilisk V3 Pro 35K Phantom Green Edition | 35,000 | yes | 1000 Hz | scroll wheel, whole mouse | `1532:00d6` wired, `1532:00d7` wireless |
+| Basilisk V3 X HyperSpeed | 18,000 | yes | 1000 Hz | scroll wheel | `1532:00b9` |
+| Basilisk X HyperSpeed | 16,000 | yes | 1000 Hz | — | `1532:0083` |
+| Cobra | 8,500 | yes | 1000 Hz | logo | `1532:00a3` |
+| Cobra HyperSpeed | 26,000 | yes | 1000 Hz | logo, whole mouse | `1532:00da`, `1532:00db` wireless |
+| DeathAdder 2000 | 2,000 | one DPI | 1000 Hz | — | `1532:004f` |
+| DeathAdder 3500 | 3,500 | one DPI | 1000 Hz | — | `1532:0054` |
+| DeathAdder Chroma | 10,000 | one DPI | 1000 Hz | — | `1532:0043` |
+| DeathAdder Elite | 16,000 | one DPI | 1000 Hz | logo, scroll wheel | `1532:005c` |
+| DeathAdder Essential | 6,400 | one DPI | 1000 Hz | logo, scroll wheel | `1532:006e` |
+| DeathAdder Essential (2021) | 6,400 | one DPI | 1000 Hz | logo | `1532:0098` |
+| DeathAdder Essential (White Edition) | 6,400 | one DPI | 1000 Hz | logo, scroll wheel | `1532:0071` |
+| DeathAdder V2 | 20,000 | one DPI | 1000 Hz | logo, scroll wheel | `1532:0084` |
+| DeathAdder V2 Lite | 8,500 | yes | 1000 Hz | logo | `1532:00a1` |
+| DeathAdder V2 Mini | 8,500 | yes | 1000 Hz | logo | `1532:008c` |
+| DeathAdder V2 Pro | 20,000 | yes | 1000 Hz | logo | `1532:007c` wired, `1532:007d` wireless |
+| DeathAdder V2 X HyperSpeed | 14,000 | yes | 1000 Hz | — | `1532:009c` |
+| DeathAdder V3 HyperSpeed | 26,000 | yes | 1000 Hz | — | `1532:00c4` wired, `1532:00c5` wireless |
+| HyperPolling Wireless | 30,000 | yes | 8000 Hz | — | `1532:00b3` wireless |
+| Imperator 2012 | 6,400 | one DPI | 1000 Hz | — | `1532:002f` |
+| Lancehead | 16,000 | yes | 1000 Hz | logo, scroll wheel, left side, right side | `1532:0059` wired, `1532:005a` wireless |
+| Lancehead Tournament Edition | 16,000 | yes | 1000 Hz | logo, scroll wheel, left side, right side | `1532:0060` |
+| Lancehead Wireless | 16,000 | yes | 1000 Hz | logo, scroll wheel, left side, right side | `1532:0070` wired, `1532:006f` wireless |
+| Mamba 2012 | 6,400 | one DPI | 1000 Hz | — | `1532:0025` wireless, `1532:0024` wired |
+| Mamba Chroma | 16,000 | one DPI | 1000 Hz | — | `1532:0045` wireless, `1532:0044` wired |
+| Mamba Elite | 16,000 | one DPI | 1000 Hz | logo, scroll wheel, left side, right side | `1532:006c` |
+| Mamba Wireless | 16,000 | one DPI | 1000 Hz | logo, scroll wheel | `1532:0073` wired, `1532:0072` wireless |
+| Naga 2014 | 8,200 | one DPI | 1000 Hz | — | `1532:0040` |
+| Naga Chroma | 16,000 | one DPI | 1000 Hz | — | `1532:0053` |
+| Naga Epic Chroma | 8,200 | one DPI | 1000 Hz | — | `1532:003e` wired, `1532:003f` wireless |
+| Naga Hex V2 | 16,000 | one DPI | 1000 Hz | — | `1532:0050` |
+| Naga Left Handed Edition 2020 | 20,000 | one DPI | 1000 Hz | logo, scroll wheel, right side | `1532:008d` |
+| Naga Pro | 20,000 | yes | 1000 Hz | logo, scroll wheel | `1532:008f` wired, `1532:0090` wireless |
+| Naga Trinity | 16,000 | one DPI | 1000 Hz | — | `1532:0067` |
+| Naga V2 HyperSpeed | 30,000 | yes | 1000 Hz | — | `1532:00b4` wireless |
+| Naga V2 Pro | 30,000 | yes | 1000 Hz | logo | `1532:00a7` wired, `1532:00a8` wireless |
+| Naga X | 18,000 | yes | 1000 Hz | scroll wheel, left side | `1532:0096` |
+| Orochi | 8,200 | one DPI | 1000 Hz | — | `1532:0048` wired |
+| Orochi 2013 | 6,400 | one DPI | 1000 Hz | — | `1532:0039` |
+| Ouroboros | 8,200 | one DPI | 1000 Hz | — | `1532:0032` |
+| Pro Click | 16,000 | yes | 1000 Hz | — | `1532:0077` wireless, `1532:0080` wired |
+| Pro Click Mini | 12,000 | yes | 1000 Hz | — | `1532:009a` wireless |
+| Pro Click V2 | 30,000 | yes | 1000 Hz | whole mouse | `1532:00d0` wired, `1532:00d1` wireless |
+| Pro Click V2 Vertical Edition | 30,000 | yes | 1000 Hz | whole mouse | `1532:00c7` wired, `1532:00c8` wireless |
+| Taipan | 8,200 | one DPI | 1000 Hz | — | `1532:0034` |
+| Viper | 16,000 | yes | 1000 Hz | logo | `1532:0078` |
+| Viper 8KHz | 20,000 | yes | 8000 Hz | logo | `1532:0091` |
+| Viper Mini SE | 30,000 | yes | 8000 Hz | — | `1532:009e` wired, `1532:009f` wireless |
+| Viper Ultimate | 20,000 | yes | 1000 Hz | logo | `1532:007a` wired, `1532:007b` wireless |
+| Viper V3 HyperSpeed | 30,000 | yes | 1000 Hz | — | `1532:00b8` |
+| Viper V3 Pro SE | 35,000 | yes | 1000 Hz | — | `1532:00de` wired, `1532:00df` wireless |
 
 </details>
 

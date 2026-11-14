@@ -9,7 +9,7 @@
 // None of these models has been tested on hardware by Hubless yet, so the session reads everything before it changes
 // anything, refuses to write if a read answers unexpectedly, reads every write back, and backs up first.
 import HID from 'node-hid'
-import type { Battery, MouseState, ProfileData, Stage } from '@shared/types'
+import type { Battery, LightEffect, LightSetting, LightZone, MouseState, ProfileData, Stage } from '@shared/types'
 import { Offline, Timeout } from '../logitech/hidpp'
 import { lookup } from '../catalog'
 import * as storage from '../storage'
@@ -18,6 +18,14 @@ import data from '../../../data/razer.json'
 export const RAZER_VID = 0x1532
 
 type Cmd = [string, string | null, number] | null
+/** One lighting zone, driven by the "extended matrix" commands (class 0x0F) with this transaction id. */
+export interface RazerZone {
+  zone: 'logo' | 'scroll' | 'backlight' | 'left' | 'right' | 'all'
+  led: number
+  tx: number
+  effects: ('static' | 'none' | 'spectrum' | 'breath')[]
+  brightness: boolean
+}
 export interface RazerModel {
   id: string
   pid: number
@@ -31,6 +39,7 @@ export interface RazerModel {
   charging: Cmd
   firmware: Cmd
   pollTwice: boolean
+  lighting: RazerZone[]
 }
 
 /** Models this driver handles: DPI as two bytes per axis and a known polling command. */
@@ -122,8 +131,8 @@ export class RazerTransport {
   ) {}
 
   /** Send one command; returns all 80 argument bytes (some replies use more than their declared data size). */
-  async request(cls: number, id: number, size: number, args: number[] = []): Promise<Uint8Array> {
-    const req = packet(this.tx, cls, id, size, args)
+  async request(cls: number, id: number, size: number, args: number[] = [], tx = this.tx): Promise<Uint8Array> {
+    const req = packet(tx, cls, id, size, args)
     let last = 0
     for (let attempt = 0; attempt < 5; attempt++) {
       const r = await this.link.exchange(req)
@@ -153,6 +162,8 @@ const POLL2: [number, number][] = [[0x40, 125], [0x20, 250], [0x10, 500], [0x08,
 export const MAX_STAGES = 5
 
 export interface Readings {
+  /** Brightness of each lighting zone, 0..255 (null: the zone can't report it). */
+  brightness?: (number | null)[]
   dpi?: Uint8Array // [storage, x BE16, y BE16, 0, 0]
   stages?: Uint8Array // [storage, active (1-based), count, (n, x BE16, y BE16, 0, 0) × count]
   poll?: Uint8Array // v1: [code]; v2: [arg, code]
@@ -179,7 +190,7 @@ export function rateOf(m: RazerModel, r: Readings) {
   return (v2 ? POLL2 : POLL1).find(([c]) => c === code)?.[1] ?? 1000
 }
 
-export function decode(m: RazerModel, r: Readings): ProfileData {
+export function decode(m: RazerModel, r: Readings, saved: LightSetting[] | null = null): ProfileData {
   const st = readStages(r)
   const live = r.dpi ? { x: be(r.dpi, 1), y: be(r.dpi, 3) } : { x: 800, y: 800 }
   const list = st && st.list.length ? st.list : [live]
@@ -189,16 +200,75 @@ export function decode(m: RazerModel, r: Readings): ProfileData {
   return {
     sector: 0, fmt: 0, enabled: true, rateHz: rateOf(m, r), rateWiredHz: null, stages,
     defaultStage: st ? Math.min(Math.max(st.active - 1, 0), list.length - 1) : 0, shiftStage: 0,
-    hits: null, buttons: [], shiftButtons: [], name: '', angleSnap: false, sleepS: null, offS: null, raw: ''
+    hits: null, buttons: [], shiftButtons: [], name: '', angleSnap: false, sleepS: null, offS: null, raw: '',
+    ...(m.lighting.length && { lighting: readLighting(m, r, saved) })
   }
 }
 
-export type Write = { what: 'stages' | 'dpi' | 'poll'; cls: number; id: number; size: number; args: number[] }
+export type Write = { what: 'stages' | 'dpi' | 'poll' | 'lighting'; cls: number; id: number; size: number; args: number[]; tx?: number }
+
+// ---------------------------------------------------------------- lighting
+const ZONE_LABEL: Record<RazerZone['zone'], string> = {
+  logo: 'Logo', scroll: 'Scroll wheel', backlight: 'Backlight', left: 'Left side', right: 'Right side', all: 'Whole mouse'
+}
+const EFFECT: Record<RazerZone['effects'][number], LightEffect> = { none: 'off', static: 'static', breath: 'breathing', spectrum: 'cycle' }
+
+export function razerZones(m: RazerModel): LightZone[] {
+  const order: LightEffect[] = ['off', 'static', 'breathing', 'cycle']
+  return m.lighting.map((z) => {
+    const effects = order.filter((e) => z.effects.some((x) => EFFECT[x] === e))
+    return { label: ZONE_LABEL[z.zone], effects, brightness: z.brightness ? effects.filter((e) => e !== 'off') : [], speed: [] }
+  })
+}
+
+/** What the mouse shows: the effect Hubless last set (Razer mice can't report it) and the brightness they report. */
+export function readLighting(m: RazerModel, r: Readings, saved: LightSetting[] | null): LightSetting[] {
+  return m.lighting.map((_, i) => {
+    const b = r.brightness?.[i]
+    const s = saved?.[i]
+    return {
+      effect: s?.effect ?? 'other',
+      color: s?.color ?? '#00ff00',
+      brightness: b == null ? (s?.brightness ?? 100) : Math.round((b * 100) / 255),
+      speedMs: 0
+    }
+  })
+}
+
+function lightWrites(m: RazerModel, cur: LightSetting[], want: LightSetting[]): Write[] {
+  const out: Write[] = []
+  m.lighting.forEach((z, i) => {
+    const w = want[i]
+    const c = cur[i]
+    if (!w || w.effect === 'other') return
+    const [r, g, b] = rgbOf(w.color)
+    const effect = (eff: number, extra: number[]): Write => ({
+      what: 'lighting', cls: 0x0f, id: 0x02, size: extra.length + 3, args: [0x01, z.led, eff, ...extra], tx: z.tx
+    })
+    const can = (e: RazerZone['effects'][number]) => z.effects.includes(e)
+    if (w.effect !== c.effect || (w.effect !== 'off' && w.effect !== 'cycle' && w.color.toLowerCase() !== c.color.toLowerCase())) {
+      if (w.effect === 'off' && can('none')) out.push(effect(0x00, [0, 0, 0]))
+      else if (w.effect === 'static' && can('static')) out.push(effect(0x01, [0, 0, 1, r, g, b]))
+      else if (w.effect === 'breathing' && can('breath')) out.push(effect(0x02, [1, 0, 1, r, g, b]))
+      else if (w.effect === 'cycle' && can('spectrum')) out.push(effect(0x03, [0, 0, 0]))
+      else throw new Error(`The ${ZONE_LABEL[z.zone].toLowerCase()} can't do that effect.`)
+    }
+    const level = Math.round((Math.max(0, Math.min(100, w.brightness)) * 255) / 100)
+    if (z.brightness && w.effect !== 'off' && (w.brightness !== c.brightness || c.effect === 'off' || c.effect === 'other'))
+      out.push({ what: 'lighting', cls: 0x0f, id: 0x04, size: 3, args: [0x01, z.led, level], tx: z.tx })
+  })
+  return out
+}
+
+const rgbOf = (c: string) => {
+  const n = parseInt(/^#?([0-9a-f]{6})$/i.exec(c)?.[1] ?? 'ffffff', 16)
+  return [n >> 16, (n >> 8) & 0xff, n & 0xff]
+}
 
 /** The writes that turn the current readings into profile p, given the DPI range. */
-export function plan(m: RazerModel, r: Readings, p: ProfileData, [lo, hi, step]: [number, number, number]): Write[] {
+export function plan(m: RazerModel, r: Readings, p: ProfileData, [lo, hi, step]: [number, number, number], saved: LightSetting[] | null = null): Write[] {
   const out: Write[] = []
-  const cur = decode(m, r)
+  const cur = decode(m, r, saved)
   const snap = (v: number) => Math.min(hi, Math.max(lo, Math.round(v / step) * step))
   const want = p.stages.filter((s) => s.x > 0).slice(0, r.stages ? MAX_STAGES : 1).map((s) => ({ x: snap(s.x), y: snap(s.y || s.x) }))
   if (!want.length) throw new Error('Keep at least one DPI stage.')
@@ -229,6 +299,7 @@ export function plan(m: RazerModel, r: Readings, p: ProfileData, [lo, hi, step]:
       if (m.pollTwice) out.push({ what: 'poll', cls: 0x00, id: 0x40, size: 2, args: [0x01, code] })
     } else out.push({ what: 'poll', cls: 0x00, id: 0x05, size: 1, args: [code] })
   }
+  if (p.lighting && cur.lighting) out.push(...lightWrites(m, cur.lighting, p.lighting))
   return out
 }
 
@@ -285,7 +356,24 @@ export class RazerSession {
     const st = readStages(r)
     if (st && (st.list.length === 0 || st.list.some((s) => s.x < 50 || s.x > 50000)))
       throw new Error('The mouse reported DPI stages in an unexpected format. Hubless left it unchanged.')
+    r.brightness = []
+    for (const z of m.lighting) {
+      let level: number | null = null
+      if (z.brightness) {
+        try {
+          level = (await this.t.request(0x0f, 0x84, 3, [0x01, z.led], z.tx))[2]
+        } catch (e) {
+          if (e instanceof Offline) throw e // asleep or unplugged; anything else: this zone just can't say
+        }
+      }
+      r.brightness.push(level)
+    }
     return r
+  }
+
+  /** The lighting Hubless last set on this mouse. */
+  private get saved() {
+    return this.model.lighting.length ? storage.savedLighting(this.backupKey) : null
   }
 
   async load() {
@@ -318,7 +406,7 @@ export class RazerSession {
   state(): MouseState {
     const m = this.model
     return {
-      profiles: [decode(m, this.readings)], activeSector: 0, stage: -1, rates: rates(m),
+      profiles: [decode(m, this.readings, this.saved)], activeSector: 0, stage: -1, rates: rates(m), lighting: razerZones(m),
       grid: { values: [], ranges: [this.dpiRange] }, hitsCaps: null, hasFactory: false,
       firmware: this.fw, serial: this.usbSerial, protocol: 'Razer',
       onboard: { fmt: 0, profiles: 1, buttons: 0, sectorSize: 0 }, features: [],
@@ -352,12 +440,22 @@ export class RazerSession {
   private async apply(writes: Write[]) {
     if (!writes.length) return
     await this.ensureBackup()
-    for (const w of writes) await this.t.request(w.cls, w.id, w.size, w.args)
+    for (const w of writes) await this.t.request(w.cls, w.id, w.size, w.args, w.tx)
     const back = await this.readAll()
     const before = this.readings
     this.readings = back
     // Every change must read back as written.
     for (const w of writes) {
+      if (w.what === 'lighting') {
+        // Effects can't be read back; brightness can.
+        const i = this.model.lighting.findIndex((z) => z.led === w.args[1])
+        const got = back.brightness?.[i]
+        if (w.id === 0x04 && got != null && Math.abs(got - w.args[2]) > 1) {
+          this.readings = back
+          throw new Error('The mouse did not keep the brightness change.')
+        }
+        continue
+      }
       const ok =
         w.what === 'dpi'
           ? be(back.dpi!, 1) === ((w.args[1] << 8) | w.args[2]) && be(back.dpi!, 3) === ((w.args[3] << 8) | w.args[4])
@@ -373,7 +471,13 @@ export class RazerSession {
   }
 
   async saveProfile(p: ProfileData) {
-    await this.apply(plan(this.model, this.readings, p, this.dpiRange))
+    const saved = this.saved
+    const writes = plan(this.model, this.readings, p, this.dpiRange, saved)
+    await this.apply(writes)
+    if (p.lighting && writes.some((w) => w.what === 'lighting')) {
+      const cur = readLighting(this.model, this.readings, saved)
+      storage.saveLighting(this.backupKey, p.lighting.map((l, i) => (l.effect === 'other' ? cur[i] : l)))
+    }
   }
 
   async restore(mem: Map<number, Uint8Array>) {

@@ -27,6 +27,8 @@ export class SimRazer implements RazerLink {
   charging = 0
   writes: string[] = []
   v2: boolean
+  /** Lighting by LED id: effect id, colour and brightness 0..255. */
+  leds = new Map<number, { effect: number; rgb: number[]; brightness: number }>()
 
   constructor(
     public model: RazerModel,
@@ -34,6 +36,7 @@ export class SimRazer implements RazerLink {
   ) {
     this.v2 = model.poll![0] === 'get_polling_rate2'
     this.poll = this.v2 ? 0x08 : 0x01
+    for (const z of model.lighting ?? []) this.leds.set(z.led, { effect: 0x03, rgb: [0, 255, 0], brightness: 255 })
   }
 
   get rateHz() {
@@ -46,7 +49,8 @@ export class SimRazer implements RazerLink {
     if (req.length !== 90) return status(3)
     let crc = 0
     for (let i = 2; i < 88; i++) crc ^= req[i]
-    if (crc !== req[88] || req[1] !== this.model.dpi![2]) return status(3)
+    const zone = req[6] === 0x0f ? (this.model.lighting ?? []).find((z) => z.led === req[9]) : undefined
+    if (crc !== req[88] || req[1] !== (zone ? zone.tx : this.model.dpi![2])) return status(3)
     if (this.o.asleep) return status(4)
     const [size, cls, id] = [req[5], req[6], req[7]]
     const a = req.subarray(8, 88)
@@ -112,6 +116,28 @@ export class SimRazer implements RazerLink {
         if (!this.model.charging) return status(5)
         out[1] = this.charging
         return ok()
+      case 0x0f02: {
+        // [storage, led, effect, …]: none/spectrum take 6 bytes, static/breathing 9 with the colour at 6..8
+        const led = this.leds.get(a[1])
+        if (!zone || !led || a[0] !== 1) return status(zone ? 3 : 5)
+        const effect = a[2]
+        const name = ({ 0: 'none', 1: 'static', 2: 'breath', 3: 'spectrum' } as Record<number, string>)[effect]
+        if (!name || !zone.effects.includes(name as never)) return status(5)
+        const coloured = effect === 1 || effect === 2
+        if (size !== (coloured ? 9 : 6) || (coloured && a[5] !== 1) || (effect === 2 && a[3] !== 1)) return status(3)
+        return write('lighting', () => this.leds.set(a[1], { ...led, effect, rgb: coloured ? [a[6], a[7], a[8]] : led.rgb }))
+      }
+      case 0x0f04: {
+        const led = this.leds.get(a[1])
+        if (!zone?.brightness || !led || size !== 3 || a[0] !== 1) return status(zone ? 3 : 5)
+        return write('brightness', () => this.leds.set(a[1], { ...led, brightness: a[2] }))
+      }
+      case 0x0f84: {
+        const led = this.leds.get(a[1])
+        if (!zone?.brightness || !led || size !== 3) return status(zone ? 3 : 5)
+        out.set([a[0], a[1], led.brightness])
+        return ok()
+      }
       default:
         return status(5)
     }

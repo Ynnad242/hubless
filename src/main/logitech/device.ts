@@ -5,7 +5,8 @@ import { crcOk, hitsFromWire, hitsToWire, withCrc } from './profile'
 
 export const F = {
   ROOT: 0x0000, FEATURE_SET: 0x0001, FW: 0x0003, NAME: 0x0005, BATTERY_UNIFIED: 0x1004, BATTERY: 0x1000,
-  DPI: 0x2201, DPI_EXT: 0x2202, RATE: 0x8060, RATE_EXT: 0x8061, ONBOARD: 0x8100, HITS: 0x1b0c
+  DPI: 0x2201, DPI_EXT: 0x2202, RATE: 0x8060, RATE_EXT: 0x8061, ONBOARD: 0x8100, HITS: 0x1b0c,
+  LED_EFFECTS: 0x8070, RGB_EFFECTS: 0x8071
 } as const
 
 const EXT_RATES = [125, 250, 500, 1000, 2000, 4000, 8000]
@@ -156,6 +157,30 @@ export class LogitechDevice {
     if (!grid.values.length && !grid.ranges.length) grid.ranges.push([100, 25600, 50])
     this.grid = grid
     return grid
+  }
+
+  // ---------------------------------------------------------------- lighting (0x8070 / 0x8071)
+  /** Locations of the mouse's RGB zones, in the order its onboard profiles store them (empty: no RGB). */
+  async lightZones(): Promise<number[]> {
+    const out: number[] = []
+    try {
+      if (this.has(F.LED_EFFECTS)) {
+        const n = (await this.call(F.LED_EFFECTS, 0))[0]
+        for (let z = 0; z < n; z++) {
+          const r = await this.call(F.LED_EFFECTS, 1, [z])
+          out.push((r[1] << 8) | r[2])
+        }
+      } else if (this.has(F.RGB_EFFECTS)) {
+        const n = (await this.call(F.RGB_EFFECTS, 0, [0xff, 0xff, 0x00]))[2]
+        for (let c = 0; c < n; c++) {
+          const r = await this.call(F.RGB_EFFECTS, 0, [c, 0xff, 0x00])
+          out.push((r[2] << 8) | r[3])
+        }
+      }
+    } catch (e) {
+      if (!(e instanceof HidppError || e instanceof Timeout)) throw e
+    }
+    return out
   }
 
   // ---------------------------------------------------------------- HITS (0x1B0C)

@@ -3,7 +3,11 @@ import { describe, expect, it, vi } from 'vitest'
 import { Offline } from '../src/main/logitech/hidpp'
 
 const backups: Map<number, Uint8Array>[] = []
-vi.mock('../src/main/storage', () => ({ saveBackup: vi.fn((_k, _n, _f, mem: Map<number, Uint8Array>) => (backups.push(new Map(mem)), 'backup.json')) }))
+vi.mock('../src/main/storage', () => ({
+  saveBackup: vi.fn((_k, _n, _f, mem: Map<number, Uint8Array>) => (backups.push(new Map(mem)), 'backup.json')),
+  savedLighting: vi.fn(() => null),
+  saveLighting: vi.fn()
+}))
 
 const { MODELS, RazerSession, RazerTransport, decode, packet, rates } = await import('../src/main/razer/razer')
 const { SimRazer } = await import('../src/main/razer/sim')
