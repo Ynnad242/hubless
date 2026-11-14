@@ -258,7 +258,9 @@ test/manager.test.ts covers it.
   interfaces + HID report descriptors from sysfs, firmware, raw readings. No serials or paths; main writes the clipboard
   (the renderer has no clipboard permission). Nothing is sent to the device.
 
-## Preloaded device photos (2026-11-13, after 0.19.0)
+## v0.20.0 (2026-11-14): preloaded device photos, mouse lighting, firmware updates
+
+### Preloaded device photos (2026-11-13)
 - data/devices now holds 29 transparent PNGs (≤1600 px, ~13 MB) for every fully supported device, every popular catalog
   mouse and a few current Razer/Logitech models. Old WebPs removed. All from manufacturer sites, background removed,
   cable cropped (PhotoMouse needs the body to start at the top). test/photos.test.ts checks format, size, that each
@@ -275,7 +277,7 @@ test/manager.test.ts covers it.
 - New photo: tools/device-photo.py <source> data/devices/<modelKey>.png [crop] [seed=x,y] [holes] [nocable]
   (corner-colour flood fill, soft edge, edge colours un-mixed from the background), then the photos test.
 
-## Mouse lighting (2026-11-13)
+### Mouse lighting (2026-11-13)
 - Lighting page for every mouse with RGB (capability 'lighting'; src/renderer/src/sections/Lighting.tsx). Per zone:
   Off / Colour / Breathing / Colour cycle, colour, brightness, speed (where the zone supports it), "Use on all zones".
   Shared types: LightSetting (in ProfileData.lighting) and LightZone (MouseState.lighting), so it saves through the
@@ -294,7 +296,7 @@ test/manager.test.ts covers it.
 - Demo mode adds a simulated G502 HERO (SimTransport('g502'), format 2 with 0x8070) and Basilisk V3 Pro.
 - Not tested on hardware: the user owns no RGB mouse. OP1 8k DPI-indicator colours (config bytes 31..50) not exposed.
 
-## Firmware updates (2026-11-13)
+### Firmware updates (2026-11-13)
 - src/main/firmware.ts. Only official routes; Hubless never writes firmware itself.
   - fwupd: `fwupdmgr refresh` (once a day, no password), `get-devices --json` + `get-updates --json`, matched to our
     device by USB id (USB\VID_x&PID_y, and HIDRAW\VEN_x&DEV_wpid for mice behind a Unifying receiver; Bolt peripherals

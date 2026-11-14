@@ -1,15 +1,18 @@
-## What's new in 0.19.0
+## What's new in 0.20.0
 
-- **Razer mice** (74 models, wired and HyperSpeed wireless: Viper, DeathAdder, Basilisk, Cobra, Naga and more): DPI
-  stages, polling rate up to 8000 Hz on 8K models, and battery level. Built from OpenRazer's protocol notes and tested
-  against a simulated mouse, not yet on real hardware, so they're marked untested. Hubless checks every reply before
-  writing anything, reads every change back and makes a backup first.
-- **Copy device report**: a read-only report for GitHub issues (Device settings, or a card's ⋯ menu), so owners can
-  help confirm untested devices. No serial numbers or personal data, and nothing is sent to the device.
-- `hubless --demo` now includes a simulated Razer Viper V3 Pro.
+- **Mouse lighting**: a new Lighting page for mice with RGB lights. Pick off, a fixed colour, breathing or colour
+  cycle per zone (logo, scroll wheel, sides), with brightness and speed, or use one setting on all zones. Works on
+  Logitech G mice with onboard memory (saved to the mouse) and 53 Razer models. Not yet tested on real RGB hardware.
+- **Firmware updates where the maker allows them**: Device settings now shows the firmware version. Devices whose
+  maker publishes firmware for Linux (through fwupd and the Linux Vendor Firmware Service) can be updated from
+  Hubless, with a backup of your mouse settings first. Wooting keyboards hand over to Wootility. For makers that only
+  release firmware through their own Windows/macOS app, Hubless says which app you need. Hubless never writes firmware
+  itself.
+- **Sharper device photos**: 29 devices now ship with crisp transparent photos, no download needed.
+- `hubless --demo` now includes a simulated G502 HERO and Basilisk V3 Pro to try the lighting page.
 
-Full list: [supported devices](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md). Installed 0.18.0? This
-update installs itself the next time you open Hubless.
+Full list: [supported devices](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md). Installed 0.18.0 or later?
+This update installs itself the next time you open Hubless.
 
 ## Install
 
