@@ -18,7 +18,10 @@ into their own memory.
 | **Lighting** | **Triggers (PRO X2 SUPERSTRIKE)** |
 | <img src="docs/screenshots/g502-hero-gaming-mouse-4-lighting.png" alt="RGB lighting: effect and colour for each light zone"> | <img src="docs/screenshots/pro-x2-superstrike-1-triggers.png" alt="Actuation point, rapid trigger and haptics for the left and right button"> |
 
-<sub>Screenshots are from the built-in demo (`hubless --demo`), which simulates these mice.</sub>
+<img src="docs/screenshots/wooting-60he-1-actuation.png" alt="Wooting 60HE: actuation point, rapid trigger, per-key values on the key map and live key travel">
+
+<sub>The mouse screenshots are from the built-in demo (`hubless --demo`), which simulates these mice. The keyboard one
+is a real Wooting 60HE.</sub>
 
 <div align="center">
 
