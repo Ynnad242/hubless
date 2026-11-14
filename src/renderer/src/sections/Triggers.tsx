@@ -66,7 +66,7 @@ function Callout({ title, h, active, onClick, live }: { title: string; h: Hits; 
 export function Triggers({ mouse, id, photo }: { mouse: MouseCtl; id: string; photo?: string }) {
   const [tab, setTab] = useState<Tab>('actuation')
   const pressed = usePhysicalButtons(id)
-  const depth = useDepth(id)
+  const rawDepth = useDepth(id)
   const [photoOk, setPhotoOk] = useState(true)
   const [target, setTarget] = useState<Target>('both')
   const [share, setShare] = useState(false)
@@ -78,6 +78,9 @@ export function Triggers({ mouse, id, photo }: { mouse: MouseCtl; id: string; ph
   const h = draft.hits[idx[0]]
   const set = (patch: Partial<Hits>) => update((d) => idx.forEach((i) => Object.assign(d.hits![i], patch)), { previewHits: true })
   const [l, r] = draft.hits
+  // The depth stream is sampled, so a quick click can fire between two samples and the last one reads short of the
+  // actuation point. A registered click (instant, from the input report) means the button passed that point.
+  const depth = [0, 1].map((s) => (pressed.includes(s) ? Math.max(rawDepth[s], draft.hits![s].actuation) : rawDepth[s])) as [number, number]
 
   const stepper = {
     actuation: (
