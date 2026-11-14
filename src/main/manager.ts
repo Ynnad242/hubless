@@ -236,7 +236,7 @@ export class DeviceManager extends EventEmitter {
     caps.push('device')
     return {
       id, kind: 'mouse', vendor: 'Logitech', name: d.name, photo: this.photoKeys.get(id), status, battery: s.battery,
-      connection: this.demo ? 'Demo' : d.index === 0xff ? 'USB cable' : 'LIGHTSPEED wireless',
+      connection: d.index === 0xff ? 'USB cable' : this.demo ? 'Demo' : 'LIGHTSPEED wireless',
       capabilities: caps, verified: s.verified, demo: this.demo, lastSeen: Date.now()
     }
   }

@@ -376,7 +376,7 @@ async function screenshots(dir: string) {
     for (const [i, page] of d.capabilities.entries()) {
       await js(`window.__nav && window.__nav(${JSON.stringify(page)})`)
       await wait(800)
-      await shot(`${d.kind}-${i + 1}-${page}`)
+      await shot(`${d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${i + 1}-${page}`)
     }
     await js('window.__open(null)')
     await wait(400)

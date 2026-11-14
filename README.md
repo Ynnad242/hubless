@@ -10,11 +10,15 @@ into their own memory.
 
 </div>
 
-<img src="docs/screenshots/0-home.png" alt="Hubless home screen listing a connected mouse">
+<img src="docs/screenshots/0-home.png" alt="Hubless home screen with four connected mice, each with its photo, battery level and connection">
 
 | Sensor & DPI | Buttons |
 |---|---|
-| <img src="docs/screenshots/mouse-2-sensor.png" alt="DPI stages, quick picks and polling rate"> | <img src="docs/screenshots/mouse-3-buttons.png" alt="Button assignments on a picture of the mouse"> |
+| <img src="docs/screenshots/pro-x2-superstrike-2-sensor.png" alt="DPI stages, quick picks and polling rate"> | <img src="docs/screenshots/pro-x2-superstrike-3-buttons.png" alt="Button assignments on a picture of the mouse"> |
+| **Lighting** | **Triggers (PRO X2 SUPERSTRIKE)** |
+| <img src="docs/screenshots/g502-hero-gaming-mouse-4-lighting.png" alt="RGB lighting: effect and colour for each light zone"> | <img src="docs/screenshots/pro-x2-superstrike-1-triggers.png" alt="Actuation point, rapid trigger and haptics for the left and right button"> |
+
+<sub>Screenshots are from the built-in demo (`hubless --demo`), which simulates these mice.</sub>
 
 <div align="center">
 
@@ -89,6 +93,8 @@ devices stay on the devices.
 - **The “Allow Hubless” banner keeps coming back.** Log out and back in once, or press ⚙ Settings → Grant access again.
 - **Changes don't stick.** Close other tools that talk to the same device (Solaar, Piper, OpenRazer's daemon,
   Wootility in a browser) while you use Hubless.
+- **“Couldn't update: pkexec must be setuid root”.** Versions before 0.20.2 could not install a second update without
+  being reopened. Quit Hubless (tray icon → Quit) and open it again from your app launcher; the update then installs.
 - **Something went wrong.** Every device page has *Restore a backup…*; a backup is made before the first change of
   every session.
 
@@ -103,17 +109,18 @@ devices stay on the devices.
 | WLmouse Ying (cable) | DPI stages, polling, lift-off, angle snap, motion sync, ripple, debounce | ✅ Tested on hardware |
 | Wooting 60HE | Actuation, rapid trigger, per-key settings, key mapping, Mod-Tap / Snap Tap, lighting | ✅ Tested on hardware |
 | Fractal Design Scape | Battery, EQ, noise cancelling, sidetone, lighting | ✅ Tested on hardware |
-| 61 other Logitech G mice | DPI, polling, buttons, onboard profiles, RGB lighting (G502, G203, G Pro and others with RGB) | 🧪 Should work, untested |
+| 52 other Logitech G mice | DPI, polling, buttons, onboard profiles, RGB lighting (G502, G203, G Pro and others with RGB) | 🧪 Should work, untested |
 | 74 Razer mice (Viper, DeathAdder, Basilisk, Cobra, Naga…) | DPI stages, polling up to 8 kHz, battery, RGB lighting on 53 of them | 🧪 Should work, tested on a simulated mouse |
 
-About 90 more devices (SteelSeries, ASUS, Glorious, Roccat, older Razer and more) are recognised by name and marked
+About 85 more devices (SteelSeries, ASUS, Glorious, Roccat, older Razer and more) are recognised by name and marked
 "support coming soon"; they can't be configured yet. Own an untested one? **Device settings → Copy device report**
 (or the card's ⋯ menu) copies a read-only report to paste into an issue. [DEVICES.md](DEVICES.md) lists every one.
 
 ## What to expect
 
 - **Settings live in the device.** Changes are saved into the device's onboard memory as you make them, so they keep
-  working in games, on other computers and without Hubless running.
+  working in games, on other computers and without Hubless running. One exception: Razer mice can't report
+  their lighting back, so Hubless remembers the lighting it last set in your home folder to show it again.
 - **Backups first.** The device memory is backed up before the first change of every session, writes are read back
   and compared, and backups can be restored from the device page.
 - **Use at your own risk.** Hubless writes to device memory using protocols worked out from public research and from
@@ -121,8 +128,9 @@ About 90 more devices (SteelSeries, ASUS, Glorious, Roccat, older Razer and more
   manufacturers' software and comes without warranty (see LICENSE).
 - **Firmware updates where the maker allows them.** Devices whose makers publish firmware for Linux (through fwupd)
   can be updated from the device page, after a settings backup. Wooting keyboards are handed to Wootility for updates.
-  Logitech G, Razer, Endgame Gear and WLmouse only ship firmware through their Windows apps, so Hubless shows the
-  version and says so.
+  Logitech G, Razer, Endgame Gear, WLmouse and Fractal Design only ship firmware through their own Windows or macOS
+  apps, so for those Hubless shows the installed version and names the app you need. Hubless never writes firmware
+  itself.
 - **Keeps running in the tray** if you want it to (for low-battery warnings). This can be turned off in Settings.
 
 ## Privacy
@@ -141,8 +149,8 @@ npx electron-vite build
 npx electron-builder --linux pacman     # or AppImage, deb, rpm → dist/
 ```
 
-Try it without hardware: `hubless --demo` (or `npx electron . --demo` from the source folder) shows a simulated
-Logitech PRO X2 SUPERSTRIKE and Razer Viper V3 Pro.
+Try it without hardware: `hubless --demo` (or `npx electron . --demo` from the source folder) shows four
+simulated mice: Logitech PRO X2 SUPERSTRIKE and G502 HERO, Razer Viper V3 Pro and Basilisk V3 Pro.
 
 ## Development
 
@@ -168,8 +176,8 @@ those credits and the licenses of bundled libraries.
 
 Hubless is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting, Fractal Design, Endgame Gear,
 WLmouse or any other manufacturer. Product names and brands belong to their owners and are used only to identify compatible
-hardware. Product photos in `data/devices/` belong to and are credited to their manufacturers (Logitech, Wooting, Fractal
-Design, Endgame Gear, WLmouse). They are not covered by the MIT license, are used only to show which hardware is supported, and
+hardware. Product photos in `data/devices/` belong to and are credited to their manufacturers (Logitech, Razer, Wooting,
+Fractal Design, Endgame Gear, WLmouse, Glorious). They are not covered by the MIT license, are used only to show which hardware is supported, and
 will be removed on request through an [issue](https://github.com/Ynnad242/hubless/issues).
 
 Hubless is free and always will be. It is MIT licensed.
