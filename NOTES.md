@@ -311,3 +311,10 @@ test/manager.test.ts covers it.
   mice go quiet. Card/page show the note with a spinner (Shell busy). Demo parks and restores the simulated devices.
 - On this PC (2026-11-13) fwupd 2.1.8 sees none of the user's peripherals (only BIOS/SSD/UEFI keys), so the real
   fwupd install path is untested on hardware; the demo G502 has a pretend update to try the flow.
+
+## v0.20.1 (2026-11-14): key travel graphic, HITS fill
+- Wooting Actuation: KeyTravel rebuilt (fixed legend, sticks to last key). Pressed state from src/shared/keytravel.ts
+  (Wooting RT model: release at peak − release, re-press at valley + press, leaves RT above actuation unless
+  continuous). Verified on the 60HE by recording ~170 state changes against per-key settings. Analog polled ~55 Hz.
+- HITS (SUPERSTRIKE): the depth stream is sampled, so a quick click could fire between samples; a click from the input
+  report now fills the button at least to its actuation point.
