@@ -15,7 +15,7 @@ export function useAnalog(id: string, active: boolean): number[][] | null {
             /* keyboard busy or gone; try again */
           }
         }
-        await new Promise((r) => setTimeout(r, 50))
+        await new Promise((r) => setTimeout(r, 12)) // a read takes ~6 ms; ~55 Hz catches quick taps
       }
     }
     void loop()

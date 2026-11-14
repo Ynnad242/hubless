@@ -14,6 +14,7 @@ import { KeyMap } from '@/components/KeyMap'
 import { Canvas, Caption, PanelTabs, Row, SidePanel } from '@/components/kit'
 import type { SaveStatus } from '@/hooks/useMouse'
 import { useAnalog } from '@/hooks/useAnalog'
+import { KEY_UP, type KeyRules, type KeyTravelState, nextPoint, stepKey } from '@shared/keytravel'
 import { cn } from '@/lib/utils'
 import { type RailItem, SaveState, Shell } from './Shell'
 
@@ -141,46 +142,70 @@ function DistanceSlider({ label, value, min, max, step, onChange }: { label: str
   )
 }
 
-/** Side view of one switch's travel, to scale: actuation point and the rapid-trigger window. */
-function KeyTravel({ actuationMm, rt, liveMm, label }: { actuationMm: number; rt: { pressMm: number; releaseMm: number } | null; liveMm?: number | null; label?: string }) {
-  const top = 24
-  const h = 200
-  const y = (v: number) => top + (v / 4) * h
-  const ay = y(actuationMm)
-  const rel = rt ? (rt.releaseMm / 4) * h : 0
+/** Side view of one switch's travel, to scale: the actuation point, how deep the key is now, and what the keyboard
+ * makes of it (Rapid Trigger included). Text sits in a fixed legend so nothing jumps while you type. */
+function KeyTravel({ rules, liveMm, keyId, label }: { rules: KeyRules; liveMm: number | null; keyId?: number; label?: string }) {
+  const sim = useRef<{ key?: number; s: KeyTravelState }>({ s: KEY_UP })
+  if (sim.current.key !== keyId) sim.current = { key: keyId, s: KEY_UP }
   const live = liveMm ?? 0
-  const fired = live >= actuationMm
+  sim.current.s = stepKey(sim.current.s, live, rules)
+  const st = sim.current.s
+  const next = nextPoint(st, rules)
+  const top = 10
+  const h = 220
+  const y = (v: number) => top + (Math.min(4, v) / 4) * h
+  const ay = y(rules.actuationMm)
   return (
-    <svg viewBox="0 0 300 270" className="h-[250px] w-auto" aria-label={`Actuation at ${actuationMm} mm`}>
-      {[0, 1, 2, 3, 4].map((v) => (
-        <g key={v}>
-          <line x1="40" x2="50" y1={y(v)} y2={y(v)} stroke="currentColor" strokeOpacity="0.3" />
-          <text x="34" y={y(v) + 4} textAnchor="end" fontSize="11" fill="currentColor" fillOpacity="0.5">
+    <div className="flex items-start gap-6">
+      <svg viewBox="0 0 120 240" className="h-[240px] w-auto shrink-0" aria-label={`Actuation at ${mm(rules.actuationMm, 0.1)}`}>
+        {[0, 1, 2, 3, 4].map((v) => (
+          <text key={v} x="36" y={y(v) + 4} textAnchor="end" fontSize="11" fill="currentColor" fillOpacity="0.45">
             {v} mm
           </text>
-        </g>
-      ))}
-      <rect x="100" y={top} width="56" height={h} rx="10" fill="var(--surface-2)" />
-      <rect x="100" y={top} width="56" height={ay - top} rx="10" fill="#2b8cff" opacity="0.18" />
-      {live > 0.02 && <rect x="100" y={top} width="56" height={y(live) - top} rx="10" fill={fired ? '#2b8cff' : '#5aa7ff'} opacity={fired ? 0.9 : 0.55} />}
-      {/* the keycap rides down with the key */}
-      <rect x="78" y={top - 22 + (live / 4) * h} width="100" height="18" rx="6" fill={fired ? '#1f6fd6' : '#2a2c31'} stroke="#3c3f46" />
-      {liveMm != null && (
-        <text x="128" y={top + h + 22} textAnchor="middle" fontSize="12" fontWeight="700" fill={fired ? '#2b8cff' : 'currentColor'} fillOpacity={fired ? 1 : 0.6}>
-          {label ? `${label} · ` : ''}{live.toFixed(2)} mm{fired ? ' · pressed' : ''}
-        </text>
-      )}
-      {rt && <rect x="94" y={ay - rel} width="68" height={rel} fill="#34c77b" opacity="0.3" />}
-      <line x1="88" x2="168" y1={ay} y2={ay} stroke="#2b8cff" strokeWidth="3" strokeLinecap="round" />
-      <text x="178" y={ay + 4} fontSize="13" fontWeight="700" fill="#2b8cff">
-        {mm(actuationMm, 0.1)}
-      </text>
-      {rt && (
-        <text x="178" y={Math.max(14, ay - rel - 6)} fontSize="11" fill="#34c77b">
-          resets {mm(rt.releaseMm)} up
-        </text>
-      )}
-    </svg>
+        ))}
+        <rect x="48" y={top} width="44" height={h} rx="8" fill="var(--surface-2)" />
+        {live > 0.02 && <rect x="48" y={top} width="44" height={y(live) - top} rx="8" fill="#2b8cff" opacity={st.pressed ? 0.9 : 0.4} />}
+        <line x1="42" x2="98" y1={ay} y2={ay} stroke="#2b8cff" strokeWidth="3" strokeLinecap="round" />
+        {next !== null && <line x1="42" x2="98" y1={y(next)} y2={y(next)} stroke="#34c77b" strokeWidth="2" strokeDasharray="4 3" />}
+      </svg>
+      <div className="w-52 space-y-4 pt-1">
+        <div className="space-y-1">
+          <Caption>{label ? `Key ${label}` : 'Press any key'}</Caption>
+          <div className="flex items-baseline gap-3">
+            <span className="text-3xl font-bold tabular-nums">{live.toFixed(2)}</span>
+            <span className="text-sm text-muted-foreground">mm</span>
+            <span
+              className={cn(
+                'ml-auto w-[4.75rem] rounded-full py-0.5 text-center text-xs font-semibold',
+                st.pressed ? 'bg-primary text-white' : 'bg-surface-2 text-muted-foreground'
+              )}
+            >
+              {st.pressed ? 'Pressed' : 'Released'}
+            </span>
+          </div>
+        </div>
+        <div className="space-y-2 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="h-[3px] w-4 rounded-full bg-[#2b8cff]" />
+            <span className="text-muted-foreground">Actuation</span>
+            <span className="ml-auto font-semibold tabular-nums">{mm(rules.actuationMm, 0.1)}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className={cn('w-4 border-t-2 border-dashed', rules.rt ? 'border-[#34c77b]' : 'border-transparent')} />
+            <span className="text-muted-foreground">Rapid Trigger</span>
+            <span className="ml-auto font-semibold tabular-nums">
+              {rules.rt ? (rules.rt.pressMm === rules.rt.releaseMm ? mm(rules.rt.pressMm) : `${mm(rules.rt.pressMm).replace(' mm', '')} / ${mm(rules.rt.releaseMm)}`) : 'Off'}
+            </span>
+          </div>
+          {rules.rt && (
+            <p className="text-muted-foreground">
+              The dashed line shows where the key {st.pressed ? 'releases' : 'presses again'}: it follows your finger once the key passes the
+              actuation point.
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -240,6 +265,9 @@ function Actuation({ kb, id }: { kb: Kb; id: string }) {
   }
   const actOf = (k: KeyDef) => s.perKeyActuation[k.id] ?? g.actuationMm
   const deepest = analog ? s.layout.reduce<KeyDef | null>((best, k) => (travel(k) > 0.05 && (!best || travel(k) > travel(best)) ? k : best), null) : null
+  // Stay on the last key pressed, so the graphic doesn't blank out between presses.
+  const [lastKey, setLastKey] = useState<KeyDef | null>(null)
+  if (deepest && deepest.id !== lastKey?.id) setLastKey(deepest)
   const keys = [...sel]
   const first = keys[0]
   const perAct = first !== undefined ? s.perKeyActuation[first] : undefined
@@ -378,23 +406,22 @@ function Actuation({ kb, id }: { kb: Kb; id: string }) {
           }}
           marked={(k) => s.perKeyActuation[k.id] !== undefined || !!rtFor(s, k.id)}
         />
-        <div className="flex items-center gap-8">
-          {(() => {
-            const watched = s.layout.find((k) => k.id === first) ?? deepest
-            return (
-              <KeyTravel
-                actuationMm={watched && first === undefined ? actOf(watched) : (act ?? g.actuationMm)}
-                rt={rt ?? (g.rapidTrigger ? { pressMm: g.rtPressMm, releaseMm: g.rtReleaseMm ?? g.rtPressMm } : null)}
-                liveMm={watched ? travel(watched) : analog ? 0 : null}
-                label={watched ? baseLabel(s)(watched) || 'Space' : undefined}
-              />
-            )
-          })()}
-          <p className="max-w-56 text-xs text-muted-foreground">
-            Press any key to see how far it travels. Keys with their own values are outlined and show them on the key; Ctrl-click to
-            select several.
-          </p>
-        </div>
+        <p className="-mt-3 text-xs text-muted-foreground">Click a key to give it its own values (they show on the key) · Ctrl-click to select several</p>
+        {(() => {
+          const watched = s.layout.find((k) => k.id === first) ?? lastKey
+          return (
+            <KeyTravel
+              rules={{
+                actuationMm: first === undefined ? (watched ? actOf(watched) : g.actuationMm) : (act ?? g.actuationMm),
+                rt: rt ?? (watched && first === undefined ? rtFor(s, watched.id) : null) ?? (g.rapidTrigger ? { pressMm: g.rtPressMm, releaseMm: g.rtReleaseMm ?? g.rtPressMm } : null),
+                continuous: g.continuousRt
+              }}
+              liveMm={watched ? travel(watched) : analog ? 0 : null}
+              keyId={watched?.id}
+              label={watched ? baseLabel(s)(watched) || 'Space' : undefined}
+            />
+          )
+        })()}
       </Canvas>
     </>
   )

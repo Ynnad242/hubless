@@ -115,7 +115,7 @@ User's own product photos live in ~/.config/hubless/images (not bundled: vendor 
 Still open: Scape lighting colours (A4 01-03 theme upload format not decoded yet), mouse wired test (needs cable), Razer/Endgame.
 
 ## v0.14.0
-Wooting live travel: cmd 20 GetAnalogValues → 6×21 bytes (0..255 = 0.1..4.0 mm), 6 ms; polled 20 Hz on Actuation page.
+Wooting live travel: cmd 20 GetAnalogValues → 6×21 bytes (0..255 = 0.1..4.0 mm), 6 ms; polled ~55 Hz on Actuation page.
 Wootility sync: keyboard re-read (`reload` action) on window focus + every 15 s when no edit pending.
 Scape: headsetState refreshes status each call; page polls every 2 s. Mute byte 4 = 0 while user unmuted (confirmed once);
 toggling not yet observed. Mouse: physical button state streamed from the mouse's input report (id 0x02) on the dj child node;
