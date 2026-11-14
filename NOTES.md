@@ -319,7 +319,7 @@ test/manager.test.ts covers it.
 - HITS (SUPERSTRIKE): the depth stream is sampled, so a quick click could fire between samples; a click from the input
   report now fills the button at least to its actuation point.
 
-## Self-update after a restart: "pkexec must be setuid root" (2026-11-14)
+## v0.20.2 (2026-11-14): self-update after a restart ("pkexec must be setuid root")
 - Electron's app.relaunch() starts the new copy with no_new_privs (verified: relaunched child NoNewPrivs=1, plain
   child_process spawn from a clean parent NoNewPrivs=0). pkexec refuses to run there, so every update after an
   update-restart failed. lifecycle.relaunch() now uses /bin/sh waiting on our pid, then exec (keeps the single-instance

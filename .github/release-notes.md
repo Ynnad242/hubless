@@ -1,13 +1,11 @@
-## What's new in 0.20.1
+## What's new in 0.20.2
 
-- **Wooting Actuation page**: the key travel graphic is simpler and steadier. The text sits in a fixed panel instead
-  of moving around, and the graphic stays on the last key you pressed. It now shows Pressed/Released exactly the way
-  the keyboard decides it, Rapid Trigger included: a dashed line marks where the key will release or press again.
-  Live travel is read about 3x more often, so quick taps show up.
-- **Logitech HITS view**: a registered click now always fills the button to its actuation point. Before, a quick
-  click could fire between two depth readings and the picture stopped short.
+- **Fixed: updates failing with "pkexec must be setuid root"**. After Hubless restarted itself into a new version,
+  the next update couldn't install. Hubless now restarts in a way that keeps updates working. If you see that
+  message, quit Hubless (tray icon → Quit) and open it again: it then installs the update straight away.
 
-0.20.0 added mouse lighting, firmware updates where makers allow them, and sharper device photos.
+0.20.1 cleaned up the Wooting key travel graphic (Rapid Trigger shown the way the keyboard decides it) and fixed the
+HITS view stopping short on quick clicks. 0.20.0 added mouse lighting, firmware updates and sharper device photos.
 
 Full list: [supported devices](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md). Installed 0.18.0 or later?
 This update installs itself the next time you open Hubless.
