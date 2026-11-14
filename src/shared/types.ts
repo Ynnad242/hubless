@@ -241,6 +241,29 @@ export interface BackupInfo {
 }
 
 /** Everything the renderer may call (exposed by the preload script as window.hubless). */
+// ---------------------------------------------------------------- firmware updates
+/** A part of a device fwupd can update (the mouse itself, or its receiver). */
+export interface FirmwareComponent {
+  fwupdId: string
+  name: string
+  version: string
+  updatable: boolean
+  update?: { version: string; summary: string; notes: string; sizeBytes: number }
+}
+
+export interface FirmwareInfo {
+  /** how this device gets firmware updates on Linux */
+  route: 'fwupd' | 'wootility' | 'vendor-app' | 'none'
+  current: string
+  /** fwupd: the parts it knows; empty when fwupd doesn't support this device */
+  components: FirmwareComponent[]
+  fwupdInstalled: boolean
+  /** the maker's own app, for devices without a Linux route */
+  vendorApp?: string
+  /** Hubless has let go of the device (an update is running or Wootility has it) */
+  held: boolean
+}
+
 export interface HublessApi {
   snapshot(): Promise<AppSnapshot>
   mouseState(id: string): Promise<MouseState>
@@ -291,6 +314,15 @@ export interface HublessApi {
   onChange(cb: (snap: AppSnapshot) => void): () => void
   /** physical button state of a mouse (bit 0 left, 1 right, 2 middle, 3 back, 4 forward) */
   onButtons(cb: (id: string, mask: number) => void): () => void
+  /** how this device's firmware can be updated, and whether an update is out (refresh: ask the LVFS now) */
+  firmwareStatus(id: string, refresh?: boolean): Promise<FirmwareInfo>
+  /** install the newest fwupd firmware for one part of the device; progress comes through onFirmwareProgress */
+  installFirmware(id: string, fwupdId: string): Promise<FirmwareInfo>
+  onFirmwareProgress(cb: (id: string, pct: number) => void): () => void
+  /** let go of a Wooting keyboard and open Wootility to update it */
+  openWootility(id: string): Promise<'app' | 'web'>
+  /** take the device back after Wootility is done */
+  reconnectDevice(id: string): Promise<void>
 }
 
 export interface AppSettings {

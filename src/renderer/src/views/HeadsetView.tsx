@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import { eqCode, parseEqCode } from '@shared/eq'
 import type { Capability, DeviceSummary, EqBand, HeadsetPatch, HeadsetState } from '@shared/types'
 import { Button } from '@/components/ui/button'
+import { FirmwarePanel } from '@/components/FirmwarePanel'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
@@ -109,6 +110,7 @@ export function HeadsetView({ device, photo, onBack }: { device: DeviceSummary; 
             </div>
           ))}
         </dl>
+        <FirmwarePanel device={device} />
       </SidePanel>
       <Canvas>{photo ? <img src={photo} alt={`${device.vendor} ${device.name}`} draggable={false} className="h-72 w-auto object-contain" /> : <HeadsetArt className="h-72" />}</Canvas>
     </>

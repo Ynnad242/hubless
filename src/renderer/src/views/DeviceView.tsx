@@ -48,7 +48,8 @@ export function DeviceView({ device, photo, onBack, expose }: { device: DeviceSu
         await mouse.flush()
         onBack()
       }}
-      asleep={device.status === 'asleep' ? `Your ${device.name} is asleep. Move it or click a button to keep editing.` : null}
+      busy={device.status === 'asleep' && !!device.note}
+      asleep={device.status === 'asleep' ? (device.note ? `${device.note}.` : `Your ${device.name} is asleep. Move it or click a button to keep editing.`) : null}
       loading={!state}
       right={
         <>

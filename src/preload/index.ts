@@ -10,7 +10,8 @@ const methods = [
   'snapshot', 'mouseState', 'saveProfile', 'previewHits', 'watchDepth', 'activateProfile', 'setProfileEnabled', 'replaceProfile',
   'backup', 'listBackups', 'restoreBackup', 'openBackupsFolder', 'exportProfile', 'importProfile', 'grantAccess', 'forgetDevice', 'appSettings', 'setAppSettings',
   'deviceImages', 'chooseDeviceImage', 'clearDeviceImage', 'appInfo', 'readDocument', 'deleteAllData', 'updateStatus', 'checkForUpdates', 'installUpdate', 'deferUpdate', 'copyDeviceReport',
-  'keyboardState', 'keyboardAction', 'keyboardAnalog', 'headsetState', 'setHeadset'
+  'keyboardState', 'keyboardAction', 'keyboardAnalog', 'headsetState', 'setHeadset',
+  'firmwareStatus', 'installFirmware', 'openWootility', 'reconnectDevice'
 ]
 
 const api = Object.fromEntries(methods.map((m) => [m, call(m)])) as unknown as HublessApi
@@ -36,6 +37,12 @@ api.onUpdate = (cb: (s: UpdateStatus) => void) => {
   const listener = (_e: unknown, s: UpdateStatus) => cb(s)
   ipcRenderer.on('hubless:update', listener)
   return () => ipcRenderer.removeListener('hubless:update', listener)
+}
+
+api.onFirmwareProgress = (cb: (id: string, pct: number) => void) => {
+  const listener = (_e: unknown, id: string, pct: number) => cb(id, pct)
+  ipcRenderer.on('hubless:firmware', listener)
+  return () => ipcRenderer.removeListener('hubless:firmware', listener)
 }
 
 contextBridge.exposeInMainWorld('hubless', api)

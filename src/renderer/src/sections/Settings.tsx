@@ -3,6 +3,7 @@ import { ClipboardCopy, FolderOpen, HardDriveDownload, History } from 'lucide-re
 import { toast } from 'sonner'
 import type { BackupInfo, DeviceSummary } from '@shared/types'
 import { Button } from '@/components/ui/button'
+import { FirmwarePanel } from '@/components/FirmwarePanel'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { MouseArt } from '@/components/DeviceArt'
 import { Canvas, Caption, SidePanel } from '@/components/kit'
@@ -43,6 +44,7 @@ export function Settings({ mouse, device, photo }: { mouse: MouseCtl; device: De
             </div>
           ))}
         </dl>
+        <FirmwarePanel device={device} />
         <div className="space-y-2 border-t pt-4">
           <Caption>Backups</Caption>
           <p className="text-xs text-muted-foreground">The whole mouse memory is saved before the first change of every session.</p>

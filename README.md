@@ -119,6 +119,10 @@ About 90 more devices (SteelSeries, ASUS, Glorious, Roccat, older Razer and more
 - **Use at your own risk.** Hubless writes to device memory using protocols worked out from public research and from
   testing on the devices listed above. That has worked reliably on the tested hardware, but it is not the
   manufacturers' software and comes without warranty (see LICENSE).
+- **Firmware updates where the maker allows them.** Devices whose makers publish firmware for Linux (through fwupd)
+  can be updated from the device page, after a settings backup. Wooting keyboards are handed to Wootility for updates.
+  Logitech G, Razer, Endgame Gear and WLmouse only ship firmware through their Windows apps, so Hubless shows the
+  version and says so.
 - **Keeps running in the tray** if you want it to (for low-battery warnings). This can be turned off in Settings.
 
 ## Privacy

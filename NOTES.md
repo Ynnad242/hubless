@@ -293,3 +293,19 @@ test/manager.test.ts covers it.
   "Not set yet" before that; brightness is read from the mouse and checked after writes.
 - Demo mode adds a simulated G502 HERO (SimTransport('g502'), format 2 with 0x8070) and Basilisk V3 Pro.
 - Not tested on hardware: the user owns no RGB mouse. OP1 8k DPI-indicator colours (config bytes 31..50) not exposed.
+
+## Firmware updates (2026-11-13)
+- src/main/firmware.ts. Only official routes; Hubless never writes firmware itself.
+  - fwupd: `fwupdmgr refresh` (once a day, no password), `get-devices --json` + `get-updates --json`, matched to our
+    device by USB id (USB\VID_x&PID_y, and HIDRAW\VEN_x&DEV_wpid for mice behind a Unifying receiver; Bolt peripherals
+    use MOD_ ids and only match through the receiver). Install: `fwupdmgr update <DeviceId> --assume-yes
+    --no-reboot-check --no-unreported-check`, % parsed from output. Mice are backed up first.
+  - Wooting: no public "latest firmware" API (changelog said 2.14.1 while the user's 60HE runs 2.14.2), so no
+    "update available" guess: "Update with Wootility" launches the installed app (PATH, *.AppImage in ~/Applications,
+    ~/.local/bin, ~/Downloads, /opt, or a .desktop via gio) or opens wootility.io; "Reconnect keyboard" takes it back.
+  - Others: note naming the maker's app (VENDOR_APP).
+- manager.hold(id, note) closes Hubless's connection and ignores the device's USB ids (and, for the unsupported list,
+  the maker's other ids: a Wooting in update mode has another pid) until release(id); a receiver is shared, so all its
+  mice go quiet. Card/page show the note with a spinner (Shell busy). Demo parks and restores the simulated devices.
+- On this PC (2026-11-13) fwupd 2.1.8 sees none of the user's peripherals (only BIOS/SSD/UEFI keys), so the real
+  fwupd install path is untested on hardware; the demo G502 has a pretend update to try the flow.

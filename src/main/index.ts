@@ -1,13 +1,14 @@
 import { rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { BrowserWindow, Menu, Notification, app, clipboard, dialog, ipcMain, session, shell } from 'electron'
-import type { Hits, HublessApi, ProfileData } from '@shared/types'
+import type { FirmwareComponent, FirmwareInfo, Hits, HublessApi, ProfileData } from '@shared/types'
 import { DeviceManager } from './manager'
 import { TrayController, loadSettings, saveSettings } from './tray'
 import * as storage from './storage'
 import { fromHex } from './logitech/profile'
 import { handleSignals, watchForUpgrade } from './lifecycle'
 import { Updater } from './updater'
+import * as firmware from './firmware'
 
 const demo = process.argv.includes('--demo') || process.env.HUBLESS_DEMO === '1'
 /** Dev-only screenshot mode; ignored by the installed app. */
@@ -126,8 +127,52 @@ function isAppUrl(url: string) {
   return url.startsWith('file://') && url.includes('/renderer/index.html')
 }
 
+// ---------------------------------------------------------------- firmware
+/** Demo mode: the simulated G502 has a pretend fwupd update, so the whole flow can be tried without hardware. */
+const demoFirmware = { version: '103.1.10', updated: false }
+
+async function firmwareInfo(id: string, refresh: boolean): Promise<FirmwareInfo> {
+  const d = manager.snapshot().devices.find((x) => x.id === id)
+  if (!d) throw new Error('That device is not known.')
+  let components: FirmwareComponent[] = []
+  if (demo) {
+    if (id === 'demo-g502')
+      components = [{
+        fwupdId: 'demo', name: d.name, version: demoFirmware.updated ? '103.2.4' : demoFirmware.version, updatable: true,
+        update: demoFirmware.updated ? undefined : { version: '103.2.4', summary: 'Firmware for the Logitech G502 HERO', notes: '• Improves sensor tracking at high DPI\n• Fixes rare wake-up delay', sizeBytes: 163_840 }
+      }]
+  } else components = await firmware.check(manager.usbIds(id), refresh)
+  const route = components.length ? 'fwupd' : d.vendor === 'Wooting' ? 'wootility' : firmware.VENDOR_APP[d.vendor] ? 'vendor-app' : 'none'
+  return {
+    route, components, current: manager.firmwareVersion(id) || components[0]?.version || '',
+    fwupdInstalled: demo || firmware.hasFwupd(), vendorApp: firmware.VENDOR_APP[d.vendor], held: manager.isHeld(id)
+  }
+}
+
+async function installFirmware(id: string, fwupdId: string): Promise<FirmwareInfo> {
+  const info = await firmwareInfo(id, false)
+  const part = info.components.find((c) => c.fwupdId === fwupdId)
+  if (!part?.update) throw new Error('There is no firmware update for this device right now.')
+  // Settings first: a mouse's whole memory is backed up so it can be restored if the update resets it.
+  if (manager.snapshot().devices.find((x) => x.id === id)?.kind === 'mouse') await manager.runMouse(id, (s) => s.backup())
+  const progress = (pct: number) => win?.webContents.send('hubless:firmware', id, pct)
+  manager.hold(id, 'Updating firmware… keep it plugged in')
+  try {
+    if (demo) {
+      for (let p = 0; p <= 100; p += 10) {
+        progress(p)
+        await new Promise((r) => setTimeout(r, 250))
+      }
+      demoFirmware.updated = true
+    } else await firmware.install(fwupdId, progress)
+  } finally {
+    manager.release(id)
+  }
+  return firmwareInfo(id, false)
+}
+
 // Every renderer call goes through here; method names match HublessApi.
-const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate'> = {
+const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate' | 'onFirmwareProgress'> = {
   snapshot: async () => manager.snapshot(),
   mouseState: (id) => manager.runMouse(id, async (s) => s.state()),
   saveProfile: (id, p: ProfileData) =>
@@ -219,6 +264,14 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate'> =
   installUpdate: async () => updater.install(),
   deferUpdate: async () => updater.defer(),
   copyDeviceReport: async (id) => clipboard.writeText(manager.report(String(id), app.getVersion())),
+  firmwareStatus: (id, refresh) => firmwareInfo(String(id), refresh === true),
+  installFirmware: (id, fwupdId) => installFirmware(String(id), String(fwupdId)),
+  openWootility: async (id) => {
+    if (manager.snapshot().devices.find((x) => x.id === id)?.vendor !== 'Wooting') throw new Error('Wootility is for Wooting keyboards.')
+    manager.hold(String(id), 'Wootility has the keyboard')
+    return firmware.openWootility((url) => shell.openExternal(url))
+  },
+  reconnectDevice: async (id) => manager.release(String(id)),
   setAppSettings: async (patch) => {
     // Only the known settings, with the right types, reach the settings file and the autostart entry.
     const p = (patch ?? {}) as Record<string, unknown>

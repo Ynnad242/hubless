@@ -51,12 +51,14 @@ interface Props {
   onBack: () => void
   right?: ReactNode
   asleep?: string | null
+  /** the device is busy (firmware update, Wootility), not asleep: spinner instead of moon, content stays readable */
+  busy?: boolean
   loading?: boolean
   children: ReactNode
 }
 
 /** Device page frame: back + name, header actions, icon rail (device settings pinned at the bottom), content. */
-export function Shell({ name, rail, section, onSection, onBack, right, asleep, loading, children }: Props) {
+export function Shell({ name, rail, section, onSection, onBack, right, asleep, busy, loading, children }: Props) {
   useEffect(() => {
     ;(window as unknown as { __nav: (c: Capability) => void }).__nav = onSection // used by the screenshot tool
   }, [onSection])
@@ -71,7 +73,7 @@ export function Shell({ name, rail, section, onSection, onBack, right, asleep, l
       </header>
       {asleep && (
         <div className="mx-4 mb-3 flex items-center gap-3 rounded-lg border border-primary/30 bg-primary/8 px-4 py-2.5 text-sm">
-          <Moon className="size-4 text-primary" /> {asleep}
+          {busy ? <Loader2 className="size-4 animate-spin text-primary" /> : <Moon className="size-4 text-primary" />} {asleep}
         </div>
       )}
       <div className="flex min-h-0 flex-1 gap-4 px-4 pb-4">
@@ -83,7 +85,7 @@ export function Shell({ name, rail, section, onSection, onBack, right, asleep, l
             <RailButton label="Device settings" icon={Settings} active={section === 'device'} onClick={() => onSection('device')} />
           </div>
         </nav>
-        <div className={cn('flex min-w-0 flex-1 gap-4', asleep && 'pointer-events-none opacity-50')}>
+        <div className={cn('flex min-w-0 flex-1 gap-4', asleep && (busy ? '[&_button:not([data-keep])]:pointer-events-none' : 'pointer-events-none opacity-50'))}>
           {loading ? (
             <div className="flex flex-1 items-center justify-center text-muted-foreground">
               <Loader2 className="size-6 animate-spin" />

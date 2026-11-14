@@ -70,6 +70,11 @@ export class DeviceManager extends EventEmitter {
   /** Catalog model of a Logitech mouse, found by USB id: names its shipped photo, since the name the mouse reports
    *  ("G203 LIGHTSYNC Gaming Mouse") often differs from the catalog's. */
   private photoKeys = new Map<string, string>()
+  /** Wireless id of a Logitech mouse behind a receiver (fwupd lists such mice by it). */
+  private wpids = new Map<string, number>()
+  /** Devices Hubless has let go of (firmware update running, or Wootility has the keyboard): their USB ids are
+   *  left alone until released, and the card shows what's going on. */
+  private held = new Map<string, { usb: Set<string>; summary: DeviceSummary; parked: Live[] }>()
   private known = new Map<string, DeviceSummary>()
   private missingPermission: string[] = []
   private searching = true
@@ -195,6 +200,7 @@ export class DeviceManager extends EventEmitter {
     const shown = new Map<string, DeviceSummary>()
     for (const e of this.live.values()) shown.set(e.summary.id, e.summary)
     for (const [id, d] of this.asleepIds) if (!shown.has(id)) shown.set(id, d)
+    for (const [id, h] of this.held) if (!shown.has(id)) shown.set(id, h.summary)
     for (const [id, d] of this.unsupported) if (!shown.has(id)) shown.set(id, d)
     for (const [id, d] of this.known) if (!shown.has(id)) shown.set(id, { ...d, status: 'inactive', battery: null, note: undefined })
     // Stable order: a device must not jump around when it falls asleep or wakes up (status changes all the time
@@ -297,7 +303,7 @@ export class DeviceManager extends EventEmitter {
       const seen = new Set<string>()
       for (const d of hid) {
         const key = `${d.vendorId}:${d.productId}`
-        if (seen.has(key)) continue
+        if (seen.has(key) || this.heldVendor(d)) continue
         seen.add(key)
         const model = lookup(d.vendorId, d.productId)
         const k = KNOWN.find((x) => x.vid === d.vendorId && (x.pid === undefined || x.pid === d.productId))
@@ -328,7 +334,7 @@ export class DeviceManager extends EventEmitter {
 
   private async scanKeyboard(list: HID.Device[]) {
     const ep = wootingEndpoint(list)
-    if (!ep || !canOpen(ep.path)) return
+    if (!ep || !canOpen(ep.path) || this.heldPath(ep.path)) return
     const id = `wooting-${ep.productId.toString(16).padStart(4, '0')}`
     if (this.live.has(id)) return
     const t = await WootingTransport.open(ep.path)
@@ -347,7 +353,7 @@ export class DeviceManager extends EventEmitter {
 
   private async scanEndgame(list: HID.Device[]) {
     const ep = endgameEndpoint(list)
-    if (!ep || !canOpen(ep.path)) return
+    if (!ep || !canOpen(ep.path) || this.heldPath(ep.path)) return
     const id = `endgame-gear-${ep.productId.toString(16).padStart(4, '0')}`
     if (this.live.has(id)) return
     const t = await EndgameTransport.open(ep.path)
@@ -366,7 +372,7 @@ export class DeviceManager extends EventEmitter {
 
   private async scanWlmouse(list: HID.Device[]) {
     const ep = wlmouseEndpoint(list)
-    if (!ep || !canOpen(ep.path)) return
+    if (!ep || !canOpen(ep.path) || this.heldPath(ep.path)) return
     const id = `wlmouse-${ep.productId.toString(16).padStart(4, '0')}`
     if (this.live.has(id)) return
     const t = await WlTransport.open(ep.path)
@@ -384,7 +390,7 @@ export class DeviceManager extends EventEmitter {
 
   private async scanRazer(list: HID.Device[]) {
     const ep = razerEndpoint(list)
-    if (!ep || !canOpen(ep.path)) return
+    if (!ep || !canOpen(ep.path) || this.heldPath(ep.path)) return
     const id = `razer-${ep.model.pid.toString(16).padStart(4, '0')}`
     if (this.live.has(id) || this.refused.has(id)) return
     const link = await HidLink.open(ep.path, ep.model.waitMs)
@@ -403,7 +409,7 @@ export class DeviceManager extends EventEmitter {
 
   private async scanHeadset(list: HID.Device[]) {
     const path = scapeEndpoint(list)
-    if (!path || !canOpen(path)) return
+    if (!path || !canOpen(path) || this.heldPath(path)) return
     const id = 'fractal-design-0001'
     if (this.live.has(id)) return
     const t = await ScapeTransport.open(path)
@@ -422,7 +428,7 @@ export class DeviceManager extends EventEmitter {
   private async scanLogitech(list: HID.Device[]) {
     const asleep = new Map<string, DeviceSummary>()
     for (const ep of endpoints(list)) {
-      if (!canOpen(ep.path)) continue
+      if (!canOpen(ep.path) || this.heldPath(ep.path)) continue
       let t = this.transports.get(ep.path)
       if (!t) {
         t = await HidrawTransport.open(ep.path)
@@ -452,6 +458,7 @@ export class DeviceManager extends EventEmitter {
           const id = `logitech-${dev.serial || serial || ep.path}`
           const cat = lookup(0x046d, ep.receiver ? wpidOf(slots, slot) : ep.pid)
           if (cat) this.photoKeys.set(id, modelKey(cat.vendor, cat.name))
+          if (ep.receiver) this.wpids.set(id, wpidOf(slots, slot))
           const summary = this.mouseSummary(id, s)
           this.live.set(id, { kind: 'logitech', summary, session: s, path: ep.path })
           void this.watchButtons(id, { vid: 0x046d, pid: ep.receiver ? wpidOf(slots, slot) : 0, report: 0x02 })
@@ -520,6 +527,95 @@ export class DeviceManager extends EventEmitter {
     }
     this.searching = false
     this.changed()
+  }
+
+  // ---------------------------------------------------------------- firmware updates
+  private usbKey = (d: { vendorId: number; productId: number }) =>
+    `${d.vendorId.toString(16).padStart(4, '0')}:${d.productId.toString(16).padStart(4, '0')}`
+
+  private heldUsb(d: { vendorId: number; productId: number }) {
+    const k = this.usbKey(d)
+    return [...this.held.values()].some((h) => h.usb.has(k))
+  }
+
+  /** A held keyboard restarts under another USB id to take new firmware: keep the maker's other ids quiet too. */
+  private heldVendor(d: { vendorId: number }) {
+    const v = d.vendorId.toString(16).padStart(4, '0') + ':'
+    return [...this.held.values()].some((h) => [...h.usb].some((u) => u.startsWith(v)))
+  }
+
+  private heldPath(path: string) {
+    if (!this.held.size) return false
+    const d = this.hid.find((x) => x.path === path)
+    return !!d && this.heldUsb(d)
+  }
+
+  isHeld(id: string) {
+    return this.held.has(id)
+  }
+
+  /** USB ids ("046d:c54d") of a connected device: its USB device (the receiver, for a wireless Logitech mouse) and,
+   *  behind a receiver, the mouse's own wireless id. */
+  usbIds(id: string): string[] {
+    const h = this.held.get(id)
+    if (h) return [...h.usb]
+    const e = this.live.get(id)
+    if (!e) return []
+    const hid = this.hid.length ? this.hid : HID.devices()
+    const d = hid.find((x) => x.path === e.path)
+    const out = d ? [this.usbKey(d)] : []
+    const w = this.wpids.get(id)
+    if (w) out.push(this.usbKey({ vendorId: 0x046d, productId: w }))
+    return out
+  }
+
+  /** The firmware version the device reported. */
+  firmwareVersion(id: string): string {
+    const e = this.live.get(id)
+    if (!e) return ''
+    switch (e.kind) {
+      case 'logitech':
+        return e.session.dev.firmware
+      case 'wooting':
+        return e.session.state?.firmware ?? ''
+      case 'scape':
+        return [e.session.state.dongleFirmware && `dongle ${e.session.state.dongleFirmware}`, e.session.state.headsetFirmware && `headset ${e.session.state.headsetFirmware}`].filter(Boolean).join(', ')
+      default:
+        return e.session.fw
+    }
+  }
+
+  /**
+   * Let go of a device so another program (fwupd, Wootility) can talk to it: close Hubless's connection and leave
+   * its USB ids alone until release(). A receiver is shared, so every mouse on it goes quiet too.
+   */
+  hold(id: string, note: string) {
+    const e = this.live.get(id)
+    if (!e) throw new Error('That device is not connected right now.')
+    const usb = new Set(this.usbIds(id))
+    const gone = e.kind === 'logitech' ? [...this.live].filter(([, x]) => x.path === e.path).map(([k]) => k) : [id]
+    this.held.set(id, { usb, summary: { ...e.summary, status: 'asleep', battery: null, note }, parked: this.demo ? gone.map((k) => this.live.get(k)!) : [] })
+    for (const k of gone) {
+      this.buttonStreams.get(k)?.close().catch(() => {})
+      this.buttonStreams.delete(k)
+      this.live.delete(k)
+    }
+    if (this.demo) return this.changed() // simulated devices just wait to be put back
+    if (e.kind === 'logitech') {
+      this.transports.get(e.path)?.close()
+      this.transports.delete(e.path)
+    } else e.session.t.close()
+    this.changed()
+  }
+
+  /** Take a held device back: it reconnects on the next scan (with its new firmware). */
+  release(id: string) {
+    const h = this.held.get(id)
+    if (!h) return
+    this.held.delete(id)
+    for (const e of h.parked) this.live.set(e.summary.id, e)
+    this.changed()
+    void this.scan()
   }
 
   // ---------------------------------------------------------------- upkeep

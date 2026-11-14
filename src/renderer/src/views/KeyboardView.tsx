@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 import type { AdvancedKey, Capability, DeviceSummary, KeyboardAction, KeyboardSettings, KeyboardState } from '@shared/types'
 import { KEY_GROUPS, type KeyDef, keyLabel, keyName } from '@shared/wooting'
 import { Button } from '@/components/ui/button'
+import { FirmwarePanel } from '@/components/FirmwarePanel'
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -690,6 +691,7 @@ function DeviceSettings({ kb, device, photo }: { kb: Kb; device: DeviceSummary; 
             </div>
           ))}
         </dl>
+        <FirmwarePanel device={device} />
         <div className="space-y-2 border-t pt-4">
           <Caption>Profiles</Caption>
           {s.profiles.map((p) => (
@@ -792,7 +794,8 @@ export function KeyboardView({ device, photo, onBack }: { device: DeviceSummary;
       onSection={setSection}
       onBack={onBack}
       loading={!ready}
-      asleep={device.status === 'asleep' ? 'The keyboard is not answering. Try plugging it back in.' : null}
+      busy={device.status === 'asleep' && !!device.note}
+      asleep={device.status === 'asleep' ? (device.note ? `${device.note}.` : 'The keyboard is not answering. Try plugging it back in.') : null}
       right={
         <>
           <SaveState status={kb.status} />
