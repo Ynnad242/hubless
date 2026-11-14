@@ -318,3 +318,9 @@ test/manager.test.ts covers it.
   continuous). Verified on the 60HE by recording ~170 state changes against per-key settings. Analog polled ~55 Hz.
 - HITS (SUPERSTRIKE): the depth stream is sampled, so a quick click could fire between samples; a click from the input
   report now fills the button at least to its actuation point.
+
+## Self-update after a restart: "pkexec must be setuid root" (2026-11-14)
+- Electron's app.relaunch() starts the new copy with no_new_privs (verified: relaunched child NoNewPrivs=1, plain
+  child_process spawn from a clean parent NoNewPrivs=0). pkexec refuses to run there, so every update after an
+  update-restart failed. lifecycle.relaunch() now uses /bin/sh waiting on our pid, then exec (keeps the single-instance
+  lock working). The updater detects no_new_privs and says "Quit Hubless and open it again"; a launcher start is clean.

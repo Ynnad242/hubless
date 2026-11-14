@@ -6,7 +6,7 @@ import { DeviceManager } from './manager'
 import { TrayController, loadSettings, saveSettings } from './tray'
 import * as storage from './storage'
 import { fromHex } from './logitech/profile'
-import { handleSignals, watchForUpgrade } from './lifecycle'
+import { handleSignals, relaunch, watchForUpgrade } from './lifecycle'
 import { Updater } from './updater'
 import * as firmware from './firmware'
 
@@ -38,7 +38,7 @@ function restart(execPath?: string) {
   restarting = true
   const args = process.argv.slice(1).filter((a) => a !== '--hidden')
   if (!win?.isVisible()) args.push('--hidden')
-  app.relaunch(execPath ? { execPath, args } : { args })
+  relaunch(args, execPath)
   quit()
 }
 
@@ -297,7 +297,7 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate' | 
     wipeUserData = true // Chromium's own folder goes once the window is closed (see window-all-closed)
     // Start over as a fresh install; the window is closed by quit() after this call returns.
     setTimeout(() => {
-      app.relaunch({ args: process.argv.slice(1).filter((a) => a !== '--hidden') })
+      relaunch(process.argv.slice(1).filter((a) => a !== '--hidden'))
       quit()
     }, 100)
   },

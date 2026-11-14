@@ -1,3 +1,4 @@
+import { spawn } from 'node:child_process'
 import { join } from 'node:path'
 import { statSync } from 'original-fs'
 import { app } from 'electron'
@@ -45,4 +46,14 @@ export function watchForUpgrade(restart: () => void, everyMs = 5000) {
     last = now
   }, everyMs)
   timer.unref()
+}
+
+/**
+ * Start Hubless again once this copy has exited. Not app.relaunch(): Chromium starts that copy with no_new_privs set,
+ * which stops pkexec (and so the next silent update) from working in it. A plain shell waits for this process to
+ * exit, so the new copy also gets the single-instance lock.
+ */
+export function relaunch(args: string[], execPath = process.execPath) {
+  const wait = 'while kill -0 "$1" 2>/dev/null; do sleep 0.1; done; shift; exec "$@"'
+  spawn('/bin/sh', ['-c', wait, 'hubless-restart', String(process.pid), execPath, ...args], { detached: true, stdio: 'ignore' }).unref()
 }

@@ -10,7 +10,7 @@
 // Settings and backups live in the home folder and device settings live in the devices, so an update never touches
 // them.
 import { execFile, execFileSync } from 'node:child_process'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { app } from 'electron'
 import { PacmanUpdater, autoUpdater, type AppUpdater } from 'electron-updater'
 import type { UpdateStatus } from '@shared/types'
@@ -19,6 +19,15 @@ type Listener = (s: UpdateStatus) => void
 const SIX_HOURS = 6 * 60 * 60 * 1000
 export const UPDATE_HELPER = '/usr/lib/hubless/hubless-update'
 const PKEXEC = ['/usr/bin/pkexec', '/bin/pkexec'].find(existsSync)
+/** Started with no_new_privs (e.g. restarted by an older Hubless through app.relaunch): pkexec can't run from here. */
+const NO_NEW_PRIVS = (() => {
+  try {
+    return /NoNewPrivs:\s*1/.test(readFileSync('/proc/self/status', 'utf8'))
+  } catch {
+    return false
+  }
+})()
+const REOPEN = 'Quit Hubless and open it again to finish updating.'
 
 export class Updater {
   status: UpdateStatus = { state: 'idle', checkedAt: null }
@@ -132,6 +141,11 @@ export class Updater {
       this.updater.quitAndInstall(true, true)
       return
     }
+    if (!this.isAppImage && NO_NEW_PRIVS) {
+      this.startup = false
+      this.set({ state: 'error', message: REOPEN })
+      return
+    }
     this.set({ state: 'installing', version, startup })
     try {
       if (this.isAppImage) this.installAppImage()
@@ -148,6 +162,7 @@ export class Updater {
   /** On quit: install a downloaded update quietly so the next start is already the new version. */
   installOnQuit() {
     if (!this.updater || this.status.state !== 'ready' || !this.silentInstall) return
+    if (!this.isAppImage && NO_NEW_PRIVS) return
     try {
       if (this.isAppImage) this.installAppImage()
       else execFileSync(PKEXEC!, [UPDATE_HELPER, this.file], { timeout: 180_000, stdio: 'ignore' })
@@ -177,6 +192,7 @@ function friendly(e: unknown) {
   if (/ENOTFOUND|EAI_AGAIN|ECONNREFUSED|ETIMEDOUT|net::ERR_/.test(msg)) return 'No internet connection.'
   if (/404/.test(msg)) return 'No release found on GitHub yet.'
   if (/sha512|checksum/i.test(msg)) return 'The download was damaged and was not installed. It will be tried again.'
+  if (/must be setuid root/i.test(msg)) return REOPEN
   if (/Not authorized|dismissed/i.test(msg)) return 'Your system didn’t allow the install.'
   return msg.split('\n')[0].slice(0, 160)
 }
