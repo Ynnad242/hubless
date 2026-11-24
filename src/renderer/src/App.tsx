@@ -8,6 +8,7 @@ import type { MouseCtl } from '@/hooks/useMouse'
 import { DeviceView } from '@/views/DeviceView'
 import { CameraView } from '@/views/CameraView'
 import { HeadsetView } from '@/views/HeadsetView'
+import { PeripheralView } from '@/views/PeripheralView'
 import { KeyboardView } from '@/views/KeyboardView'
 import { Home } from '@/views/Home'
 import { photoFor } from '@shared/devices'
@@ -65,6 +66,7 @@ export default function App() {
   const updating = (update.state === 'downloading' || update.state === 'ready' || update.state === 'installing') && update.startup
   const screen = updating ? <UpdateScreen update={update} /> : null
 
+  if (device?.capabilities.includes('settings')) return <>{<PeripheralView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
   if (device?.kind === 'keyboard') return <>{<KeyboardView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
   if (device?.kind === 'webcam') return <>{<CameraView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
   if (device?.kind === 'headset') return <>{<HeadsetView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>

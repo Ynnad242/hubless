@@ -20,6 +20,9 @@ export const FACTORY = Uint8Array.from(
 
 const SUPERSTRIKE_FEATURES = [0x0000, 0x0001, 0x0003, 0x0005, 0x1d4b, 0x0020, 0x1004, 0x2250, 0x2251, 0x2202, 0x8090,
   0x80e0, 0x1b0c, 0x8061, 0x8100, 0x8110]
+// A G733-style headset and a G915-style keyboard (the keyboard also has onboard memory, like the real one).
+const G733_FEATURES = [0x0000, 0x0001, 0x0003, 0x0005, 0x1f20, 0x8300, 0x8310, 0x8070]
+const G915_FEATURES = [0x0000, 0x0001, 0x0003, 0x0005, 0x1004, 0x4521, 0x8040, 0x8071, 0x8100]
 const G502_FEATURES = [0x0000, 0x0001, 0x0003, 0x0005, 0x1d4b, 0x0020, 0x1b04, 0x2201, 0x8060, 0x8070, 0x8100]
 
 /** A G502 HERO style profile (format 2): 1000 Hz, stages 400/800/1600/3200/6400, a cyan main light and a blue
@@ -61,12 +64,19 @@ export class SimTransport implements Transport {
   asleep = false
   /** Profile selections, to check that lighting changes are shown at once. */
   selects = 0
+  // headset and keyboard state
+  sidetone = 30
+  autoOff = 30
+  millivolts = 3900
+  eq = [0, 2, 0, -3, 4]
+  disabled = 0
+  bright = { on: 1, level: 60 }
   private write: { sector: number; data: number[] } | null = null
   private features: number[]
   private fmt: number
 
-  constructor(public model: 'superstrike' | 'g502' = 'superstrike') {
-    this.features = model === 'g502' ? G502_FEATURES : SUPERSTRIKE_FEATURES
+  constructor(public model: 'superstrike' | 'g502' | 'g733' | 'g915' = 'superstrike') {
+    this.features = { superstrike: SUPERSTRIKE_FEATURES, g502: G502_FEATURES, g733: G733_FEATURES, g915: G915_FEATURES }[model]
     this.fmt = model === 'g502' ? 2 : 8
     const factory = model === 'g502' ? g502Profile() : FACTORY
     const ctl = new Uint8Array(255).fill(0xff)
@@ -90,7 +100,7 @@ export class SimTransport implements Transport {
   }
 
   async pairedDevices() {
-    return this.model === 'g502' ? [] : [{ slot: 1, wpid: 0x40bd, name: 'X2 SUPERSTRIKE', serial: 'DE400001' }]
+    return this.model !== 'superstrike' ? [] : [{ slot: 1, wpid: 0x40bd, name: 'X2 SUPERSTRIKE', serial: 'DE400001' }]
   }
 
   async request(_index: number, feature: number, fn: number, params: number[] = []): Promise<Buffer> {
@@ -109,16 +119,17 @@ export class SimTransport implements Transport {
         break
       case 0x0001:
         if (fn === 0) return [this.features.length - 1]
-        if (fn === 1) return [this.features[p[0]] >> 8, this.features[p[0]] & 0xff, 0, 0]
+        if (fn === 1) return [this.features[p[0]] >> 8, this.features[p[0]] & 0xff, 0, this.features[p[0]] === 0x1f20 ? 2 : 0]
         break
       case 0x0003:
         if (fn === 0) return [1, 0xde, 0x40, 0x00, this.model === 'g502' ? 0x02 : 0x01]
         if (fn === 1) return [0, ...Buffer.from('MPM'), 0x42, 0x00, 0x00, 0x11]
         break
       case 0x0005: {
-        const name = Buffer.from(this.model === 'g502' ? 'G502 HERO Gaming Mouse' : 'PRO X2 SUPERSTRIKE')
+        const name = Buffer.from({ g502: 'G502 HERO Gaming Mouse', superstrike: 'PRO X2 SUPERSTRIKE', g733: 'G733 Gaming Headset', g915: 'G915 TKL LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard' }[this.model])
         if (fn === 0) return [name.length]
         if (fn === 1) return [...name.subarray(p[0], p[0] + 16)]
+        if (fn === 2) return [{ g733: 8, g915: 0, g502: 3, superstrike: 3 }[this.model]]
         break
       }
       case 0x1004:
@@ -165,6 +176,49 @@ export class SimTransport implements Transport {
         break
       case 0x8100:
         return this.onboard(fn, p)
+      case 0x1f20:
+        if (fn === 0) return [this.millivolts >> 8, this.millivolts & 0xff, 1]
+        if (fn === 1) return [this.autoOff]
+        if (fn === 2) return [(this.autoOff = p[0])]
+        break
+      case 0x8300:
+        if (fn === 0) return [this.sidetone]
+        if (fn === 1) {
+          if (p[0] > 100) throw new HidppError(2)
+          return [(this.sidetone = p[0])]
+        }
+        break
+      case 0x8310: {
+        const freqs = [80, 240, 750, 2200, 6600]
+        if (fn === 0) return [freqs.length, 12, 0, 0, 0]
+        if (fn === 1) return [p[0], ...freqs.slice(p[0], p[0] + 7).flatMap((f) => [f >> 8, f & 0xff])]
+        if (fn === 2) return this.eq.map((g) => g & 0xff)
+        if (fn === 3) {
+          if (p[0] !== 2) throw new HidppError(2)
+          const gains = p.slice(1, 1 + freqs.length).map((b) => (b << 24) >> 24)
+          if (gains.some((g) => g < -12 || g > 12)) throw new HidppError(2)
+          this.eq = gains
+          return []
+        }
+        break
+      }
+      case 0x4521:
+        if (fn === 0) return [0x1f]
+        if (fn === 1) return [this.disabled]
+        if (fn === 2) return [(this.disabled = p[0] & 0x1f)]
+        break
+      case 0x8040:
+        if (fn === 0) return [0, 100, 5, 0x04, 0, 10]
+        if (fn === 1) return [this.bright.level >> 8, this.bright.level & 0xff]
+        if (fn === 2) {
+          const v = (p[0] << 8) | p[1]
+          if (v < 10 || v > 100) throw new HidppError(2)
+          this.bright.level = v
+          return []
+        }
+        if (fn === 3) return [this.bright.on]
+        if (fn === 4) return [(this.bright.on = p[0] & 1)]
+        break
     }
     return null
   }

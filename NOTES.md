@@ -339,3 +339,18 @@ test/manager.test.ts covers it.
 - Photos: Logitech gallery PNGs (resource.logitech.com .../webcams/<model>/gallery), Razer store 500x500 cutouts
   (Kiyo V2 line only; the original Kiyo / Kiyo Pro aren't in the store). Elgato's shots have shadowed backgrounds that
   don't cut out cleanly: no Facecam photo yet.
+
+## Logitech G headsets and keyboards (2026-11-24)
+- logitechKind(): mice by DPI/HITS features, else 0x0005 fn2 device type (0 keyboard, 2 numpad, 3-5 pointer, 8 headset),
+  else by features. Fixes a latent bug: any Logitech device with onboard memory (e.g. a G915) was loaded as a mouse.
+- Headset dongles carry HID++ on usage page 0xFF43 (mice/keyboards/receivers 0xFF00): endpoints() takes both.
+- LogiHeadset: 0x8300 sidetone fn0 get / fn1 set [0..100]; 0x8310 EQ fn0 [count, range, caps, min, max] (0 → ±range),
+  fn1 [start] → [start, freq BE16 ×7], fn2 [0] → gains (signed), fn3 [0x02, gains...]; 0x1F20 fn0 [mV BE16, flags bit0
+  valid bit1 charging] → Solaar's voltage table, fn1/fn2 auto-off minutes (feature v2+).
+- LogiKeyboard: 0x8040 fn0 [max BE16, steps, caps (bit2 on/off), min BE16], fn1 get, fn2 set BE16, fn3/fn4 on/off;
+  0x4521 fn0 mask, fn1 get, fn2 set (0x01 Caps, 0x02 Num, 0x04 Scroll, 0x08 Insert, 0x10 Win).
+- Not done: keyboard RGB (0x8071 needs SetSWControl mode 3 and host-side power management; the keyboard's own
+  lighting is off meanwhile), G-keys (0x8010), Centurion headsets (PRO X 2, A50 X, G522: 0x02xx/0x06xx features).
+- Generic PeripheralSession + DeviceSetting list + PeripheralView: drivers describe settings, the page draws them.
+- Photos: logitechg.com category pages list gallery PNGs (G733, PRO X Wireless, G915/TKL/X/X TKL, G515 TKL, PRO X TKL
+  Rapid, G815). None found for G535, G435, G935.

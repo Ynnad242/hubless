@@ -4,13 +4,14 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { modelKey, photoFor, photoKey } from '../src/shared/devices'
 import { WEBCAMS, camName } from '../src/shared/webcams'
+import { LOGITECH_PERIPHERALS, logitechPeripheralName } from '../src/shared/peripherals'
 
 const dir = new URL('../data/devices/', import.meta.url)
 const files = readdirSync(dir)
 const catalog: { vendor: string; name: string; popular?: boolean }[] = JSON.parse(readFileSync(new URL('../data/mice.json', import.meta.url), 'utf8')).models
 // Devices Hubless supports that aren't mice, so aren't in the mouse catalog.
 const others = [modelKey('Wooting', '60HE'), modelKey('Fractal Design', 'Scape')]
-const known = new Set([...catalog.map((m) => modelKey(m.vendor, m.name)), ...others, ...WEBCAMS.map((w) => modelKey(w.vendor, w.name))])
+const known = new Set([...catalog.map((m) => modelKey(m.vendor, m.name)), ...others, ...WEBCAMS.map((w) => modelKey(w.vendor, w.name)), ...LOGITECH_PERIPHERALS.map((p) => modelKey('Logitech', p.name))])
 
 describe('shipped device photos', () => {
   it.each(files)('%s is a transparent, sharp PNG for a known model', (f) => {
@@ -40,6 +41,15 @@ describe('webcam names', () => {
     expect(camName('MX Brio')).toBe('MX Brio')
     expect(camName('Razer Kiyo Pro')).toBe('Kiyo Pro')
     expect(camName('Integrated Camera')).toBeUndefined()
+  })
+})
+
+describe('Logitech headset and keyboard names', () => {
+  it('turns the names they report into product names', () => {
+    expect(logitechPeripheralName('G915 TKL LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard')).toBe('G915 TKL')
+    expect(logitechPeripheralName('G733 Gaming Headset')).toBe('G733')
+    expect(logitechPeripheralName('PRO X Wireless Gaming Headset')).toBe('PRO X Wireless')
+    expect(logitechPeripheralName('MX Keys')).toBeUndefined()
   })
 })
 

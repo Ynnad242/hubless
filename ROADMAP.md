@@ -12,8 +12,8 @@ What's planned for Hubless, roughly in order. Want something else, or own a devi
 
 - **Other Wooting keyboards** (Wooting 80HE, 60HE+, Two HE, UwU and older models): they speak the same protocol
   as the 60HE Hubless already supports, with different layouts.
-- **Logitech G keyboards** (G915, G915 TKL, G PRO, G513, G815 and others): lighting, G-keys and game mode, over the
-  same HID++ protocol Hubless already uses for Logitech mice.
+- **Logitech G keyboards: lighting effects and G-keys.** Brightness and game mode are in; RGB effects need Hubless to
+  take over the keyboard's lighting, which needs testing on a real keyboard first.
 - **Custom keyboards with VIA or Vial** (QMK firmware): key mapping across layers, macros and lighting for any
   board that supports VIA or Vial, like the browser configurators at usevia.app and get.vial.today.
 

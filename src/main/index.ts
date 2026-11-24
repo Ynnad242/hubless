@@ -248,6 +248,16 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate' | 
       return s.state
     }),
   keyboardAnalog: (id) => manager.runKeyboard(id, (s) => s.analog()),
+  peripheralState: (id) =>
+    manager.runPeripheral(id, async (s) => {
+      await s.refresh()
+      return s.state()
+    }),
+  setPeripheral: (id, key, value) =>
+    manager.runPeripheral(id, async (s) => {
+      await s.set(String(key), value)
+      return s.state()
+    }),
   cameraState: (id) => manager.runCamera(id, async (s) => s.state()),
   setCamera: (id, values) =>
     manager.runCamera(id, async (s) => {

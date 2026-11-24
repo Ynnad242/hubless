@@ -182,6 +182,15 @@ unexpectedly, and reads every change back.
 If you own one of these, open it in Hubless and use **Device settings → Copy device report**, then paste it into an
 issue. Once a model checks out it moves to ✅ Works.
 
+### Logitech G headsets and keyboards
+
+Logitech G headsets and keyboards that speak HID++ 2.0, wired, through a LIGHTSPEED receiver or a headset dongle. Hubless
+shows what each one offers: **sidetone, equalizer, battery and auto power-off** on headsets (G733, G535, G435, PRO X
+Wireless, G935 and others), **backlight brightness, game mode (lock the Windows key, Caps Lock, Num Lock, Scroll Lock or
+Insert) and battery** on keyboards (G915, G915 TKL, G915 X, G815, G515, PRO X TKL and others). Tested on simulated
+devices, not yet on real ones. Not yet: keyboard lighting effects, G-keys, and newer headsets on Logitech's newer
+protocol (PRO X 2, Astro A50 X, G522).
+
 ### Webcams
 
 Every standard USB webcam (UVC): Logitech C920, C920S, Brio, MX Brio, StreamCam, C270, Razer Kiyo, Kiyo Pro, Kiyo V2,

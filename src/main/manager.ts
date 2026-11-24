@@ -8,6 +8,7 @@ import HID from 'node-hid'
 import type { AppSnapshot, DeviceKind, DeviceSummary } from '@shared/types'
 import { modelKey } from '@shared/devices'
 import { camName } from '@shared/webcams'
+import { logitechPeripheralName } from '@shared/peripherals'
 import { lookup } from './catalog'
 import { EG_VID, EndgameSession, EndgameTransport, MODELS as EG_MODELS, endgameEndpoint } from './endgame/op1'
 import { MODELS as WL_MODELS, WlSession, WlTransport, wlmouseEndpoint } from './wlmouse/ying'
@@ -17,6 +18,7 @@ import { ScapeSession, ScapeTransport, scapeEndpoint } from './fractal/scape'
 import { LogitechDevice } from './logitech/device'
 import { HidrawTransport, Offline, Timeout, endpoints, type Transport } from './logitech/hidpp'
 import { LogitechSession } from './logitech/session'
+import { LogiHeadset, LogiKeyboard, logitechKind } from './logitech/peripheral'
 import { SimTransport } from './logitech/sim'
 import { VENDORS, saveCamera, savedCamera } from './storage'
 import { WebcamSession } from './webcam/session'
@@ -35,6 +37,8 @@ type Live =
   | { kind: 'endgame'; summary: DeviceSummary; path: string; session: EndgameSession }
   | { kind: 'wlmouse'; summary: DeviceSummary; path: string; session: WlSession }
   | { kind: 'razer'; summary: DeviceSummary; path: string; session: RazerSession }
+  /** a Logitech headset or keyboard: shares its receiver's or cable's transport with the mice, like 'logitech' */
+  | { kind: 'logiperipheral'; summary: DeviceSummary; path: string; session: LogiHeadset | LogiKeyboard }
 
 /** Any mouse the mouse pages can edit. */
 export type MouseSession = LogitechSession | EndgameSession | WlSession | RazerSession
@@ -65,6 +69,8 @@ const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 const cleanName = (product: string, vendor: string) =>
   product.replace(new RegExp(`^(${vendor.split(' ')[0]}\\s*)+`, 'i'), '').replace(/\s*\(ARM\)|\s+Dongle$/i, '').trim() || product
 const wpidOf = (slots: { slot: number; wpid: number }[], slot: number) => slots.find((x) => x.slot === slot)?.wpid ?? 0
+/** Logitech devices share one HID++ transport per receiver or cable, closed through the transports map. */
+const sharedTransport = (e: Live) => e.kind === 'logitech' || e.kind === 'logiperipheral'
 const isMouse = (e: Live): e is Extract<Live, { session: MouseSession }> => ['logitech', 'endgame', 'wlmouse', 'razer'].includes(e.kind)
 const offline = (e: unknown) => e instanceof Offline || e instanceof Timeout
 
@@ -127,7 +133,7 @@ export class DeviceManager extends EventEmitter {
     if (this.timer) clearInterval(this.timer)
     for (const d of this.buttonStreams.values()) d.close().catch(() => {})
     for (const t of this.transports.values()) t.close()
-    for (const e of this.live.values()) if (e.kind !== 'logitech') e.session.t.close()
+    for (const e of this.live.values()) if (e.kind !== 'logitech' && e.kind !== 'logiperipheral') e.session.t.close()
   }
 
   // ---------------------------------------------------------------- registry
@@ -469,6 +475,18 @@ export class DeviceManager extends EventEmitter {
         }
         try {
           const dev = await new LogitechDevice(t, slot, name).connect()
+          const kind = await logitechKind(dev)
+          if (kind === 'headset' || kind === 'keyboard') {
+            const ps = kind === 'headset' ? new LogiHeadset(dev) : new LogiKeyboard(dev)
+            await ps.load()
+            const id = `logitech-${dev.serial || serial || ep.path}`
+            const connection = ep.receiver || ep.headset ? 'LIGHTSPEED wireless' : 'USB cable'
+            const summary = this.peripheralSummary(id, ps, connection)
+            this.live.set(id, { kind: 'logiperipheral', summary, session: ps, path: ep.path })
+            this.remember(summary)
+            continue
+          }
+          if (kind !== 'mouse' && kind !== null) continue
           if (!dev.onboard && !dev.isSuperstrike) continue
           const s = new LogitechSession(dev)
           await s.load()
@@ -541,6 +559,13 @@ export class DeviceManager extends EventEmitter {
       await b.load()
       this.live.set('razer-demo-2', { kind: 'razer', summary: { ...this.razerSummary('razer-demo-2', b), demo: true }, session: b, path: 'demo-razer-2' })
       this.known.set('demo-old', fake('demo-old', 'mouse', 'Endgame Gear', 'OP1 8k'))
+      // A Logitech G headset and keyboard, through the same HID++ driver as a real one.
+      for (const [id, model] of [['demo-g733', 'g733'], ['demo-g915', 'g915']] as const) {
+        const dev = await new LogitechDevice(new SimTransport(model), 0xff).connect()
+        const ps = model === 'g733' ? new LogiHeadset(dev) : new LogiKeyboard(dev)
+        await ps.load()
+        this.live.set(id, { kind: 'logiperipheral', summary: this.peripheralSummary(id, ps, 'LIGHTSPEED wireless'), session: ps, path: `demo-${model}` })
+      }
     }
     this.searching = false
     this.changed()
@@ -592,6 +617,7 @@ export class DeviceManager extends EventEmitter {
     if (!e) return ''
     switch (e.kind) {
       case 'logitech':
+      case 'logiperipheral':
         return e.session.dev.firmware
       case 'wooting':
         return e.session.state?.firmware ?? ''
@@ -610,7 +636,7 @@ export class DeviceManager extends EventEmitter {
     const e = this.live.get(id)
     if (!e) throw new Error('That device is not connected right now.')
     const usb = new Set(this.usbIds(id))
-    const gone = e.kind === 'logitech' ? [...this.live].filter(([, x]) => x.path === e.path).map(([k]) => k) : [id]
+    const gone = sharedTransport(e) ? [...this.live].filter(([, x]) => x.path === e.path).map(([k]) => k) : [id]
     this.held.set(id, { usb, summary: { ...e.summary, status: 'asleep', battery: null, note }, parked: this.demo ? gone.map((k) => this.live.get(k)!) : [] })
     for (const k of gone) {
       this.buttonStreams.get(k)?.close().catch(() => {})
@@ -618,7 +644,7 @@ export class DeviceManager extends EventEmitter {
       this.live.delete(k)
     }
     if (this.demo) return this.changed() // simulated devices just wait to be put back
-    if (e.kind === 'logitech') {
+    if (e.kind === 'logitech' || e.kind === 'logiperipheral') {
       this.transports.get(e.path)?.close()
       this.transports.delete(e.path)
     } else e.session.t.close()
@@ -648,7 +674,7 @@ export class DeviceManager extends EventEmitter {
         this.touch(id)
         this.buttonStreams.get(id)?.close().catch(() => {})
         this.buttonStreams.delete(id)
-        if (e.kind === 'logitech') {
+        if (e.kind === 'logitech' || e.kind === 'logiperipheral') {
           this.transports.get(e.path)?.close()
           this.transports.delete(e.path)
         } else e.session.t.close()
@@ -680,6 +706,9 @@ export class DeviceManager extends EventEmitter {
       } else if (e.kind === 'razer') {
         await e.session.ping()
         e.summary = this.razerSummary(id, e.session)
+      } else if (e.kind === 'logiperipheral') {
+        await e.session.refresh()
+        e.summary = this.peripheralSummary(id, e.session, e.summary.connection)
       } else {
         await e.session.ping()
       }
@@ -741,6 +770,23 @@ export class DeviceManager extends EventEmitter {
     const e = this.live.get(id)
     if (!e || !isMouse(e)) throw new Error('That mouse is not connected right now.')
     return e.session
+  }
+
+  private peripheralSummary(id: string, s: LogiHeadset | LogiKeyboard, connection: string): DeviceSummary {
+    const st = s.state()
+    return {
+      id, kind: s.kind, vendor: 'Logitech', name: logitechPeripheralName(s.name) ?? cleanName(s.name, 'Logitech'), status: 'ready', connection,
+      battery: st.battery === null ? null : { percent: st.battery, status: '', charging: st.charging },
+      capabilities: ['settings', 'device'], verified: false, demo: this.demo, lastSeen: Date.now()
+    }
+  }
+
+  async runPeripheral<T>(id: string, job: (s: LogiHeadset | LogiKeyboard) => Promise<T>): Promise<T> {
+    const e = this.get(id, 'logiperipheral')
+    const r = await this.guard(id, () => job(e.session), 'The device is not answering. Is it switched on?')
+    e.summary = this.peripheralSummary(id, e.session, e.summary.connection)
+    this.changed()
+    return r
   }
 
   // ---------------------------------------------------------------- webcams

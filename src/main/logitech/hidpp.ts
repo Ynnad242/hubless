@@ -182,16 +182,17 @@ export class HidrawTransport implements Transport {
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 /** HID++ endpoints: Logitech vendor interfaces (usage page 0xFF00) that aren't dj children. */
-export function endpoints(list: HID.Device[] = HID.devices()): { path: string; receiver: boolean; name: string; pid: number }[] {
+export function endpoints(list: HID.Device[] = HID.devices()): { path: string; receiver: boolean; name: string; pid: number; headset: boolean }[] {
   const seen = new Set<string>()
-  const out: { path: string; receiver: boolean; name: string; pid: number }[] = []
+  const out: { path: string; receiver: boolean; name: string; pid: number; headset: boolean }[] = []
   for (const d of list) {
-    if (d.vendorId !== LOGITECH || d.usagePage !== 0xff00 || !d.path || seen.has(d.path)) continue
+    // Mice, keyboards and receivers carry HID++ on usage page 0xFF00; Logitech G headset dongles on 0xFF43.
+    if (d.vendorId !== LOGITECH || (d.usagePage !== 0xff00 && d.usagePage !== 0xff43) || !d.path || seen.has(d.path)) continue
     seen.add(d.path)
     // Receivers expose the HID++ channel on interface 2; dj children reuse the receiver's channel.
     const receiver = /receiver/i.test(d.product ?? '') || [0xc539, 0xc53a, 0xc545, 0xc547, 0xc54d, 0xc54f].includes(d.productId)
     if (receiver && d.productId < 0xc500) continue
-    out.push({ path: d.path, receiver, name: d.product ?? 'Logitech device', pid: d.productId })
+    out.push({ path: d.path, receiver, name: d.product ?? 'Logitech device', pid: d.productId, headset: d.usagePage === 0xff43 })
   }
   return out
 }

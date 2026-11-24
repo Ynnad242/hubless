@@ -1,7 +1,7 @@
 // Types shared by the main process (device drivers) and the renderer (UI).
 
 export type DeviceKind = 'mouse' | 'keyboard' | 'headset' | 'webcam'
-export type Capability = 'triggers' | 'sensor' | 'buttons' | 'profiles' | 'device' | 'actuation' | 'keymap' | 'advanced' | 'lighting' | 'audio' | 'camera'
+export type Capability = 'triggers' | 'sensor' | 'buttons' | 'profiles' | 'device' | 'actuation' | 'keymap' | 'advanced' | 'lighting' | 'audio' | 'camera' | 'settings'
 
 export interface Hits {
   actuation: number // 1 (shallow) .. 10 (deep)
@@ -158,6 +158,37 @@ export type KeyboardAction =
   | { type: 'lighting'; brightness?: number; paint?: { keys: number[]; color: string }; effect?: 'static' | 'original' }
   | { type: 'restore' }
   | { type: 'reload' }
+
+// ---------------------------------------------------------------- generic device settings
+// Headsets and keyboards whose drivers describe their own settings (Logitech G headsets and keyboards, and more):
+// the page draws whatever the device offers.
+export interface DeviceSetting {
+  key: string
+  label: string
+  hint?: string
+  group: string
+  kind: 'slider' | 'switch' | 'choice' | 'eq'
+  value: number
+  min?: number
+  max?: number
+  step?: number
+  unit?: string // shown after the value, e.g. '%', ' min'
+  /** what the slider's lowest value means, e.g. 'Off' or 'Never' */
+  zeroLabel?: string
+  options?: { value: number; label: string }[]
+  /** kind 'eq': band frequencies in Hz and gains in dB */
+  bands?: { freq: number; gain: number }[]
+}
+
+export interface PeripheralState {
+  settings: DeviceSetting[]
+  battery: number | null
+  charging: boolean
+  /** why some settings aren't shown, e.g. lighting not supported yet */
+  note?: string
+}
+
+export type SettingValue = number | number[]
 
 // ---------------------------------------------------------------- webcams (any UVC camera, through V4L2)
 export interface CameraControl {
@@ -316,6 +347,9 @@ export interface HublessApi {
   /** live travel of every key, rows × columns, 0..255 over 0..4 mm */
   keyboardAnalog(id: string): Promise<number[][]>
   headsetState(id: string): Promise<HeadsetState>
+  peripheralState(id: string): Promise<PeripheralState>
+  /** a number, or every EQ band's gain for kind 'eq' */
+  setPeripheral(id: string, key: string, value: SettingValue): Promise<PeripheralState>
   cameraState(id: string): Promise<CameraState>
   /** set controls (several at once, e.g. turning auto exposure off with a new exposure time) and save them */
   setCamera(id: string, values: Record<string, number>): Promise<CameraState>

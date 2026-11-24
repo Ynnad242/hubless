@@ -112,6 +112,8 @@ devices stay on the devices.
 | WLmouse Ying (cable) | DPI stages, polling, lift-off, angle snap, motion sync, ripple, debounce | ✅ Tested on hardware |
 | Wooting 60HE | Actuation, rapid trigger, per-key settings, key mapping, Mod-Tap / Snap Tap, lighting | ✅ Tested on hardware |
 | Fractal Design Scape | Battery, EQ, noise cancelling, sidetone, lighting | ✅ Tested on hardware |
+| Logitech G headsets (G733, G535, G435, PRO X Wireless, G935…) | Sidetone, EQ, battery, auto power-off, for whichever the headset offers | 🧪 Should work, tested on a simulated headset |
+| Logitech G keyboards (G915, G815, G515, PRO X TKL…) | Backlight brightness, game mode (lock the Windows key, Caps Lock and more), battery. Not yet: lighting effects | 🧪 Should work, tested on a simulated keyboard |
 | Logitech C922 Pro Stream | Exposure, white balance, focus, zoom, picture, anti-flicker, live preview; settings kept across unplugs | ✅ Tested on hardware |
 | Any other USB webcam (C920, Brio, StreamCam, Razer Kiyo, Elgato Facecam…) | The same, for whichever settings the camera offers | 🧪 Should work: every standard (UVC) webcam |
 | 52 other Logitech G mice | DPI, polling, buttons, onboard profiles, RGB lighting (G502, G203, G Pro and others with RGB) | 🧪 Should work, untested |
