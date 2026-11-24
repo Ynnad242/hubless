@@ -17,6 +17,10 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="36a7", TAG+="uaccess"
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1532", TAG+="uaccess"
 # Endgame Gear
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3367", TAG+="uaccess"
+# SteelSeries
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1038", TAG+="uaccess"
+# HyperX Cloud Alpha Wireless
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="03f0", ATTRS{idProduct}=="098d", TAG+="uaccess"
 RULES
 # An older, broken copy of the rule may have been installed by the app itself.
 rm -f /etc/udev/rules.d/70-hubless.rules

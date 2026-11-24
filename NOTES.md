@@ -364,3 +364,17 @@ test/manager.test.ts covers it.
 - Effects can't be read back: the last one set is kept in lighting.json under razer-kbd:<pid>:<serial>.
 - Photos: Razer store 500x500 cutouts; compact boards come out ~300 px wide, too small to ship, so only BlackWidow V3,
   V4 Pro, Ornata V3, Ornata V3 X have photos.
+
+## SteelSeries / HyperX headsets (2026-11-24)
+- Table-driven HidHeadset (src/main/headsets/hid-headsets.ts), facts from HeadsetControl lib/devices/*.hpp:
+  Nova 7 family (1038, 12 pids, if 3 usage 0xFFC0, 64 B no report id): status [00 b0] → [2] battery (0..4 on older
+  firmware pids), [3] 0 off / 1,2 charging; sidetone [00 39 0..3] (+ save [00 09] on Gen 2 0x227e); auto-off
+  [00 a3 min]; EQ [00 33 20+g ×10 00], bands 32..16k as listed for the Nova 5. Arctis 7/Pro (if 5, 0xFF43, 31 B, report
+  id 6): battery [06 18] → [2] percent; sidetone [06 35 01 00 0..0x12] / off [06 35]; auto-off [06 51 min]; save [06 09]
+  after each. HyperX Cloud Alpha Wireless (03f0:098d, 31 B): [21 bb 03] connected ([3]=1 off), [21 bb 0c] charging,
+  [21 bb 0b] battery; sidetone [21 bb 10 on] + [21 bb 11 0..128]; auto-off [21 bb 12 min]; voice prompts [21 bb 13].
+- Write-only settings are remembered in ~/.config/hubless/headsets.json. udev: SteelSeries vendor 1038, HyperX by exact
+  product (HP's vendor id 03f0 covers much else).
+- Logitech headsets on interface 3 under other usage pages (G535: 0x000C) are now found too (046d:0Axx, interface 3).
+- No headset photos yet: SteelSeries' CDN rate-limits and its Nova 7 shots have opaque backgrounds; hyperx.com blocks
+  scripted fetches.

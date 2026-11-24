@@ -114,6 +114,14 @@ protocol (PRO X 2, Astro A50 X, G522).
 lighting (off, one colour, breathing, colour cycle), brightness and game mode**, using the command variant OpenRazer
 uses for each model. Tested on a simulated keyboard, not yet on a real one. Not yet: per-key colours, macros.
 
+### SteelSeries and HyperX headsets
+
+**SteelSeries Arctis Nova 7** (Nova 7, 7X, 7P, Gen 2 and special editions): battery, sidetone, auto power-off and a
+10-band EQ. **SteelSeries Arctis 7, Arctis 7 2019, Arctis Pro 2019 and Pro GameDAC**: battery, sidetone, auto power-off.
+**HyperX Cloud Alpha Wireless**: battery, sidetone, auto power-off, voice prompts. Commands follow HeadsetControl. These
+headsets can't report their settings, so Hubless shows the ones it last set. Tested on simulated headsets, not yet on
+real ones. Not yet: Corsair, Razer and other SteelSeries / HyperX headsets.
+
 ### Webcams
 
 Every standard USB webcam (UVC): Logitech C920, C920S, Brio, MX Brio, StreamCam, C270, Razer Kiyo, Kiyo Pro, Kiyo V2,

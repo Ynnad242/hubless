@@ -8,6 +8,11 @@ What's planned for Hubless, roughly in order. Want something else, or own a devi
 - **Controllers.** Gamepads such as Xbox, PlayStation DualSense and 8BitDo controllers: battery, button remapping,
   stick dead zones and trigger settings where the controller supports them.
 
+## Headsets
+
+- **More headsets:** Corsair (Void, Virtuoso), Razer (BlackShark, Kraken), the other SteelSeries Arctis Nova models
+  (Nova 5, Nova Pro, Nova 3) and HyperX Cloud models, and Logitech's newer headsets (PRO X 2, Astro A50 X, G522).
+
 ## Keyboards
 
 - **Other Wooting keyboards** (Wooting 80HE, 60HE+, Two HE, UwU and older models): they speak the same protocol

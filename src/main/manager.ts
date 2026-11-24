@@ -17,13 +17,14 @@ import { SimRazer } from './razer/sim'
 import { KEYBOARDS as RAZER_KEYBOARDS, RazerKeyboard, razerKeyboardEndpoint } from './razer/keyboard'
 import { SimRazerKeyboard } from './razer/sim-keyboard'
 import type { PeripheralSession } from './peripheral'
+import { HEADSETS, HidHeadset, NodeHidIo, SimNova7Io, headsetEndpoints } from './headsets/hid-headsets'
 import { ScapeSession, ScapeTransport, scapeEndpoint } from './fractal/scape'
 import { LogitechDevice } from './logitech/device'
 import { HidrawTransport, Offline, Timeout, endpoints, type Transport } from './logitech/hidpp'
 import { LogitechSession } from './logitech/session'
 import { LogiHeadset, LogiKeyboard, logitechKind } from './logitech/peripheral'
 import { SimTransport } from './logitech/sim'
-import { VENDORS, saveCamera, saveLighting, savedCamera, savedLighting } from './storage'
+import { VENDORS, saveCamera, saveHeadset, saveLighting, savedCamera, savedHeadset, savedLighting } from './storage'
 import { WebcamSession } from './webcam/session'
 import { type CameraBackend, SimCamera, hasV4l2Ctl, realCameras } from './webcam/uvc'
 import { WootingSession, WootingTransport, wootingEndpoint } from './wooting/wooting'
@@ -43,6 +44,7 @@ type Live =
   /** a Logitech headset or keyboard: shares its receiver's or cable's transport with the mice, like 'logitech' */
   | { kind: 'logiperipheral'; summary: DeviceSummary; path: string; session: LogiHeadset | LogiKeyboard }
   | { kind: 'razerkbd'; summary: DeviceSummary; path: string; session: RazerKeyboard }
+  | { kind: 'hidheadset'; summary: DeviceSummary; path: string; session: HidHeadset }
 
 /** Any mouse the mouse pages can edit. */
 export type MouseSession = LogitechSession | EndgameSession | WlSession | RazerSession
@@ -325,6 +327,7 @@ export class DeviceManager extends EventEmitter {
       await this.scanWlmouse(hid)
       await this.scanRazer(hid)
       await this.scanRazerKeyboard(hid)
+      await this.scanHidHeadsets(hid)
       // Recognised peripherals that no driver claimed: the vendors above, plus any mouse in the built-in catalog.
       this.unsupported.clear()
       const seen = new Set<string>()
@@ -450,6 +453,25 @@ export class DeviceManager extends EventEmitter {
     } catch (e) {
       link.close()
       if (!offline(e)) this.refused.set(id, `Hubless couldn't read this keyboard safely, so it changed nothing (${(e as Error).message})`)
+    }
+  }
+
+  private async scanHidHeadsets(list: HID.Device[]) {
+    for (const ep of headsetEndpoints(list)) {
+      if (!canOpen(ep.path) || this.heldPath(ep.path)) continue
+      const id = `${slug(ep.spec.vendor)}-${ep.pid.toString(16).padStart(4, '0')}`
+      if (this.live.has(id) || this.refused.has(id)) continue
+      const io = await NodeHidIo.open(ep.path)
+      const s = new HidHeadset(io, ep.spec, ep.pid, ep.serial, { load: savedHeadset, save: saveHeadset })
+      try {
+        await s.load()
+        const summary = this.peripheralSummary(id, s, 'Wireless', ep.spec.vendor)
+        this.live.set(id, { kind: 'hidheadset', summary, path: ep.path, session: s })
+        this.remember(summary)
+      } catch (e) {
+        io.close()
+        if (!offline(e)) this.refused.set(id, `Hubless couldn't read this headset (${(e as Error).message})`)
+      }
     }
   }
 
@@ -587,6 +609,10 @@ export class DeviceManager extends EventEmitter {
       const kb = new RazerKeyboard(new RazerTransport(new SimRazerKeyboard(bw), bw.tx), bw, 'demo', { load: () => null, save: () => {} })
       await kb.load()
       this.live.set('razer-demo-kbd', { kind: 'razerkbd', summary: this.peripheralSummary('razer-demo-kbd', kb, 'USB cable', 'Razer'), session: kb, path: 'demo-razer-kbd' })
+      // A SteelSeries Arctis Nova 7, through the real headset driver.
+      const nova = new HidHeadset(new SimNova7Io(), HEADSETS[0], 0x227e, 'demo', { load: () => null, save: () => {} })
+      await nova.load()
+      this.live.set('steelseries-demo', { kind: 'hidheadset', summary: this.peripheralSummary('steelseries-demo', nova, 'Wireless', 'SteelSeries'), session: nova, path: 'demo-nova' })
       // A Logitech G headset and keyboard, through the same HID++ driver as a real one.
       for (const [id, model] of [['demo-g733', 'g733'], ['demo-g915', 'g915']] as const) {
         const dev = await new LogitechDevice(new SimTransport(model), 0xff).connect()
@@ -652,6 +678,7 @@ export class DeviceManager extends EventEmitter {
       case 'scape':
         return [e.session.state.dongleFirmware && `dongle ${e.session.state.dongleFirmware}`, e.session.state.headsetFirmware && `headset ${e.session.state.headsetFirmware}`].filter(Boolean).join(', ')
       case 'razerkbd':
+      case 'hidheadset':
         return ''
       default:
         return e.session.fw
@@ -736,7 +763,7 @@ export class DeviceManager extends EventEmitter {
       } else if (e.kind === 'razer') {
         await e.session.ping()
         e.summary = this.razerSummary(id, e.session)
-      } else if (e.kind === 'logiperipheral' || e.kind === 'razerkbd') {
+      } else if (e.kind === 'logiperipheral' || e.kind === 'razerkbd' || e.kind === 'hidheadset') {
         await e.session.refresh()
         e.summary = this.peripheralSummary(id, e.session, e.summary.connection, e.summary.vendor)
       } else {
@@ -805,7 +832,8 @@ export class DeviceManager extends EventEmitter {
   private peripheralSummary(id: string, s: PeripheralSession, connection: string, vendor = 'Logitech'): DeviceSummary {
     const st = s.state()
     return {
-      id, kind: s.kind, vendor, name: (vendor === 'Logitech' && logitechPeripheralName(s.name)) || cleanName(s.name, vendor), status: 'ready', connection,
+      id, kind: s.kind, vendor, name: (vendor === 'Logitech' && logitechPeripheralName(s.name)) || cleanName(s.name, vendor),
+      status: (s as { off?: boolean }).off ? 'asleep' : 'ready', note: (s as { off?: boolean }).off ? 'Headset off · receiver connected' : undefined, connection,
       battery: st.battery === null ? null : { percent: st.battery, status: '', charging: st.charging },
       capabilities: ['settings', 'device'], verified: false, demo: this.demo, lastSeen: Date.now()
     }
@@ -813,7 +841,7 @@ export class DeviceManager extends EventEmitter {
 
   async runPeripheral<T>(id: string, job: (s: PeripheralSession) => Promise<T>): Promise<T> {
     const e = this.live.get(id)
-    if (!e || (e.kind !== 'logiperipheral' && e.kind !== 'razerkbd')) throw new Error('That device is not connected right now.')
+    if (!e || (e.kind !== 'logiperipheral' && e.kind !== 'razerkbd' && e.kind !== 'hidheadset')) throw new Error('That device is not connected right now.')
     const r = await this.guard(id, () => job(e.session), 'The device is not answering. Is it switched on?')
     e.summary = this.peripheralSummary(id, e.session, e.summary.connection, e.summary.vendor)
     this.changed()

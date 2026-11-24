@@ -1360,9 +1360,13 @@ protocol layouts), which Hubless then checked against real hardware wherever pos
 
 - **OpenRazer** (GPL-2.0-or-later) — Razer model names, USB ids and maximum DPI in `data/mice.json`, and the Razer
   protocol facts in `data/razer.json` (report layout, command ids, per-model transaction ids and polling command),
-  extracted by `tools/extract-razer.py`. Hubless's Razer driver is its own code.
+  extracted by `tools/extract-razer.py`, and the Razer keyboard facts in `data/razer-keyboards.json` (command variant,
+  transaction id and interface per model), extracted by `tools/extract-razer-kbd.py`. Hubless's Razer drivers are its own code.
   https://github.com/openrazer/openrazer
-- **Solaar** (GPL-2.0) and **libratbag** — Logitech HID++ background. https://github.com/pwr-Solaar/Solaar
+- **Solaar** (GPL-2.0) and **libratbag** — Logitech HID++ background, and the byte layouts of the HID++ sidetone,
+  equalizer, battery voltage, brightness and disable-keys features. https://github.com/pwr-Solaar/Solaar
+- **HeadsetControl** (GPL-3.0) — SteelSeries and HyperX headset commands and product ids, used as a reference for
+  Hubless's own headset driver. https://github.com/Sapd/HeadsetControl
 - **egctl** (AGPL-3.0-or-later) — Endgame Gear OP1 8k v2 config offsets, used as a reference for the OP1 8k layout.
   https://github.com/Creationsss/egctl
 - **OpenMouse mouse-protocol** (AGPL-3.0) — WLmouse / CompX feature-report commands (page, command and payload
@@ -1376,7 +1380,7 @@ protocol layouts), which Hubless then checked against real hardware wherever pos
 ## Trademarks and product photos
 
 Hubless is an independent project. It is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting,
-Fractal Design, Endgame Gear, WLmouse, Glorious or any other manufacturer named in it. All product names, logos and brands are the
+Fractal Design, Endgame Gear, WLmouse, Glorious, SteelSeries, HyperX, Elgato or any other manufacturer named in it. All product names, logos and brands are the
 property of their respective owners and are used only to identify compatible hardware.
 
 The product photos in `data/devices/` show hardware made by those manufacturers. They remain the property of their

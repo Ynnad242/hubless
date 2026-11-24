@@ -12,14 +12,18 @@ const DATA = join(process.env.XDG_DATA_HOME || join(homedir(), '.local/share'), 
 export const UDEV_RULE_PATH = '/etc/udev/rules.d/70-hubless.rules'
 // Vendors whose peripherals Hubless talks to.
 export const VENDORS: Record<string, string> = {
-  '046d': 'Logitech', '31e3': 'Wooting', '36bc': 'Fractal Design', '1532': 'Razer', '3367': 'Endgame Gear', '36a7': 'WLmouse'
+  '046d': 'Logitech', '31e3': 'Wooting', '36bc': 'Fractal Design', '1532': 'Razer', '3367': 'Endgame Gear', '36a7': 'WLmouse',
+  '1038': 'SteelSeries'
 }
+/** Devices whose vendor id is shared with much else (HyperX belongs to HP): allowed by exact product. */
+export const UDEV_PRODUCTS: [string, string, string][] = [['03f0', '098d', 'HyperX Cloud Alpha Wireless']]
 export const UDEV_RULE =
   '# hubless: let the logged-in user configure their mice, keyboards and headsets\n' +
   Object.entries(VENDORS)
     // udev has no end-of-line comments: the vendor name goes on its own line.
     .map(([vid, name]) => `# ${name}\nKERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="${vid}", TAG+="uaccess"\n`)
-    .join('')
+    .join('') +
+  UDEV_PRODUCTS.map(([vid, pid, name]) => `# ${name}\nKERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="${vid}", ATTRS{idProduct}=="${pid}", TAG+="uaccess"\n`).join('')
 
 export function backupDir(serial: string) {
   const d = join(DATA, 'backups', serial || 'unknown')
@@ -228,6 +232,28 @@ export function saveCamera(key: string, c: SavedCamera) {
   all[key] = c
   mkdirSync(CONFIG_DIR, { recursive: true })
   writeFileSync(WEBCAMS, JSON.stringify(all, null, 1))
+}
+
+// Settings a headset can't report back (SteelSeries, HyperX): what Hubless last set, per headset.
+const HEADSETS = join(CONFIG_DIR, 'headsets.json')
+export function savedHeadset(key: string): Record<string, number | number[]> | null {
+  try {
+    const v = (JSON.parse(readFileSync(HEADSETS, 'utf8')) as Record<string, Record<string, number | number[]>>)[key]
+    return v && typeof v === 'object' ? v : null
+  } catch {
+    return null
+  }
+}
+export function saveHeadset(key: string, values: Record<string, number | number[]>) {
+  let all: Record<string, Record<string, number | number[]>> = {}
+  try {
+    all = JSON.parse(readFileSync(HEADSETS, 'utf8'))
+  } catch {
+    /* first time */
+  }
+  all[key] = values
+  mkdirSync(CONFIG_DIR, { recursive: true })
+  writeFileSync(HEADSETS, JSON.stringify(all, null, 1))
 }
 
 export function deleteAllData() {

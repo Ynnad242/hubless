@@ -115,6 +115,7 @@ devices stay on the devices.
 | Logitech G headsets (G733, G535, G435, PRO X Wireless, G935…) | Sidetone, EQ, battery, auto power-off, for whichever the headset offers | 🧪 Should work, tested on a simulated headset |
 | Logitech G keyboards (G915, G815, G515, PRO X TKL…) | Backlight brightness, game mode (lock the Windows key, Caps Lock and more), battery. Not yet: lighting effects | 🧪 Should work, tested on a simulated keyboard |
 | 61 Razer keyboards (BlackWidow, Huntsman, Ornata, DeathStalker, Cynosa…) | Lighting (off, one colour, breathing, colour cycle), brightness, game mode | 🧪 Should work, tested on a simulated keyboard |
+| SteelSeries Arctis Nova 7 (all versions), Arctis 7 / Pro, HyperX Cloud Alpha Wireless | Battery, sidetone, auto power-off; EQ on the Nova 7; voice prompts on the Cloud Alpha | 🧪 Should work, tested on a simulated headset |
 | Logitech C922 Pro Stream | Exposure, white balance, focus, zoom, picture, anti-flicker, live preview; settings kept across unplugs | ✅ Tested on hardware |
 | Any other USB webcam (C920, Brio, StreamCam, Razer Kiyo, Elgato Facecam…) | The same, for whichever settings the camera offers | 🧪 Should work: every standard (UVC) webcam |
 | 52 other Logitech G mice | DPI, polling, buttons, onboard profiles, RGB lighting (G502, G203, G Pro and others with RGB) | 🧪 Should work, untested |
@@ -178,12 +179,12 @@ Protocol notes: [docs/PROTOCOL.md](docs/PROTOCOL.md). The mouse catalog is gener
 
 ## Credits and legal
 
-Protocol knowledge builds on Solaar, libratbag, OpenRazer, egctl, OpenMouse, scapectl, Wooting protocol notes and the
+Protocol knowledge builds on Solaar, libratbag, OpenRazer, HeadsetControl, egctl, OpenMouse, scapectl, Wooting protocol notes and the
 SUPERSTRIKE research by kazehana99k and SuperStrike Studio; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for
 those credits and the licenses of bundled libraries.
 
 Hubless is not affiliated with, endorsed by or sponsored by Logitech, Razer, Wooting, Fractal Design, Endgame Gear,
-WLmouse or any other manufacturer. Product names and brands belong to their owners and are used only to identify compatible
+WLmouse, SteelSeries, HyperX, Elgato or any other manufacturer. Product names and brands belong to their owners and are used only to identify compatible
 hardware. Product photos in `data/devices/` belong to and are credited to their manufacturers (Logitech, Razer, Wooting,
 Fractal Design, Endgame Gear, WLmouse, Glorious). They are not covered by the MIT license, are used only to show which hardware is supported, and
 will be removed on request through an [issue](https://github.com/Ynnad242/hubless/issues).

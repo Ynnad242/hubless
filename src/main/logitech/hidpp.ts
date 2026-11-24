@@ -187,12 +187,14 @@ export function endpoints(list: HID.Device[] = HID.devices()): { path: string; r
   const out: { path: string; receiver: boolean; name: string; pid: number; headset: boolean }[] = []
   for (const d of list) {
     // Mice, keyboards and receivers carry HID++ on usage page 0xFF00; Logitech G headset dongles on 0xFF43.
-    if (d.vendorId !== LOGITECH || (d.usagePage !== 0xff00 && d.usagePage !== 0xff43) || !d.path || seen.has(d.path)) continue
+    // Some headsets (G535) answer HID++ on interface 3 under another usage page; Logitech headset ids are 0x0Axx.
+    const headsetIf = d.vendorId === LOGITECH && (d.productId & 0xff00) === 0x0a00 && d.interface === 3
+    if (d.vendorId !== LOGITECH || (d.usagePage !== 0xff00 && d.usagePage !== 0xff43 && !headsetIf) || !d.path || seen.has(d.path)) continue
     seen.add(d.path)
     // Receivers expose the HID++ channel on interface 2; dj children reuse the receiver's channel.
     const receiver = /receiver/i.test(d.product ?? '') || [0xc539, 0xc53a, 0xc545, 0xc547, 0xc54d, 0xc54f].includes(d.productId)
     if (receiver && d.productId < 0xc500) continue
-    out.push({ path: d.path, receiver, name: d.product ?? 'Logitech device', pid: d.productId, headset: d.usagePage === 0xff43 })
+    out.push({ path: d.path, receiver, name: d.product ?? 'Logitech device', pid: d.productId, headset: d.usagePage === 0xff43 || headsetIf })
   }
   return out
 }
