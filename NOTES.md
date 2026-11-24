@@ -324,3 +324,18 @@ test/manager.test.ts covers it.
   child_process spawn from a clean parent NoNewPrivs=0). pkexec refuses to run there, so every update after an
   update-restart failed. lifecycle.relaunch() now uses /bin/sh waiting on our pid, then exec (keeps the single-instance
   lock working). The updater detects no_new_privs and says "Quit Hubless and open it again"; a launcher start is clean.
+
+## Webcams (2026-11-24)
+- Any UVC camera, through V4L2: sysfs (/sys/class/video4linux/videoN, index 0, driver uvcvideo) lists cameras;
+  v4l2-ctl --list-ctrls-menus / --set-ctrl reads and writes (v4l-utils, now a package dependency). Virtual cameras
+  (OBS, v4l2loopback) are skipped.
+- Webcams have no settings memory: Hubless saves what differs from the factory value in ~/.config/hubless/webcams.json
+  (key vid:pid:serial, or vid:pid@usbport), restores on connect, and (keep switch, default on) every 2 s poll when another
+  app changes them. Auto switches (auto_exposure, white_balance_automatic, focus_automatic_continuous) are written
+  before the values they lock; reset does the reverse (locked values first, then the switches). Session operations are
+  serialized: a poll racing a reset re-applied old values before that.
+- Live preview: getUserMedia, video only, permitted for Hubless's own window only; off in demo (would open the real
+  camera). Verified on the C922 (046d:085c): set → camera, outside change undone within 5 s, preview 1280x720, reset.
+- Photos: Logitech gallery PNGs (resource.logitech.com .../webcams/<model>/gallery), Razer store 500x500 cutouts
+  (Kiyo V2 line only; the original Kiyo / Kiyo Pro aren't in the store). Elgato's shots have shadowed backgrounds that
+  don't cut out cleanly: no Facecam photo yet.

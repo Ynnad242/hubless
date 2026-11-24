@@ -3,13 +3,14 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { modelKey, photoFor, photoKey } from '../src/shared/devices'
+import { WEBCAMS, camName } from '../src/shared/webcams'
 
 const dir = new URL('../data/devices/', import.meta.url)
 const files = readdirSync(dir)
 const catalog: { vendor: string; name: string; popular?: boolean }[] = JSON.parse(readFileSync(new URL('../data/mice.json', import.meta.url), 'utf8')).models
 // Devices Hubless supports that aren't mice, so aren't in the mouse catalog.
 const others = [modelKey('Wooting', '60HE'), modelKey('Fractal Design', 'Scape')]
-const known = new Set([...catalog.map((m) => modelKey(m.vendor, m.name)), ...others])
+const known = new Set([...catalog.map((m) => modelKey(m.vendor, m.name)), ...others, ...WEBCAMS.map((w) => modelKey(w.vendor, w.name))])
 
 describe('shipped device photos', () => {
   it.each(files)('%s is a transparent, sharp PNG for a known model', (f) => {
@@ -27,7 +28,18 @@ describe('shipped device photos', () => {
   it('covers every popular mouse and every fully supported device', () => {
     const missing = catalog.filter((m) => m.popular && !files.includes(`${modelKey(m.vendor, m.name)}.png`)).map((m) => m.name)
     expect(missing).toEqual([])
-    for (const k of [...others, 'wlmouse-ying', 'endgame-gear-op1-8k', 'logitech-pro-x2-superstrike']) expect(files).toContain(`${k}.png`)
+    for (const k of [...others, 'wlmouse-ying', 'endgame-gear-op1-8k', 'logitech-pro-x2-superstrike', 'logitech-c922-pro-stream']) expect(files).toContain(`${k}.png`)
+  })
+})
+
+describe('webcam names', () => {
+  it('turns the names cameras report into product names', () => {
+    expect(camName('C922 Pro Stream Webcam')).toBe('C922 Pro Stream')
+    expect(camName('HD Pro Webcam C920')).toBe('C920 HD Pro')
+    expect(camName('Logitech BRIO')).toBe('Brio')
+    expect(camName('MX Brio')).toBe('MX Brio')
+    expect(camName('Razer Kiyo Pro')).toBe('Kiyo Pro')
+    expect(camName('Integrated Camera')).toBeUndefined()
   })
 })
 

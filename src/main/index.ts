@@ -248,6 +248,22 @@ const api: Omit<HublessApi, 'onChange' | 'onButtons' | 'onDepth' | 'onUpdate' | 
       return s.state
     }),
   keyboardAnalog: (id) => manager.runKeyboard(id, (s) => s.analog()),
+  cameraState: (id) => manager.runCamera(id, async (s) => s.state()),
+  setCamera: (id, values) =>
+    manager.runCamera(id, async (s) => {
+      await s.set(values && typeof values === 'object' ? values : {})
+      return s.state()
+    }),
+  setCameraKeep: (id, keep) =>
+    manager.runCamera(id, async (s) => {
+      await s.setKeep(!!keep)
+      return s.state()
+    }),
+  resetCamera: (id) =>
+    manager.runCamera(id, async (s) => {
+      await s.reset()
+      return s.state()
+    }),
   headsetState: (id) =>
     manager.runHeadset(id, async (s) => {
       await s.refresh() // live mute / boom / battery
@@ -340,10 +356,15 @@ app.on('before-quit', () => (quitting = true))
 handleSignals(quit)
 
 app.whenReady().then(() => {
-  // No camera, microphone, notifications-from-the-page, HID-from-the-page or other web permissions: devices are
-  // reached only through the main process.
-  session.defaultSession.setPermissionRequestHandler((_wc, _perm, cb) => cb(false))
-  session.defaultSession.setPermissionCheckHandler(() => false)
+  // No microphone, notifications-from-the-page, HID-from-the-page or other web permissions: devices are reached
+  // through the main process. One exception: the webcam page's live preview may open a camera (video only), and
+  // only from Hubless's own window.
+  const ownPage = (wc: Electron.WebContents | null) => !!wc && wc === win?.webContents
+  session.defaultSession.setPermissionRequestHandler((wc, perm, cb, details) => {
+    const media = details as { mediaTypes?: string[] }
+    cb(perm === 'media' && ownPage(wc) && !!media.mediaTypes?.length && media.mediaTypes.every((t) => t === 'video'))
+  })
+  session.defaultSession.setPermissionCheckHandler((wc, perm, _origin, details) => perm === 'media' && ownPage(wc) && (details as { mediaType?: string }).mediaType !== 'audio')
   if (app.isPackaged) Menu.setApplicationMenu(null) // drops the default DevTools / reload shortcuts
   createWindow()
   if (!demo && !SHOTS) tray.ensure()

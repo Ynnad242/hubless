@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import { AboutDialog, SettingsDialog } from '@/components/SettingsDialog'
 import type { MouseCtl } from '@/hooks/useMouse'
 import { DeviceView } from '@/views/DeviceView'
+import { CameraView } from '@/views/CameraView'
 import { HeadsetView } from '@/views/HeadsetView'
 import { KeyboardView } from '@/views/KeyboardView'
 import { Home } from '@/views/Home'
@@ -65,6 +66,7 @@ export default function App() {
   const screen = updating ? <UpdateScreen update={update} /> : null
 
   if (device?.kind === 'keyboard') return <>{<KeyboardView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
+  if (device?.kind === 'webcam') return <>{<CameraView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
   if (device?.kind === 'headset') return <>{<HeadsetView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} />}{screen}</>
   if (device) return <>{<DeviceView key={device.id} device={device} photo={photoFor(images, device)} onBack={() => setOpen(null)} expose={expose} />}{screen}</>
 

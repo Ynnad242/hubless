@@ -5,8 +5,6 @@ What's planned for Hubless, roughly in order. Want something else, or own a devi
 
 ## New kinds of devices
 
-- **Webcams.** Settings for webcams such as the Logitech C920/C922 and Razer Kiyo: focus, exposure, white balance,
-  zoom, brightness and the like, with presets.
 - **Controllers.** Gamepads such as Xbox, PlayStation DualSense and 8BitDo controllers: battery, button remapping,
   stick dead zones and trigger settings where the controller supports them.
 

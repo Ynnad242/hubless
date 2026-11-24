@@ -1,7 +1,7 @@
 // Types shared by the main process (device drivers) and the renderer (UI).
 
-export type DeviceKind = 'mouse' | 'keyboard' | 'headset'
-export type Capability = 'triggers' | 'sensor' | 'buttons' | 'profiles' | 'device' | 'actuation' | 'keymap' | 'advanced' | 'lighting' | 'audio'
+export type DeviceKind = 'mouse' | 'keyboard' | 'headset' | 'webcam'
+export type Capability = 'triggers' | 'sensor' | 'buttons' | 'profiles' | 'device' | 'actuation' | 'keymap' | 'advanced' | 'lighting' | 'audio' | 'camera'
 
 export interface Hits {
   actuation: number // 1 (shallow) .. 10 (deep)
@@ -159,6 +159,32 @@ export type KeyboardAction =
   | { type: 'restore' }
   | { type: 'reload' }
 
+// ---------------------------------------------------------------- webcams (any UVC camera, through V4L2)
+export interface CameraControl {
+  name: string // V4L2 control name, e.g. brightness, focus_absolute
+  type: 'int' | 'bool' | 'menu'
+  min: number
+  max: number
+  step: number
+  default: number
+  value: number
+  /** greyed out by the camera right now, e.g. exposure time while auto exposure is on */
+  inactive: boolean
+  options?: { value: number; label: string }[]
+}
+
+export interface CameraState {
+  controls: CameraControl[]
+  /** put saved settings back when another app (Discord, Zoom, OBS) changes them */
+  keep: boolean
+  /** settings Hubless has saved for this camera, by control name */
+  saved: Record<string, number>
+  /** the camera's name as the browser lists it, to pick it for the live preview */
+  label: string
+  /** v4l2-ctl isn't installed, so nothing can be read or changed */
+  needsTools?: boolean
+}
+
 // ---------------------------------------------------------------- headsets (Fractal Scape)
 export interface EqBand {
   type: 'peak' | 'lowShelf' | 'highShelf' | 'lowPass' | 'highPass' | 'notch' | 'bandPass'
@@ -290,6 +316,12 @@ export interface HublessApi {
   /** live travel of every key, rows × columns, 0..255 over 0..4 mm */
   keyboardAnalog(id: string): Promise<number[][]>
   headsetState(id: string): Promise<HeadsetState>
+  cameraState(id: string): Promise<CameraState>
+  /** set controls (several at once, e.g. turning auto exposure off with a new exposure time) and save them */
+  setCamera(id: string, values: Record<string, number>): Promise<CameraState>
+  setCameraKeep(id: string, keep: boolean): Promise<CameraState>
+  /** factory values for every control, and forget the saved settings */
+  resetCamera(id: string): Promise<CameraState>
   setHeadset(id: string, patch: HeadsetPatch): Promise<HeadsetState>
   /** Custom card photos the user picked, as data URLs keyed by device id. */
   deviceImages(devices: { id: string; vendor: string; name: string; photo?: string }[]): Promise<Record<string, string>>

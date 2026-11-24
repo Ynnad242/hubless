@@ -20,6 +20,7 @@ device name and the output of `lsusb`. Devices people ask for get supported firs
 | **WLmouse Ying** | Mouse | `36a7:a875` (USB cable) | Up to 6 DPI stages (50–30,000), polling 125–1000 Hz on the cable, lift-off 0.7 / 1 / 2 mm, angle snapping, motion sync, ripple control, click debounce, backups. Not yet: button remapping, the wireless receiver |
 | **Wooting 60HE** | Keyboard | `31e3:1312` | Actuation, rapid trigger, Tachyon mode, per-key actuation and rapid trigger, live key travel, key mapping (3 layers), Mod-Tap / Toggle / Snap Tap, lighting, rename |
 | **Fractal Design Scape** | Headset | `36bc:0001` (dongle) | Battery, EQ presets and custom EQ, EQ codes, noise cancelling, sidetone and its volume, lighting on/off |
+| **Logitech C922 Pro Stream** | Webcam | `046d:085c` | Exposure (auto or manual time, low-light compensation, gain, backlight), white balance, focus, zoom / pan / tilt, brightness, contrast, saturation, sharpness, anti-flicker, live preview. Settings are kept on this PC and put back after an unplug or when another app changes them |
 
 ## 🧪 Should work
 
@@ -180,6 +181,13 @@ unexpectedly, and reads every change back.
 
 If you own one of these, open it in Hubless and use **Device settings → Copy device report**, then paste it into an
 issue. Once a model checks out it moves to ✅ Works.
+
+### Webcams
+
+Every standard USB webcam (UVC): Logitech C920, C920S, Brio, MX Brio, StreamCam, C270, Razer Kiyo, Kiyo Pro, Kiyo V2,
+Elgato Facecam and the rest, including most built-in laptop cameras on USB. **Hubless shows whichever settings the
+camera offers** (exposure, white balance, focus, zoom, picture), with a live preview. Webcams forget their settings when
+unplugged, so Hubless saves them on this PC and puts them back. Needs `v4l-utils` (the packages install it).
 
 ## 🔜 Recognised, support coming soon
 

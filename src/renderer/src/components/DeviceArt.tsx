@@ -200,7 +200,23 @@ export function HeadsetArt({ className }: { className?: string }) {
   )
 }
 
-export function DeviceArt({ kind, className }: { kind: 'mouse' | 'keyboard' | 'headset'; className?: string }) {
+export function WebcamArt({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 220 200" className={cn('h-full w-auto', className)} aria-hidden>
+      <ellipse cx="110" cy="188" rx="70" ry="8" fill="#000" opacity="0.35" />
+      <path d="M78 150 L110 120 L142 150 Z" fill="#26282d" />
+      <rect x="60" y="148" width="100" height="14" rx="5" fill="#1f2125" stroke="#3a3d44" />
+      <rect x="24" y="40" width="172" height="86" rx="43" fill="#202226" stroke="#3a3d44" strokeWidth="1.5" />
+      <circle cx="110" cy="83" r="30" fill="#0e0f11" stroke="#454850" strokeWidth="2" />
+      <circle cx="110" cy="83" r="17" fill="#15263d" />
+      <circle cx="103" cy="76" r="5" fill="#2b8cff" opacity="0.7" />
+      <circle cx="160" cy="70" r="3" fill="#34c77b" />
+    </svg>
+  )
+}
+
+export function DeviceArt({ kind, className }: { kind: 'mouse' | 'keyboard' | 'headset' | 'webcam'; className?: string }) {
+  if (kind === 'webcam') return <WebcamArt className={className} />
   if (kind === 'keyboard') return <KeyboardArt className={className} />
   if (kind === 'headset') return <HeadsetArt className={className} />
   return <MouseArt className={className} />

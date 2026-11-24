@@ -121,11 +121,19 @@
     ],
     "deb": {
       "afterInstall": "build/after-install.sh",
-      "afterRemove": "build/after-remove.sh"
+      "afterRemove": "build/after-remove.sh",
+      "fpm": [
+        "--depends",
+        "v4l-utils"
+      ]
     },
     "rpm": {
       "afterInstall": "build/after-install.sh",
-      "afterRemove": "build/after-remove.sh"
+      "afterRemove": "build/after-remove.sh",
+      "fpm": [
+        "--depends",
+        "v4l-utils"
+      ]
     },
     "pacman": {
       "depends": [
@@ -135,7 +143,8 @@
         "libxss",
         "libxtst",
         "libnotify",
-        "mesa"
+        "mesa",
+        "v4l-utils"
       ],
       "afterInstall": "build/after-install.sh",
       "afterRemove": "build/after-remove.sh",

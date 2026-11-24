@@ -201,6 +201,35 @@ export function saveLighting(key: string, lighting: LightSetting[]) {
   writeFileSync(LIGHTING, JSON.stringify(all, null, 1))
 }
 
+// Webcams forget their settings when unplugged: what the user set, per camera, to put back.
+const WEBCAMS = join(CONFIG_DIR, 'webcams.json')
+export interface SavedCamera {
+  keep: boolean
+  values: Record<string, number>
+}
+
+export function savedCamera(key: string): SavedCamera {
+  try {
+    const c = (JSON.parse(readFileSync(WEBCAMS, 'utf8')) as Record<string, SavedCamera>)[key]
+    if (c && typeof c.values === 'object') return { keep: c.keep !== false, values: { ...c.values } }
+  } catch {
+    /* none yet */
+  }
+  return { keep: true, values: {} }
+}
+
+export function saveCamera(key: string, c: SavedCamera) {
+  let all: Record<string, SavedCamera> = {}
+  try {
+    all = JSON.parse(readFileSync(WEBCAMS, 'utf8'))
+  } catch {
+    /* first time */
+  }
+  all[key] = c
+  mkdirSync(CONFIG_DIR, { recursive: true })
+  writeFileSync(WEBCAMS, JSON.stringify(all, null, 1))
+}
+
 export function deleteAllData() {
   const updates = join(process.env.XDG_CACHE_HOME || join(homedir(), '.cache'), 'hubless-updater')
   for (const p of [CONFIG_DIR, DATA, AUTOSTART_FILE, updates]) rmSync(p, { recursive: true, force: true })

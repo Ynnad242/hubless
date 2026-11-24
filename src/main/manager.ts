@@ -7,6 +7,7 @@ import { basename, join } from 'node:path'
 import HID from 'node-hid'
 import type { AppSnapshot, DeviceKind, DeviceSummary } from '@shared/types'
 import { modelKey } from '@shared/devices'
+import { camName } from '@shared/webcams'
 import { lookup } from './catalog'
 import { EG_VID, EndgameSession, EndgameTransport, MODELS as EG_MODELS, endgameEndpoint } from './endgame/op1'
 import { MODELS as WL_MODELS, WlSession, WlTransport, wlmouseEndpoint } from './wlmouse/ying'
@@ -17,7 +18,9 @@ import { LogitechDevice } from './logitech/device'
 import { HidrawTransport, Offline, Timeout, endpoints, type Transport } from './logitech/hidpp'
 import { LogitechSession } from './logitech/session'
 import { SimTransport } from './logitech/sim'
-import { VENDORS } from './storage'
+import { VENDORS, saveCamera, savedCamera } from './storage'
+import { WebcamSession } from './webcam/session'
+import { type CameraBackend, SimCamera, hasV4l2Ctl, realCameras } from './webcam/uvc'
 import { WootingSession, WootingTransport, wootingEndpoint } from './wooting/wooting'
 
 HID.setDriverType('hidraw')
@@ -35,6 +38,11 @@ type Live =
 
 /** Any mouse the mouse pages can edit. */
 export type MouseSession = LogitechSession | EndgameSession | WlSession | RazerSession
+
+/** Webcam makers by USB vendor id, for the card's name; any other UVC camera is shown as "Webcam". */
+const CAM_VENDORS: Record<number, string> = {
+  0x046d: 'Logitech', 0x1532: 'Razer', 0x0fd9: 'Elgato', 0x045e: 'Microsoft', 0x041e: 'Creative', 0x07ca: 'AVerMedia'
+}
 
 /** Peripherals recognised before (or without) a driver. */
 const KNOWN: { vid: number; pid?: number; kind: DeviceKind; vendor: string; name?: string }[] = [
@@ -82,6 +90,10 @@ export class DeviceManager extends EventEmitter {
   private timer: NodeJS.Timeout | null = null
   private tick = 0
   sim: SimTransport | null = null
+  /** Webcams aren't HID devices: found through V4L2 and kept apart from the HID drivers. */
+  private cams = new Map<string, { summary: DeviceSummary; session: WebcamSession }>()
+  private camBackend: CameraBackend = realCameras
+  private camStore = { load: savedCamera, save: saveCamera }
 
   constructor(private demo = false) {
     super()
@@ -199,6 +211,7 @@ export class DeviceManager extends EventEmitter {
   snapshot(): AppSnapshot {
     const shown = new Map<string, DeviceSummary>()
     for (const e of this.live.values()) shown.set(e.summary.id, e.summary)
+    for (const c of this.cams.values()) shown.set(c.summary.id, c.summary)
     for (const [id, d] of this.asleepIds) if (!shown.has(id)) shown.set(id, d)
     for (const [id, h] of this.held) if (!shown.has(id)) shown.set(id, h.summary)
     for (const [id, d] of this.unsupported) if (!shown.has(id)) shown.set(id, d)
@@ -206,7 +219,7 @@ export class DeviceManager extends EventEmitter {
     // Stable order: a device must not jump around when it falls asleep or wakes up (status changes all the time
     // while the user is away), so status only separates plugged-in devices from remembered ones.
     const order = { ready: 0, asleep: 0, unsupported: 0, inactive: 1 }
-    const kinds = { mouse: 0, keyboard: 1, headset: 2 }
+    const kinds = { mouse: 0, keyboard: 1, headset: 2, webcam: 3 }
     return {
       devices: [...shown.values()].sort((a, b) => order[a.status] - order[b.status] || kinds[a.kind] - kinds[b.kind] || a.name.localeCompare(b.name) || a.id.localeCompare(b.id)),
       missingPermission: this.missingPermission,
@@ -286,7 +299,10 @@ export class DeviceManager extends EventEmitter {
     if (this.scanning) return
     this.scanning = true
     try {
-      if (this.demo) return await this.scanDemo()
+      if (this.demo) {
+        await this.scanWebcams()
+        return await this.scanDemo()
+      }
       const hid = list
       const missing = new Set<string>()
       for (const [vid, name] of Object.entries(VENDORS)) {
@@ -324,6 +340,7 @@ export class DeviceManager extends EventEmitter {
         this.remember(summary)
       }
       await this.scanLogitech(hid)
+      await this.scanWebcams()
       this.missingPermission = [...missing]
       this.searching = false
       this.changed()
@@ -640,6 +657,7 @@ export class DeviceManager extends EventEmitter {
       }
       if (e.summary.status === 'asleep' || this.tick % 4 === 0) await this.refresh(id, e)
     }
+    await this.pollWebcams()
     if (this.tick % 3 === 0 || !this.live.size) await this.scan(list)
   }
 
@@ -723,6 +741,67 @@ export class DeviceManager extends EventEmitter {
     const e = this.live.get(id)
     if (!e || !isMouse(e)) throw new Error('That mouse is not connected right now.')
     return e.session
+  }
+
+  // ---------------------------------------------------------------- webcams
+  private camSummary(id: string, s: WebcamSession): DeviceSummary {
+    const vendor = CAM_VENDORS[s.info.vid] ?? 'Webcam'
+    return {
+      id, kind: 'webcam', vendor, name: camName(s.info.name) ?? cleanName(s.info.name, vendor), status: 'ready', battery: null, connection: 'USB',
+      capabilities: ['camera', 'device'], verified: s.info.vid === 0x046d && s.info.pid === 0x085c, demo: this.demo, lastSeen: Date.now(),
+      note: hasV4l2Ctl() || this.demo ? undefined : 'Install v4l-utils to change its settings'
+    }
+  }
+
+  private async scanWebcams() {
+    if (this.demo && !(this.camBackend instanceof SimCamera)) this.camBackend = new SimCamera()
+    const found = this.camBackend.list()
+    for (const info of found) {
+      const vid = info.vid.toString(16).padStart(4, '0')
+      const pid = info.pid.toString(16).padStart(4, '0')
+      const base = `webcam-${vid}${pid}`
+      // Two of the same camera get their own cards (by serial, or the USB port if they have none).
+      const twin = found.filter((f) => f.vid === info.vid && f.pid === info.pid).length > 1
+      const id = twin ? `${base}-${slug(info.serial || info.usb)}` : base
+      if (this.cams.has(id)) continue
+      const session = new WebcamSession(info, this.camBackend, this.camStore)
+      if (hasV4l2Ctl() || this.demo)
+        try {
+          await session.load()
+        } catch (e) {
+          console.error('webcam failed to load', info.dev, e)
+          continue
+        }
+      const summary = this.camSummary(id, session)
+      this.cams.set(id, { summary, session })
+      this.remember(summary)
+    }
+  }
+
+  private async pollWebcams() {
+    if (!this.cams.size) return
+    const devs = new Set(this.camBackend.list().map((c) => c.dev))
+    for (const [id, c] of this.cams) {
+      if (!devs.has(c.session.info.dev)) {
+        this.cams.delete(id)
+        this.touch(id)
+        this.changed()
+        continue
+      }
+      if (!hasV4l2Ctl() && !this.demo) continue
+      try {
+        await c.session.poll()
+      } catch {
+        /* camera busy or just unplugged: next tick */
+      }
+    }
+  }
+
+  async runCamera<T>(id: string, job: (s: WebcamSession) => Promise<T>): Promise<T> {
+    const c = this.cams.get(id)
+    if (!c) throw new Error('The webcam is not connected.')
+    if (!hasV4l2Ctl() && !this.demo) throw new Error('Install v4l-utils so Hubless can change webcam settings.')
+    return job(c.session)
   }
 
   runKeyboard<T>(id: string, job: (s: WootingSession) => Promise<T>): Promise<T> {

@@ -13,13 +13,18 @@ Everything stays in your home folder:
 | App settings (tray, start on login, battery warning) | `~/.config/hubless/settings.json` | Remember your choices |
 | Devices seen before (name, model, serial number) | `~/.config/hubless/devices.json` | Show unplugged devices on the home screen |
 | Photos you picked for your devices | `~/.config/hubless/images/` | Show your own picture on the device card |
+| Webcam settings you changed, per camera (by model and serial number) | `~/.config/hubless/webcams.json` | Webcams forget their settings when unplugged, so Hubless puts them back |
+| Lighting a Razer mouse can't report back | `~/.config/hubless/lighting.json` | Show the lighting Hubless last set |
 | Backups of your devices' memory | `~/.local/share/hubless/backups/` | Undo changes; made before the first change of every session |
 | The app window's own browser-engine data (cache, window state) | `~/.config/Hubless/` | Electron/Chromium keeps this for the user interface |
 | Downloaded updates waiting to be installed | `~/.cache/hubless-updater/` | Install the next version |
 | Start-on-login entry (only if you turn it on) | `~/.config/autostart/io.github.hubless.Hubless.desktop` | Start in the tray when you log in |
 
 Your device settings themselves (DPI, buttons, lighting, EQ, …) are written into the devices' own memory, not to
-your computer.
+your computer. Webcams are the exception: they have no memory for settings, so those are kept in `webcams.json`.
+
+The live preview on a webcam's page is shown only in the Hubless window while that page is open. It is never recorded,
+saved or sent anywhere, and Hubless can't use any microphone: the window may open a camera's video and nothing else.
 
 The installer also adds three system files, none with personal data: `/usr/lib/udev/rules.d/70-hubless.rules`, which
 lets the logged-in user talk to supported mice, keyboards and headsets without root, and the update helper

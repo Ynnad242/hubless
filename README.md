@@ -4,7 +4,7 @@
 
 # Hubless
 
-**Settings for gaming mice, keyboards and headsets on Linux.**
+**Settings for gaming mice, keyboards, headsets and webcams on Linux.**
 One app for the things G HUB, Synapse, Wootility and Adjust usually do, talking to the devices directly and saving
 into their own memory.
 
@@ -112,6 +112,8 @@ devices stay on the devices.
 | WLmouse Ying (cable) | DPI stages, polling, lift-off, angle snap, motion sync, ripple, debounce | ✅ Tested on hardware |
 | Wooting 60HE | Actuation, rapid trigger, per-key settings, key mapping, Mod-Tap / Snap Tap, lighting | ✅ Tested on hardware |
 | Fractal Design Scape | Battery, EQ, noise cancelling, sidetone, lighting | ✅ Tested on hardware |
+| Logitech C922 Pro Stream | Exposure, white balance, focus, zoom, picture, anti-flicker, live preview; settings kept across unplugs | ✅ Tested on hardware |
+| Any other USB webcam (C920, Brio, StreamCam, Razer Kiyo, Elgato Facecam…) | The same, for whichever settings the camera offers | 🧪 Should work: every standard (UVC) webcam |
 | 52 other Logitech G mice | DPI, polling, buttons, onboard profiles, RGB lighting (G502, G203, G Pro and others with RGB) | 🧪 Should work, untested |
 | 74 Razer mice (Viper, DeathAdder, Basilisk, Cobra, Naga…) | DPI stages, polling up to 8 kHz, battery, RGB lighting on 53 of them | 🧪 Should work, tested on a simulated mouse |
 
