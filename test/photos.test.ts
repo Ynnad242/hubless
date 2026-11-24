@@ -5,13 +5,14 @@ import { describe, expect, it } from 'vitest'
 import { modelKey, photoFor, photoKey } from '../src/shared/devices'
 import { WEBCAMS, camName } from '../src/shared/webcams'
 import { LOGITECH_PERIPHERALS, logitechPeripheralName } from '../src/shared/peripherals'
+import { KEYBOARDS as RAZER_KEYBOARDS, keyboardName } from '../src/main/razer/keyboard'
 
 const dir = new URL('../data/devices/', import.meta.url)
 const files = readdirSync(dir)
 const catalog: { vendor: string; name: string; popular?: boolean }[] = JSON.parse(readFileSync(new URL('../data/mice.json', import.meta.url), 'utf8')).models
 // Devices Hubless supports that aren't mice, so aren't in the mouse catalog.
 const others = [modelKey('Wooting', '60HE'), modelKey('Fractal Design', 'Scape')]
-const known = new Set([...catalog.map((m) => modelKey(m.vendor, m.name)), ...others, ...WEBCAMS.map((w) => modelKey(w.vendor, w.name)), ...LOGITECH_PERIPHERALS.map((p) => modelKey('Logitech', p.name))])
+const known = new Set([...catalog.map((m) => modelKey(m.vendor, m.name)), ...others, ...WEBCAMS.map((w) => modelKey(w.vendor, w.name)), ...LOGITECH_PERIPHERALS.map((p) => modelKey('Logitech', p.name)), ...[...RAZER_KEYBOARDS.values()].map((m) => modelKey('Razer', keyboardName(m)))])
 
 describe('shipped device photos', () => {
   it.each(files)('%s is a transparent, sharp PNG for a known model', (f) => {

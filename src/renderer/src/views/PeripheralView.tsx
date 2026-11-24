@@ -13,6 +13,7 @@ import type { SaveStatus } from '@/hooks/useMouse'
 import { type RailItem, SaveState, Shell } from './Shell'
 
 const RAIL: RailItem[] = [{ key: 'settings', label: 'Settings', icon: SlidersHorizontal }]
+const SWATCHES = ['#ffffff', '#2b8cff', '#00e5ff', '#34c77b', '#ffd60a', '#ff9f0a', '#ff453a', '#ff2d92', '#bf5af2']
 const hz = (f: number) => (f >= 1000 ? `${+(f / 1000).toFixed(1)}k` : String(f))
 
 /**
@@ -69,9 +70,9 @@ export function PeripheralView({ device, photo, onBack }: { device: DeviceSummar
       return (
         <div key={s.key} className="space-y-2">
           <div className="text-sm">{s.label}</div>
-          <Select value={String(s.value)} onValueChange={(v) => set(s.key, Number(v))}>
+          <Select value={s.options!.some((o) => o.value === s.value) ? String(s.value) : ''} onValueChange={(v) => set(s.key, Number(v))}>
             <SelectTrigger className="w-full">
-              <SelectValue />
+              <SelectValue placeholder="Pick one" />
             </SelectTrigger>
             <SelectContent>
               {s.options!.map((o) => (
@@ -84,6 +85,30 @@ export function PeripheralView({ device, photo, onBack }: { device: DeviceSummar
           {s.hint && <p className="text-xs text-muted-foreground">{s.hint}</p>}
         </div>
       )
+    if (s.kind === 'color') {
+      const hex = `#${s.value.toString(16).padStart(6, '0')}`
+      return (
+        <div key={s.key} className="space-y-2.5">
+          <div className="text-sm">{s.label}</div>
+          <div className="flex flex-wrap items-center gap-2">
+            {SWATCHES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                aria-label={c}
+                onClick={() => set(s.key, parseInt(c.slice(1), 16))}
+                className={hex.toLowerCase() === c ? 'size-7 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-surface' : 'size-7 rounded-full'}
+                style={{ background: c }}
+              />
+            ))}
+            <label className="relative size-7 cursor-pointer overflow-hidden rounded-full border border-dashed" title="Any colour">
+              <input type="color" value={hex} onChange={(e) => set(s.key, parseInt(e.target.value.slice(1), 16))} className="absolute inset-0 size-full cursor-pointer opacity-0" />
+              <span className="flex size-full items-center justify-center text-xs text-muted-foreground">+</span>
+            </label>
+          </div>
+        </div>
+      )
+    }
     if (s.kind === 'slider')
       return (
         <div key={s.key} className="space-y-2.5">

@@ -23,6 +23,10 @@ export function checkValue(s: DeviceSetting | undefined, value: SettingValue): n
   }
   if (typeof value !== 'number' || !Number.isFinite(value)) throw new Error('That value is not a number.')
   if (s.kind === 'switch') return value ? 1 : 0
+  if (s.kind === 'color') {
+    if (value < 0 || value > 0xffffff) throw new Error('That is not a colour.')
+    return Math.round(value)
+  }
   if (s.kind === 'choice') {
     if (!s.options!.some((o) => o.value === value)) throw new Error('That choice is not available.')
     return value

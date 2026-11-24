@@ -167,7 +167,8 @@ export interface DeviceSetting {
   label: string
   hint?: string
   group: string
-  kind: 'slider' | 'switch' | 'choice' | 'eq'
+  /** 'color': value is 0xRRGGBB */
+  kind: 'slider' | 'switch' | 'choice' | 'eq' | 'color'
   value: number
   min?: number
   max?: number

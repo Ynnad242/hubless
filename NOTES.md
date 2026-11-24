@@ -354,3 +354,13 @@ test/manager.test.ts covers it.
 - Generic PeripheralSession + DeviceSetting list + PeripheralView: drivers describe settings, the page draws them.
 - Photos: logitechg.com category pages list gallery PNGs (G733, PRO X Wireless, G915/TKL/X/X TKL, G515 TKL, PRO X TKL
   Rapid, G815). None found for G535, G435, G935.
+
+## Razer keyboards (2026-11-24)
+- data/razer-keyboards.json from tools/extract-razer-kbd.py (OpenRazer razerkbd_driver.c): per pid the effect builder
+  family (standard class 0x03 cmd 0x0A, or extended class 0x0F cmd 0x02 with storage+LED), transaction id, interface
+  and wait (razer_get_report_params), brightness (only when its read and write use the same family/tx/LED: the Huntsman
+  V3 Pro family reads with a different command than it writes, so no brightness there), game mode (0x03 0x00/0x80,
+  VARSTORE GAME_LED 0x08). Laptops (Blade/Book) and keypads are left out. 61 keyboards, 9 on standard commands.
+- Effects can't be read back: the last one set is kept in lighting.json under razer-kbd:<pid>:<serial>.
+- Photos: Razer store 500x500 cutouts; compact boards come out ~300 px wide, too small to ship, so only BlackWidow V3,
+  V4 Pro, Ornata V3, Ornata V3 X have photos.

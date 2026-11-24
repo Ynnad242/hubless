@@ -1,0 +1,1837 @@
+{
+ "generated": "tools/extract-razer-kbd.py from OpenRazer driver/razerkbd_driver.c",
+ "models": [
+  {
+   "id": "BLACKWIDOW_ULTIMATE_2016",
+   "pid": 532,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_X_ULTIMATE",
+   "pid": 535,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_CHROMA",
+   "pid": 515,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_OVERWATCH",
+   "pid": 529,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "DEATHSTALKER_CHROMA",
+   "pid": 516,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_CHROMA_TE",
+   "pid": 521,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_X_CHROMA",
+   "pid": 534,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_X_CHROMA_TE",
+   "pid": 538,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 255,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_CHROMA",
+   "pid": 542,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_V2",
+   "pid": 605,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_V3",
+   "pid": 673,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_V3_ALT",
+   "pid": 655,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_V3_X",
+   "pid": 660,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_V3_X_ALT",
+   "pid": 674,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA_V3_TENKEYLESS",
+   "pid": 675,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "CYNOSA_CHROMA",
+   "pid": 554,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "CYNOSA_CHROMA_PRO",
+   "pid": 556,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "CYNOSA_LITE",
+   "pid": 575,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "CYNOSA_V2",
+   "pid": 606,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_LITE",
+   "pid": 565,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_2019",
+   "pid": 577,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_ESSENTIAL",
+   "pid": 567,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "ORNATA",
+   "pid": 543,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_CHROMA_V2",
+   "pid": 545,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "standard",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": {
+    "variant": "standard",
+    "tx": 255,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_ELITE",
+   "pid": 550,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_TE",
+   "pid": 579,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_MINI",
+   "pid": 599,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_MINI_JP",
+   "pid": 617,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_ELITE",
+   "pid": 552,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN",
+   "pid": 551,
+   "interface": 1,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V3_PRO_WIRED",
+   "pid": 602,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V3_PRO_WIRELESS",
+   "pid": 604,
+   "interface": 2,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V3",
+   "pid": 590,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V3_TK",
+   "pid": 2596,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V3_MINI_HYPERSPEED_WIRED",
+   "pid": 600,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V3_MINI_HYPERSPEED_WIRELESS",
+   "pid": 625,
+   "interface": 3,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V2_TENKEYLESS",
+   "pid": 619,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 31,
+    "args": [
+     0,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V2",
+   "pid": 620,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 31,
+    "args": [
+     0,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V2_ANALOG",
+   "pid": 614,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_MINI_ANALOG",
+   "pid": 642,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_MINI_HYPERSPEED_WIRED",
+   "pid": 697,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_MINI_HYPERSPEED_WIRELESS",
+   "pid": 698,
+   "interface": 3,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "DEATHSTALKER_V2",
+   "pid": 661,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "DEATHSTALKER_V2_PRO_WIRED",
+   "pid": 658,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "DEATHSTALKER_V2_PRO_WIRELESS",
+   "pid": 656,
+   "interface": 2,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "JORO",
+   "pid": 717,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4",
+   "pid": 647,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_X",
+   "pid": 659,
+   "interface": 2,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_PRO",
+   "pid": 653,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_75PCT",
+   "pid": 677,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_TENKEYLESS_HYPERSPEED_WIRED",
+   "pid": 727,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_TENKEYLESS_HYPERSPEED_WIRELESS",
+   "pid": 725,
+   "interface": 2,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_LOW_PROFILE_TENKEYLESS_HYPERSPEED_WIRED",
+   "pid": 724,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 31,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "BLACKWIDOW_V4_LOW_PROFILE_TENKEYLESS_HYPERSPEED_WIRELESS",
+   "pid": 722,
+   "interface": 2,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "DEATHSTALKER_V2_PRO_TKL_WIRED",
+   "pid": 664,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 63,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 63,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "DEATHSTALKER_V2_PRO_TKL_WIRELESS",
+   "pid": 662,
+   "interface": 2,
+   "waitMs": 5,
+   "wireless": true,
+   "variant": "extended",
+   "tx": 159,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": {
+    "variant": "extended",
+    "tx": 159,
+    "args": [
+     1,
+     5
+    ]
+   },
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V3_PRO",
+   "pid": 678,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V3_PRO_TKL",
+   "pid": 679,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V3_PRO_MINI",
+   "pid": 688,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": 5,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V3_PRO_8KHZ",
+   "pid": 719,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "id": "HUNTSMAN_V3_HE_MAGNETIC_TKL_8KHZ",
+   "pid": 746,
+   "interface": 3,
+   "waitMs": 1,
+   "wireless": false,
+   "variant": "extended",
+   "tx": 31,
+   "effects": [
+    "breath",
+    "none",
+    "spectrum",
+    "static"
+   ],
+   "led": null,
+   "brightness": null,
+   "game": {
+    "tx": 255,
+    "args": [
+     1,
+     8
+    ]
+   }
+  }
+ ]
+}

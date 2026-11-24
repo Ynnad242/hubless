@@ -108,6 +108,12 @@ Insert) and battery** on keyboards (G915, G915 TKL, G915 X, G815, G515, PRO X TK
 devices, not yet on real ones. Not yet: keyboard lighting effects, G-keys, and newer headsets on Logitech's newer
 protocol (PRO X 2, Astro A50 X, G522).
 
+### Razer keyboards
+
+61 Razer keyboards (BlackWidow, Huntsman, Ornata, DeathStalker, Cynosa and Joro, wired and HyperSpeed): **whole-keyboard
+lighting (off, one colour, breathing, colour cycle), brightness and game mode**, using the command variant OpenRazer
+uses for each model. Tested on a simulated keyboard, not yet on a real one. Not yet: per-key colours, macros.
+
 ### Webcams
 
 Every standard USB webcam (UVC): Logitech C920, C920S, Brio, MX Brio, StreamCam, C270, Razer Kiyo, Kiyo Pro, Kiyo V2,
