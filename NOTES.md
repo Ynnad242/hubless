@@ -325,7 +325,9 @@ test/manager.test.ts covers it.
   update-restart failed. lifecycle.relaunch() now uses /bin/sh waiting on our pid, then exec (keeps the single-instance
   lock working). The updater detects no_new_privs and says "Quit Hubless and open it again"; a launcher start is clean.
 
-## Webcams (2026-11-24)
+## v0.21.0 (2026-11-25): webcams, headsets, keyboards
+
+### Webcams (2026-11-24)
 - Any UVC camera, through V4L2: sysfs (/sys/class/video4linux/videoN, index 0, driver uvcvideo) lists cameras;
   v4l2-ctl --list-ctrls-menus / --set-ctrl reads and writes (v4l-utils, now a package dependency). Virtual cameras
   (OBS, v4l2loopback) are skipped.
@@ -340,7 +342,7 @@ test/manager.test.ts covers it.
   (Kiyo V2 line only; the original Kiyo / Kiyo Pro aren't in the store). Elgato's shots have shadowed backgrounds that
   don't cut out cleanly: no Facecam photo yet.
 
-## Logitech G headsets and keyboards (2026-11-24)
+### Logitech G headsets and keyboards (2026-11-24)
 - logitechKind(): mice by DPI/HITS features, else 0x0005 fn2 device type (0 keyboard, 2 numpad, 3-5 pointer, 8 headset),
   else by features. Fixes a latent bug: any Logitech device with onboard memory (e.g. a G915) was loaded as a mouse.
 - Headset dongles carry HID++ on usage page 0xFF43 (mice/keyboards/receivers 0xFF00): endpoints() takes both.
@@ -355,7 +357,7 @@ test/manager.test.ts covers it.
 - Photos: logitechg.com category pages list gallery PNGs (G733, PRO X Wireless, G915/TKL/X/X TKL, G515 TKL, PRO X TKL
   Rapid, G815). None found for G535, G435, G935.
 
-## Razer keyboards (2026-11-24)
+### Razer keyboards (2026-11-24)
 - data/razer-keyboards.json from tools/extract-razer-kbd.py (OpenRazer razerkbd_driver.c): per pid the effect builder
   family (standard class 0x03 cmd 0x0A, or extended class 0x0F cmd 0x02 with storage+LED), transaction id, interface
   and wait (razer_get_report_params), brightness (only when its read and write use the same family/tx/LED: the Huntsman
@@ -365,7 +367,7 @@ test/manager.test.ts covers it.
 - Photos: Razer store 500x500 cutouts; compact boards come out ~300 px wide, too small to ship, so only BlackWidow V3,
   V4 Pro, Ornata V3, Ornata V3 X have photos.
 
-## SteelSeries / HyperX headsets (2026-11-24)
+### SteelSeries / HyperX headsets (2026-11-24)
 - Table-driven HidHeadset (src/main/headsets/hid-headsets.ts), facts from HeadsetControl lib/devices/*.hpp:
   Nova 7 family (1038, 12 pids, if 3 usage 0xFFC0, 64 B no report id): status [00 b0] → [2] battery (0..4 on older
   firmware pids), [3] 0 off / 1,2 charging; sidetone [00 39 0..3] (+ save [00 09] on Gen 2 0x227e); auto-off

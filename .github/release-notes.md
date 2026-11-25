@@ -1,14 +1,27 @@
-## What's new in 0.20.2
+## What's new in 0.21.0
 
-- **Fixed: updates failing with "pkexec must be setuid root"**. After Hubless restarted itself into a new version,
-  the next update couldn't install. Hubless now restarts in a way that keeps updates working. If you see that
-  message, quit Hubless (tray icon → Quit) and open it again: it then installs the update straight away.
+Hubless now does more than mice and Wooting keyboards:
 
-0.20.1 cleaned up the Wooting key travel graphic (Rapid Trigger shown the way the keyboard decides it) and fixed the
-HITS view stopping short on quick clicks. 0.20.0 added mouse lighting, firmware updates and sharper device photos.
+- **Webcams.** Any USB webcam: brightness, contrast, focus, exposure, white balance, zoom and the rest, with a live
+  preview. Settings are kept per camera and put back when you plug it in again or another app changes them. Photos
+  for popular Logitech and Razer webcams.
+- **Logitech G headsets** (G733, G535, PRO X Wireless and others): sidetone, equalizer, battery and auto power-off.
+- **Logitech G keyboards** (G915, G815, G515, PRO X TKL and others): backlight brightness, battery and game mode
+  (lock the Windows key and others).
+- **Razer keyboards**, 61 models (BlackWidow, Huntsman, Ornata, DeathStalker, Cynosa, Joro): lighting effect and
+  colour, brightness and game mode.
+- **SteelSeries Arctis Nova 7** (all versions), **Arctis 7 / Pro** and **HyperX Cloud Alpha Wireless**: battery,
+  sidetone, auto power-off, and a 10-band EQ on the Nova 7.
+
+Webcams were tested on real hardware. The headsets and keyboards follow the protocols documented by Solaar,
+OpenRazer and HeadsetControl but haven't been tried on every model yet: if something doesn't work on yours, use
+**report a problem** in Hubless's settings and it'll get fixed.
+
+Webcam controls need `v4l-utils`; the packages install it for you.
 
 Full list: [supported devices](https://github.com/Ynnad242/hubless/blob/main/DEVICES.md). Installed 0.18.0 or later?
-This update installs itself the next time you open Hubless.
+This update installs itself the next time you open Hubless. Headsets and SteelSeries devices need the new device
+access rule, which the update installs.
 
 ## Install
 
